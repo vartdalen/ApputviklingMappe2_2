@@ -12,6 +12,14 @@
     <string name="user_level">User Level</string>
 
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="signup">Sign up</string>
+    <string name ="quit">Quit</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!--Confirmation Messages-->
+    <string name="confirmation_quit1">Really quit?</string>
+    <string name="confirmation_quit2">Current game will not be saved.</string>
 
 </resources>

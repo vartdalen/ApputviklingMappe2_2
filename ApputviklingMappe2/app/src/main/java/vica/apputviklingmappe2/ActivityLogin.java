@@ -1,24 +1,29 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.content.Intent;
 import android.util.Patterns;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 public class ActivityLogin extends Activity {
     private static final String TAG = "ActivityLogin";
     private static final int REQUEST_SIGNUP = 0;
 
-    EditText loginEmail;
-    EditText loginPassword;
-    Button loginButtonLogin;
-    Button loginButtonSignup;
+    private EditText loginEmail;
+    private EditText loginPassword;
+    private Button loginButtonLogin;
+    private Button loginButtonSignup;
     private Toolbar toolbar;
 
     @Override
@@ -30,6 +35,8 @@ public class ActivityLogin extends Activity {
         loginPassword = (EditText) findViewById(R.id.login_password);
         loginButtonLogin = (Button) findViewById(R.id.login_button_login);
         loginButtonSignup = (Button) findViewById(R.id.login_button_signup);
+
+        setupToolbar();
 
 //        loginButtonLogin.setOnClickListener(new View.OnClickListener() {
 //
@@ -43,6 +50,31 @@ public class ActivityLogin extends Activity {
     public void loadSignup(View v) {
         Intent intent = new Intent(getApplicationContext(), ActivitySignup.class);
         startActivityForResult(intent, REQUEST_SIGNUP);
+    }
+
+    public void quit() {
+        AlertDialog confirm_quit = new AlertDialog.Builder(ActivityLogin.this).create();
+        confirm_quit.setTitle(getString(R.string.quit));
+        confirm_quit.setMessage(getString(R.string.confirmation_quit1));
+        confirm_quit.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        confirm_quit.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        confirm_quit.show();
+    }
+
+    private void setupToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_logged_out);
+        toolbar.setNavigationIcon(null);
     }
 
 //    public void login() {
