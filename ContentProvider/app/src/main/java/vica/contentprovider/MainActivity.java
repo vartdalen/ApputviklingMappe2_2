@@ -19,10 +19,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         ContentValues values = new ContentValues();
-        values.put("Firstname", "Ola");
-        values.put("Lastname", "Nguyen");
+        values.put("Firstname", "Admin");
+        values.put("Lastname", "Admin");
+        values.put("Email", "admin@live.no");
         values.put("Address", "Seilduksgata 23A");
         values.put("Phonenumber", "46842543");
+        values.put("Password", "admin123");
         values.put("Zip_Code", "0553");
         values.put("Zip_Area", "Oslo");
 

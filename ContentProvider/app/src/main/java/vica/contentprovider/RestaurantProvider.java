@@ -33,9 +33,11 @@ public class RestaurantProvider extends ContentProvider {
     // Label table user columns
     public final static String USER_ID = "idUser";
     public final static String USER_FIRSTNAME = "Firstname";
+    public final static String USER_EMAIL = "Email";
     public final static String USER_LASTNAME = "Lastname";
     public final static String USER_ADDRESS = "Address";
     public final static String USER_PHONE = "Phonenumber";
+    public final static String USER_PASSWORD = "Password";
     public final static String ZIP_CODE = "Zip_Code";
     public final static String AREA = "Zip_Area";
 
@@ -62,8 +64,10 @@ public class RestaurantProvider extends ContentProvider {
                     + USER_ID + " INTEGER PRIMARY KEY,"
                     + USER_FIRSTNAME + " TEXT,"
                     + USER_LASTNAME + " TEXT,"
+                    + USER_EMAIL + " TEXT,"
                     + USER_ADDRESS + " TEXT,"
                     + USER_PHONE + " TEXT,"
+                    + USER_PASSWORD + " TEXT,"
                     + ZIP_CODE + " TEXT,"
                     + AREA + " TEXT );";
 

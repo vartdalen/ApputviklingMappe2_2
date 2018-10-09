@@ -9,6 +9,7 @@
     <string name="phone">Phone</string>
     <string name="address">Address</string>
     <string name="zip_code">Zip Code</string>
+    <string name="zip_area">Zip Area</string>
     <string name="user_level">User Level</string>
 
     <string name="login">Login</string>
