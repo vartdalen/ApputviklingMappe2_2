@@ -1,61 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/AppTheme">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:clipToPadding="false">
+    <include layout="@layout/toolbar"/>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <include layout="@layout/toolbar"/>
-
-        <ImageView
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginTop="24dp"
-            android:layout_gravity="center_horizontal"/>
-
-        <!-- Email Label -->
-        <EditText
-            android:id="@+id/login_email"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email">
-        </EditText>
+            android:paddingTop="40dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:clipToPadding="false">
 
-        <!-- Password Label -->
-        <EditText
-            android:id="@+id/login_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:inputType="textPassword"
-            android:hint="@string/password">
-        </EditText>
+            <ImageView
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:layout_gravity="center_horizontal"/>
 
-        <Button
-            android:id="@+id/login_button_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/login"/>
+            <!-- Email Label -->
+            <EditText
+                android:id="@+id/login_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email">
+            </EditText>
 
-        <Button
-            android:id="@+id/login_button_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/signup"
-            android:onClick="loadSignup">
-        </Button>
-    </LinearLayout>
-</ScrollView>
+            <!-- Password Label -->
+            <EditText
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:inputType="textPassword"
+                android:hint="@string/password">
+            </EditText>
+
+            <Button
+                android:id="@+id/login_button_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:text="@string/login"
+                android:background="@drawable/button_primary"/>
+
+            <Button
+                android:id="@+id/login_button_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/signup"
+                android:background="@drawable/button_secondary"
+                android:onClick="loadSignup">
+            </Button>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
