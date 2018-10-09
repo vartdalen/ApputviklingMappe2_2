@@ -7,18 +7,16 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.util.Patterns;
-import android.view.Menu;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 public class ActivityLogin extends Activity {
     private static final String TAG = "ActivityLogin";
-    private static final int REQUEST_SIGNUP = 0;
+    private static final int REQUEST_SIGNUP = 10;
 
     private EditText loginEmail;
     private EditText loginPassword;
@@ -47,6 +45,30 @@ public class ActivityLogin extends Activity {
 //        });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SIGNUP) {
+            if (resultCode == RESULT_OK) {
+
+                // TODO: Implement successful signup logic here
+                // By default we just finish the Activity and log them in automatically
+                this.finish();
+            }
+            if (resultCode == RESULT_CANCELED) {
+                this.finish();
+            }
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                quit();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
     public void loadSignup(View v) {
         Intent intent = new Intent(getApplicationContext(), ActivitySignup.class);
         startActivityForResult(intent, REQUEST_SIGNUP);
@@ -75,6 +97,13 @@ public class ActivityLogin extends Activity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_logged_out);
         toolbar.setNavigationIcon(null);
+        toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                quit();
+                return true;
+            }
+        });
     }
 
 //    public void login() {
@@ -110,23 +139,13 @@ public class ActivityLogin extends Activity {
 //    }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
-            }
-        }
-    }
 
-    @Override
-    public void onBackPressed() {
-        // disable going back to the MainActivity
-        moveTaskToBack(true);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        // disable going back to the MainActivity
+//        moveTaskToBack(true);
+//    }
 
 //    public void onLoginSuccess() {
 //        buttonLogin.setEnabled(true);

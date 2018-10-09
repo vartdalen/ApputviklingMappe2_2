@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toolbar;
 
@@ -25,7 +26,14 @@ public class ActivitySignup extends Activity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                setResult(RESULT_FIRST_USER); finish();
+            }
+        });
+        toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                quit();
+                return true;
             }
         });
     }
@@ -37,6 +45,7 @@ public class ActivitySignup extends Activity {
         confirm_quit.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        setResult(RESULT_CANCELED);
                         finish();
                     }
                 });
