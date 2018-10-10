@@ -18,20 +18,14 @@ public class ActivitySignup extends Activity {
     public final static String USER_FIRSTNAME = "Firstname";
     public final static String USER_LASTNAME = "Lastname";
     public final static String USER_EMAIL = "Email";
-    public final static String USER_ADDRESS = "Address";
     public final static String USER_PHONE = "Phonenumber";
     public final static String USER_PASSWORD = "Password";
-    public final static String ZIP_CODE = "Zip_Code";
-    public final static String AREA = "Zip_Area";
 
     private EditText firstname;
     private EditText lastname;
     private EditText email;
-    private EditText address;
     private EditText phonenr;
     private EditText password;
-    private EditText zipcode;
-    private EditText ziparea;
 
     private Button signup_button;
 
@@ -42,12 +36,9 @@ public class ActivitySignup extends Activity {
 
         firstname = (EditText)findViewById(R.id.signup_first_name);
 //        lastname = (EditText)findViewById(R.id.lastname);
-        email = (EditText)findViewById(R.id.signup_email);
-//        address = (EditText)findViewById(R.id.address);
+//        email = (EditText)findViewById(R.id.signup_email);
 //        phonenr = (EditText)findViewById(R.id.phonenr);
-        password  = (EditText)findViewById(R.id.signup_password);
-//        zipcode = (EditText)findViewById(R.id.zipcode);
-//        ziparea = (EditText)findViewById(R.id.ziparea);
+//        password  = (EditText)findViewById(R.id.signup_password);
 
         signup_button = (Button)findViewById(R.id.signup_button);
     }
@@ -57,31 +48,28 @@ public class ActivitySignup extends Activity {
 
         String firstnameV = firstname.getText().toString();
 //        String lastnameV = lastname.getText().toString();
-        String emailV = email.getText().toString();
+//        String emailV = email.getText().toString();
 //        String addressV = address.getText().toString();
 //        String phonenrV = phonenr.getText().toString();
-        String passwordV = password.getText().toString();
+//        String passwordV = password.getText().toString();
 //        String zipcodeV = zipcode.getText().toString();
 //        String zipareaV = ziparea.getText().toString();
 
         values.put(USER_FIRSTNAME, firstnameV);
 //        values.put(USER_LASTNAME, lastnameV);
-        values.put(USER_EMAIL, emailV);
+//        values.put(USER_EMAIL, emailV);
 //        values.put(USER_ADDRESS, addressV);
 //        values.put(USER_PHONE, phonenrV);
-        values.put(USER_PASSWORD, passwordV);
+//        values.put(USER_PASSWORD, passwordV);
 //        values.put(ZIP_CODE, zipcodeV);
 //        values.put(AREA, zipareaV);
 
         Uri uri = getContentResolver().insert( CONTENT_URI, values);
         firstname.setText("");
 //        lastname.setText("");
-        email.setText("");
-//        address.setText("");
+//        email.setText("");
 //        phonenr.setText("");
-        password.setText("");
-//        zipcode.setText("");
-//        ziparea.setText("");
+//        password.setText("");
 
         Toast.makeText(this, "Registered!", Toast.LENGTH_SHORT).show();
     }
