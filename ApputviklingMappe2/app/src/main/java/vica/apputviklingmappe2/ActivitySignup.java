@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -55,10 +54,11 @@ public class ActivitySignup extends Activity {
     private void setupToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_logged_out);
+        toolbar.setTitle(getString(R.string.signup));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_FIRST_USER); finish();
+                finish();
             }
         });
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -71,19 +71,19 @@ public class ActivitySignup extends Activity {
     }
 
     private void setupListeners() {
-        OnTextChangedListener firstNameOnTextChangedListener = new OnTextChangedListener(firstName, null, firstNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.invalid_first_name), null);
+        OnTextChangedListener firstNameOnTextChangedListener = new OnTextChangedListener(firstName, null, firstNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_first_name), null);
         firstName.addTextChangedListener(firstNameOnTextChangedListener);
-        OnTextChangedListener lastNameOnTextChangedListener = new OnTextChangedListener(lastName, null, lastNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.invalid_last_name), null);
+        OnTextChangedListener lastNameOnTextChangedListener = new OnTextChangedListener(lastName, null, lastNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_last_name), null);
         lastName.addTextChangedListener(lastNameOnTextChangedListener);
-        OnTextChangedListener phoneOnTextChangedListener = new OnTextChangedListener(phone, null, phoneFeedback, "^[0-9]{8}$", getString(R.string.invalid_phone), null);
+        OnTextChangedListener phoneOnTextChangedListener = new OnTextChangedListener(phone, null, phoneFeedback, "^[0-9]{8}$", getString(R.string.error_phone), null);
         phone.addTextChangedListener(phoneOnTextChangedListener);
-        OnTextChangedListener emailOnTextChangedListener = new OnTextChangedListener(email, emailConfirm, emailConfirmFeedback, "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$", getString(R.string.invalid_email1), getString(R.string.invalid_email12));
+        OnTextChangedListener emailOnTextChangedListener = new OnTextChangedListener(email, emailConfirm, emailConfirmFeedback, "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$", getString(R.string.error_email1), getString(R.string.error_email2));
         email.addTextChangedListener(emailOnTextChangedListener);
-        OnTextChangedListener emailConfirmOnTextChangedListener = new OnTextChangedListener(emailConfirm, email, emailConfirmFeedback, "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$", getString(R.string.invalid_email1), getString(R.string.invalid_email12));
+        OnTextChangedListener emailConfirmOnTextChangedListener = new OnTextChangedListener(emailConfirm, email, emailConfirmFeedback, "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$", getString(R.string.error_email1), getString(R.string.error_email2));
         emailConfirm.addTextChangedListener(emailConfirmOnTextChangedListener);
-        OnTextChangedListener passwordOnTextChangedListener = new OnTextChangedListener(password, passwordConfirm, passwordFeedback, "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$", getString(R.string.invalid_password1), getString(R.string.invalid_password2));
+        OnTextChangedListener passwordOnTextChangedListener = new OnTextChangedListener(password, passwordConfirm, passwordFeedback, "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$", getString(R.string.error_password1), getString(R.string.error_password2));
         password.addTextChangedListener(passwordOnTextChangedListener);
-        OnTextChangedListener passwordConfirmOnTextChangedListener = new OnTextChangedListener(passwordConfirm, password, passwordFeedback, "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$", getString(R.string.invalid_password1), getString(R.string.invalid_password2));
+        OnTextChangedListener passwordConfirmOnTextChangedListener = new OnTextChangedListener(passwordConfirm, password, passwordFeedback, "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$", getString(R.string.error_password1), getString(R.string.error_password2));
         passwordConfirm.addTextChangedListener(passwordConfirmOnTextChangedListener);
     }
 
@@ -110,7 +110,7 @@ public class ActivitySignup extends Activity {
         confirm_quit.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        setResult(RESULT_CANCELED);
+                        setResult(RESULT_FIRST_USER);
                         finish();
                     }
                 });

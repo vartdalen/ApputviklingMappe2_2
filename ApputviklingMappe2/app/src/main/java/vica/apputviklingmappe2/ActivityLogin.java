@@ -2,11 +2,13 @@ package vica.apputviklingmappe2;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.util.Patterns;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +18,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 public class ActivityLogin extends Activity {
-    private static final String TAG = "ActivityLogin";
-    private static final int REQUEST_SIGNUP = 10;
+    private static final int REQUEST_LOGIN = 10;
 
     private EditText email;
     private EditText password;
@@ -31,31 +32,18 @@ public class ActivityLogin extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email = (EditText) findViewById(R.id.login_email);
-        password = (EditText) findViewById(R.id.login_password);
-        feedback = (TextView) findViewById(R.id.login_feedback);
-        buttonLogin = (Button) findViewById(R.id.login_button_login);
-        buttonSignup = (Button) findViewById(R.id.login_button_signup);
-
         setupToolbar();
-
-//        buttonLogin.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                login();
-//            }
-//        });
+        setupFields();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
+        if (requestCode == REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
-                feedback.setText(getString(R.string.confirmation_signup));
                 feedback.setTextColor(getColor(R.color.colorOk));
+                feedback.setText(getString(R.string.ok_signup));
             }
-            if (resultCode == RESULT_CANCELED) {
+            if (resultCode == RESULT_FIRST_USER) {
                 this.finish();
             }
         }
@@ -67,13 +55,9 @@ public class ActivityLogin extends Activity {
                 quit();
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
-    public void loadSignup(View v) {
-        Intent intent = new Intent(getApplicationContext(), ActivitySignup.class);
-        startActivityForResult(intent, REQUEST_SIGNUP);
-    }
+
 
     public void quit() {
         AlertDialog confirm_quit = new AlertDialog.Builder(ActivityLogin.this).create();
@@ -97,6 +81,7 @@ public class ActivityLogin extends Activity {
     private void setupToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_logged_out);
+        toolbar.setTitle(getString(R.string.login));
         toolbar.setNavigationIcon(null);
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -107,75 +92,55 @@ public class ActivityLogin extends Activity {
         });
     }
 
-//    public void login() {
-//        Log.d(TAG, "Login");
-//
-//        if (!validate()) {
-//            onLoginFailed();
-//            return;
-//        }
-//
-//        buttonLogin.setEnabled(false);
-//
-//        final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this,
-//                R.style.ThemeOverlay_AppCompat_Dark);
-//        progressDialog.setIndeterminate(true);
-//        progressDialog.setMessage("Authenticating...");
-//        progressDialog.show();
-//
-//        String email = inputEmail.getText().toString();
-//        String password = inputPassword.getText().toString();
-//
-//        // TODO: Implement your own authentication logic here.
-//
-//        new Handler().postDelayed(
-//                new Runnable() {
-//                    public void run() {
-//                        // On complete call either onLoginSuccess or onLoginFailed
-//                        onLoginSuccess();
-//                        // onLoginFailed();
-//                        progressDialog.dismiss();
-//                    }
-//                }, 3000);
-//    }
+    private void setupFields() {
+        email = (EditText) findViewById(R.id.login_email);
+        password = (EditText) findViewById(R.id.login_password);
+        feedback = (TextView) findViewById(R.id.login_feedback);
+        buttonLogin = (Button) findViewById(R.id.login_button_login);
+        buttonSignup = (Button) findViewById(R.id.login_button_signup);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
+        buttonSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityLogin.this, ActivitySignup.class);
+                startActivityForResult(intent, REQUEST_LOGIN);
+            }
+        });
+    }
 
+    public void login() {
+        final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this);
+        progressDialog.setMessage(getString(R.string.validating));
+        progressDialog.show();
+        // TODO: Implement your own authentication logic here.
 
+        new Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        if (!validate()) {
+                            feedback.setTextColor(getColor(R.color.colorError));
+                            feedback.setText(getString(R.string.error_login));
+                        } else {
+                            onLoginSuccess();
+                        }
+                        progressDialog.dismiss();
+                    }
+                }, 3000);
+    }
 
-
-//    @Override
-//    public void onBackPressed() {
-//        // disable going back to the MainActivity
-//        moveTaskToBack(true);
-//    }
-
-//    public void onLoginSuccess() {
-//        buttonLogin.setEnabled(true);
-//        finish();
-//    }
-
-//    public void onLoginFailed() {
-//        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-//        buttonLogin.setEnabled(true);
-//    }
+    public void onLoginSuccess() {
+        finish();
+        Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
+        startActivityForResult(intent, REQUEST_LOGIN);
+    }
 
     public boolean validate() {
         boolean valid = true;
-        String email = this.email.getText().toString();
-        String password = this.password.getText().toString();
-
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            this.email.setError("enter a valid email address");
-            valid = false;
-        } else {
-            this.email.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            this.password.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            this.password.setError(null);
-        }
 
         return valid;
     }

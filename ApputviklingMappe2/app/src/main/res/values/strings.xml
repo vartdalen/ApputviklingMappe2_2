@@ -9,6 +9,7 @@
     <string name="phone">Phone</string>
     <string name="user_level">User level</string>
 
+    <string name="main_menu">Main Menu</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="signup">Sign up</string>
@@ -23,15 +24,17 @@
     <!--Confirmation Messages-->
     <string name="confirmation_quit1">Really quit?</string>
     <string name="confirmation_quit2">Current game will not be saved</string>
-    <string name="confirmation_signup">Signup successful</string>
 
     <!--Validation Messages-->
-    <string name="invalid_first_name">Invalid first name</string>
-    <string name="invalid_last_name">Invalid last name</string>
-    <string name="invalid_phone">Must be 8 digits</string>
-    <string name="invalid_email1">Invalid email</string>
-    <string name="invalid_email12">Emails must match</string>
-    <string name="invalid_password1">Must be 6–20 characters, at least one number and at least one letter</string>
-    <string name="invalid_password2">Passwords must match</string>
+    <string name="validating">Validating…</string>
+    <string name="error_first_name">Invalid first name</string>
+    <string name="error_last_name">Invalid last name</string>
+    <string name="error_phone">Must be 8 digits</string>
+    <string name="error_email1">Invalid email</string>
+    <string name="error_email2">Emails must match</string>
+    <string name="error_password1">Must be 6–20 characters, at least one number and at least one letter</string>
+    <string name="error_password2">Passwords must match</string>
+    <string name="error_login">Invalid username or password</string>
+    <string name="ok_signup">Signup successful</string>
 
 </resources>
