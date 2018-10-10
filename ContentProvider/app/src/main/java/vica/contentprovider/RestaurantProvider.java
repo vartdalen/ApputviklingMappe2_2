@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,9 +31,8 @@ public class RestaurantProvider extends ContentProvider {
     private final static String TABLE_ORDERLINE = "Orderline";
 
     // Label table user columns
-    public final static String USER_ID = "idUser";
+    public final static String USER_ID = "Email";
     public final static String USER_FIRSTNAME = "Firstname";
-    public final static String USER_EMAIL = "Email";
     public final static String USER_LASTNAME = "Lastname";
     public final static String USER_PHONE = "Phonenumber";
     public final static String USER_PASSWORD = "Password";
@@ -57,10 +57,9 @@ public class RestaurantProvider extends ContentProvider {
         @Override
         public void onCreate(SQLiteDatabase db) {
             String sql = "CREATE TABLE " + TABLE_USER + "("
-                    + USER_ID + " INTEGER PRIMARY KEY,"
+                    + USER_ID + " TEXT PRIMARY KEY,"
                     + USER_FIRSTNAME + " TEXT,"
                     + USER_LASTNAME + " TEXT,"
-                    + USER_EMAIL + " TEXT,"
                     + USER_PHONE + " TEXT,"
                     + USER_PASSWORD + " TEXT);";
 
@@ -83,16 +82,44 @@ public class RestaurantProvider extends ContentProvider {
         return true;
     }
 
+//    @Override
+//    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+//        Cursor cur = null;
+//        if(uriMatcher.match(uri) == USER) {
+//            cur = db.query(TABLE_USER, projection, USER_ID + "=" + uri.getPathSegments().get(1), selectionArgs, null, null, sortOrder);
+//            return cur;
+//        } else{
+//            cur = db.query(TABLE_USER, null, null, null, null, null, null);
+//            return cur;
+//        }
+//    }
+
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Cursor cur = null;
-        if(uriMatcher.match(uri) == USER) {
-            cur = db.query(TABLE_USER, projection, USER_EMAIL + "=" + uri.getPathSegments().get(1), selectionArgs, null, null, sortOrder);
-            return cur;
-        } else{
-            cur = db.query(TABLE_USER, null, null, null, null, null, null);
-            return cur;
+    public Cursor query(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
+
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(TABLE_USER);
+
+        int uriType = uriMatcher.match(uri);
+
+        switch (uriType) {
+            case USER_WITH_ID:
+                queryBuilder.appendWhere(USER_ID + "="
+                        + uri.getLastPathSegment());
+                break;
+            case USER:
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI");
         }
+
+        Cursor cursor = queryBuilder.query(DBhelper.getReadableDatabase(),
+                projection, selection, selectionArgs, null, null,
+                sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(),
+                uri);
+        return cursor;
     }
 
     @Override
@@ -113,7 +140,7 @@ public class RestaurantProvider extends ContentProvider {
         db.insert(TABLE_USER, null, values);
         Cursor c = db.query(TABLE_USER, null, null, null, null, null, null);
         c.moveToLast();
-        long minid= c.getLong(0);
+        long minid = c.getLong(0);
         getContext().getContentResolver().notifyChange(uri, null);
 
         return ContentUris.withAppendedId(uri, minid);

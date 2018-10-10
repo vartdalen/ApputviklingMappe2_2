@@ -62,10 +62,6 @@ public class ActivityLogin extends Activity {
             if (resultCode == RESULT_CANCELED) {
                 this.finish();
             }
-        }else if(requestCode == REQUEST_TEST){
-            if (resultCode == RESULT_OK){
-                this.finish();
-            }
         }
     }
 
@@ -82,11 +78,6 @@ public class ActivityLogin extends Activity {
     public void loadSignup(View v) {
         Intent intent = new Intent(getApplicationContext(), ActivitySignup.class);
         startActivityForResult(intent, REQUEST_LOGIN);
-    }
-
-    public void loadDBTest() {
-        Intent intent = new Intent(getApplicationContext(), DBTest.class);
-        startActivityForResult(intent, REQUEST_TEST);
     }
 
     public void quit() {
@@ -168,7 +159,6 @@ public class ActivityLogin extends Activity {
         Log.d(TAG, "Login");
 
         if (validate()) {
-            loadDBTest();
         }else{
 //            onLoginFailed();
             return;

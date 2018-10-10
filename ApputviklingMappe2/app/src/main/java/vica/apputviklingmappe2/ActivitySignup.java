@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,7 +18,8 @@ import android.widget.Toast;
 public class ActivitySignup extends Activity {
 
     private Toolbar toolbar;
-    public static final Uri CONTENT_URI = Uri.parse("content://"+ R.string.PROVIDER + "/User");
+    public static String PROVIDER = "vica.contentprovider" ;
+    public static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER + "/User");
 
     private EditText firstname;
     private EditText lastname;
@@ -86,12 +88,17 @@ public class ActivitySignup extends Activity {
         confirm_quit.show();
     }
 
+    public void loadDBTest() {
+        Intent intent = new Intent(getApplicationContext(), DBTest.class);
+        startActivity(intent);
+    }
+
     public void signup_button(View v){
         ContentValues values = new ContentValues();
 
         values.put(getString(R.string.USER_FIRSTNAME), firstname.getText().toString());
         values.put(getString(R.string.USER_LASTNAME), lastname.getText().toString());
-        values.put(getString(R.string.USER_EMAIL), email.getText().toString());
+        values.put(getString(R.string.USER_ID), email.getText().toString());
         values.put(getString(R.string.USER_PHONE), phonenr.getText().toString());
         values.put(getString(R.string.USER_PASSWORD), password.getText().toString());
         
@@ -104,7 +111,7 @@ public class ActivitySignup extends Activity {
             password.setText("");
             passwordCf.setText("");
 
-            Toast.makeText(this, "User created!", Toast.LENGTH_SHORT).show();
+            loadDBTest();
         }else {
             Toast.makeText(this, "Registration failed!!", Toast.LENGTH_SHORT).show();
         }

@@ -28,28 +28,20 @@ public class DBTest extends Activity {
     // Retrieves data from database by using a stringbuilder and sends the string to the textview
     public void showall(View v) {
         Cursor cur = getContentResolver().query(CONTENT_URI, null, null, null, null);
-
-        String[] projection = {getString(R.string.USER_EMAIL)};
-        String selection = "Email = \"" + "admin@gmail.no" + "\"";
-        Cursor cur1 = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
-        StringBuilder stringBuilderQueryResult1 = new StringBuilder("");
 
-//        if(cur != null && cur.moveToFirst()) {
-          if(cur1 != null && cur1.moveToFirst()) {
+        if(cur != null && cur.moveToFirst()) {
             do {
-//                stringBuilderQueryResult.append(
-//                        (cur.getString(1)) + " " +
-//                        (cur.getString(2)) + " " +
-//                        (cur.getString(3)) + " " +
-//                        (cur.getString(4)) + " " + "\r\n");
-                stringBuilderQueryResult1.append(
-                        (cur1.getString(1))
-                );
+                stringBuilderQueryResult.append(
+                        (cur.getString(0)) + " " + // id (email)
+                        (cur.getString(1)) + " " + // firstname
+                        (cur.getString(2)) + " " + // lastname
+                        (cur.getString(3)) + " " + // phone
+                        (cur.getString(4)) + " " + "\r\n"); // password
             }
-            while(cur1.moveToNext());
-            cur1.close();
-            view_showall.setText(stringBuilderQueryResult1);
+            while(cur.moveToNext());
+            cur.close();
+            view_showall.setText(stringBuilderQueryResult);
         }
         else{
             Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();
