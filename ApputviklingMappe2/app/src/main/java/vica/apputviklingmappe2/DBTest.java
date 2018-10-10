@@ -48,10 +48,28 @@ public class DBTest extends Activity {
 //        }
 //    }
 
-    public void showall(View v) {
-        String[] projection = {getString(R.string.USER_ID)}; // table columns
+//    public void showall(View v) {
+//        String[] projection = {getString(R.string.USER_ID)}; // table columns
+//
+//        String selection = "Email = 'admin@live.no'";
+//
+//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+//
+//        if (cursor.moveToFirst()) {
+//            cursor.moveToFirst();
+//            stringBuilderQueryResult.append(cursor.getString(0));
+//            view_showall.setText(stringBuilderQueryResult);
+//            cursor.close();
+//        } else {
+//            Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-        String selection = "Email = 'admin@live.no'";
+    public void showall(View v) {
+        String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
+
+        String selection = "Password = '123123'";
 
         Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");

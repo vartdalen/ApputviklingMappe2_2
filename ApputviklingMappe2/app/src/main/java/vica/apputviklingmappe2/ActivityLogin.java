@@ -28,8 +28,6 @@ public class ActivityLogin extends Activity {
     private Button loginButtonSignup;
     private Toolbar toolbar;
 
-    DB db = new DB();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +40,13 @@ public class ActivityLogin extends Activity {
 
         setupToolbar();
 
-        loginButtonLogin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+//        loginButtonLogin.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                login();
+//            }
+//        });
     }
 
     @Override
@@ -129,38 +127,62 @@ public class ActivityLogin extends Activity {
 //        buttonLogin.setEnabled(true);
 //    }
 
+    public String getEmail(String email) {
+        String[] projection = {getString(R.string.USER_ID)}; // table columns
+
+        String selection = "Email = "+"'"+email+"'";
+
+        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            stringBuilderQueryResult.append(cursor.getString(0));
+            cursor.close();
+        } else {
+            Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
+        }
+        return stringBuilderQueryResult.toString();
+    }
+
+    public String getPassword(String password) {
+        String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
+
+        String selection = "Password = "+"'"+password+"'";
+
+        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            stringBuilderQueryResult.append(cursor.getString(4));
+            cursor.close();
+        } else {
+            Toast.makeText(this, "Password not found!", Toast.LENGTH_SHORT).show();
+        }
+        return stringBuilderQueryResult.toString();
+    }
+
     public boolean validate() {
-        boolean valid = true;
-        // Input fra user i activity_login
+        boolean valid;
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
 
-        if (db.getEmail(email) == null) {
-            loginEmail.setError("Enter a valid email address!");
+        if (getEmail(email) == null || getPassword(password) == null) {
+            loginEmail.setError("Wrong password or email!");
             valid = false;
-        } else if(email == db.getEmail(email) && password == db.getPassword(password)) {
-            Toast.makeText(this, "Login successfully!", Toast.LENGTH_SHORT).show();
+        } else {
+            valid = true;
         }
-
-//        if (password.isEmpty()) {
-//            loginPassword.setError("Enter a valid password");
-//            valid = false;
-//        } else {
-//            loginPassword.setError(null);
-//        }
-
         return valid;
     }
 
-    public void login() {
-        Log.d(TAG, "Login");
-
+    public void login(View v) {
         if (validate()) {
             Intent intent = new Intent(getApplicationContext(), DBTest.class);
             startActivity(intent);
         }else{
-//            onLoginFailed();
-            return;
+            Toast.makeText(this, "Wrong password or email!", Toast.LENGTH_SHORT).show();
         }
 
 //        buttonLogin.setEnabled(false);

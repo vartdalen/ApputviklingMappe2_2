@@ -95,9 +95,7 @@ public class RestaurantProvider extends ContentProvider {
 //    }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
-                        String[] selectionArgs, String sortOrder) {
-
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(TABLE_USER);
 
@@ -105,8 +103,7 @@ public class RestaurantProvider extends ContentProvider {
 
         switch (uriType) {
             case USER_WITH_ID:
-                queryBuilder.appendWhere(USER_ID + "="
-                        + uri.getLastPathSegment());
+                queryBuilder.appendWhere(USER_ID + "=" + uri.getLastPathSegment());
                 break;
             case USER:
                 break;
@@ -114,11 +111,8 @@ public class RestaurantProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI");
         }
 
-        Cursor cursor = queryBuilder.query(DBhelper.getReadableDatabase(),
-                projection, selection, null, null, null,
-                sortOrder);
-        cursor.setNotificationUri(getContext().getContentResolver(),
-                uri);
+        Cursor cursor = queryBuilder.query(DBhelper.getReadableDatabase(), projection, selection, null, null, null, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
