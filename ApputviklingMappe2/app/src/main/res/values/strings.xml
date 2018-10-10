@@ -2,12 +2,12 @@
     <string name="app_name">ApputviklingMappe2</string>
 
     <!-- Registration -->
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="phone">Phone</string>
-    <string name="user_level">User Level</string>
+    <string name="user_level">User level</string>
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>
@@ -23,5 +23,14 @@
     <!--Confirmation Messages-->
     <string name="confirmation_quit1">Really quit?</string>
     <string name="confirmation_quit2">Current game will not be saved.</string>
+
+    <!--Validation Messages-->
+    <string name="invalid_first_name">Invalid first name</string>
+    <string name="invalid_last_name">Invalid last name</string>
+    <string name="invalid_phone">Must be 8 digits</string>
+    <string name="invalid_email1">Invalid email</string>
+    <string name="invalid_email12">Emails must match</string>
+    <string name="invalid_password1">Must be 6-20 characters, at least one number and at least one letter</string>
+    <string name="invalid_password2">Passwords must match</string>
 
 </resources>
