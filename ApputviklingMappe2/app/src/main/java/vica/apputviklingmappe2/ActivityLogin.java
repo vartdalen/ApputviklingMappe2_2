@@ -12,16 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 public class ActivityLogin extends Activity {
     private static final String TAG = "ActivityLogin";
     private static final int REQUEST_SIGNUP = 10;
 
-    private EditText loginEmail;
-    private EditText loginPassword;
-    private Button loginButtonLogin;
-    private Button loginButtonSignup;
+    private EditText email;
+    private EditText password;
+    private TextView feedback;
+    private Button buttonLogin;
+    private Button buttonSignup;
     private Toolbar toolbar;
 
     @Override
@@ -29,14 +31,15 @@ public class ActivityLogin extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginEmail = (EditText) findViewById(R.id.login_email);
-        loginPassword = (EditText) findViewById(R.id.login_password);
-        loginButtonLogin = (Button) findViewById(R.id.login_button_login);
-        loginButtonSignup = (Button) findViewById(R.id.login_button_signup);
+        email = (EditText) findViewById(R.id.login_email);
+        password = (EditText) findViewById(R.id.login_password);
+        feedback = (TextView) findViewById(R.id.login_feedback);
+        buttonLogin = (Button) findViewById(R.id.login_button_login);
+        buttonSignup = (Button) findViewById(R.id.login_button_signup);
 
         setupToolbar();
 
-//        loginButtonLogin.setOnClickListener(new View.OnClickListener() {
+//        buttonLogin.setOnClickListener(new View.OnClickListener() {
 //
 //            @Override
 //            public void onClick(View v) {
@@ -49,10 +52,8 @@ public class ActivityLogin extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
+                feedback.setText(getString(R.string.confirmation_signup));
+                feedback.setTextColor(getColor(R.color.colorOk));
             }
             if (resultCode == RESULT_CANCELED) {
                 this.finish();
@@ -159,21 +160,21 @@ public class ActivityLogin extends Activity {
 
     public boolean validate() {
         boolean valid = true;
-        String email = loginEmail.getText().toString();
-        String password = loginPassword.getText().toString();
+        String email = this.email.getText().toString();
+        String password = this.password.getText().toString();
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            loginEmail.setError("enter a valid email address");
+            this.email.setError("enter a valid email address");
             valid = false;
         } else {
-            loginEmail.setError(null);
+            this.email.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            loginPassword.setError("between 4 and 10 alphanumeric characters");
+            this.password.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
-            loginPassword.setError(null);
+            this.password.setError(null);
         }
 
         return valid;

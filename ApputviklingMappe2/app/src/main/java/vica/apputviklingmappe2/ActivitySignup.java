@@ -123,7 +123,7 @@ public class ActivitySignup extends Activity {
         confirm_quit.show();
     }
 
-    public void signup_button(View v){
+    public void signup(View v){
         ContentValues values = new ContentValues();
 
         values.put(USER_FIRSTNAME, firstName.getText().toString());
@@ -132,9 +132,20 @@ public class ActivitySignup extends Activity {
         values.put(USER_PHONE, phone.getText().toString());
         values.put(USER_PASSWORD, password.getText().toString());
 
-        if((getContentResolver().insert( CONTENT_URI, values) != null)){
+        System.out.println(password.getText().length());
+        System.out.println(passwordConfirm.getText().length());
 
-        } else {
+        if(firstName.getText().length() > 0 && firstNameFeedback.getText().length() == 0
+                && lastName.getText().length() > 0 && lastNameFeedback.getText().length() == 0
+                && phone.getText().length() > 0 && phoneFeedback.getText().length() == 0
+                && email.getText().length() > 0 && emailConfirmFeedback.getText().length() == 0
+                && password.getText().length() > 0 && passwordFeedback.getText().length() == 0 ) {
+
+            if((getContentResolver().insert( CONTENT_URI, values) != null)){
+                setResult(RESULT_OK);
+                this.finish();
+            }
         }
+
     }
 }
