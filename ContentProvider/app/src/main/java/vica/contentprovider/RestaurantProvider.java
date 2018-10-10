@@ -115,7 +115,7 @@ public class RestaurantProvider extends ContentProvider {
         }
 
         Cursor cursor = queryBuilder.query(DBhelper.getReadableDatabase(),
-                projection, selection, selectionArgs, null, null,
+                projection, selection, null, null, null,
                 sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(),
                 uri);

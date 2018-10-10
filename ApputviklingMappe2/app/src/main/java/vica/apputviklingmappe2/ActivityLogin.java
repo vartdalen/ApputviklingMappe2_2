@@ -21,13 +21,14 @@ import static vica.apputviklingmappe2.ActivitySignup.CONTENT_URI;
 public class ActivityLogin extends Activity {
     private static final String TAG = "ActivityLogin";
     private static final int REQUEST_LOGIN = 10;
-    private static final int REQUEST_TEST = 20;
 
     private EditText loginEmail;
     private EditText loginPassword;
     private Button loginButtonLogin;
     private Button loginButtonSignup;
     private Toolbar toolbar;
+
+    DB db = new DB();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,14 +135,10 @@ public class ActivityLogin extends Activity {
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
 
-        // Henter data fra databasen for å sammenligne
-        Cursor curEmail = getContentResolver().query(CONTENT_URI, new String[]{email}, null, null, null);
-        Cursor curPassword = getContentResolver().query(CONTENT_URI, new String[]{password}, null, null, null);
-
-        if (curEmail == null) {
+        if (db.getEmail(email) == null) {
             loginEmail.setError("Enter a valid email address!");
             valid = false;
-        } else if(email == curEmail.toString() && password == curPassword.toString()) {
+        } else if(email == db.getEmail(email) && password == db.getPassword(password)) {
             Toast.makeText(this, "Login successfully!", Toast.LENGTH_SHORT).show();
         }
 
@@ -159,6 +156,8 @@ public class ActivityLogin extends Activity {
         Log.d(TAG, "Login");
 
         if (validate()) {
+            Intent intent = new Intent(getApplicationContext(), DBTest.class);
+            startActivity(intent);
         }else{
 //            onLoginFailed();
             return;
