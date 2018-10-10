@@ -45,8 +45,8 @@ public class RestaurantProvider extends ContentProvider {
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER, "User", USER_WITH_ID);
-        uriMatcher.addURI(PROVIDER, "User/#", USER);
+        uriMatcher.addURI(PROVIDER, "User", USER);
+        uriMatcher.addURI(PROVIDER, "User/#", USER_WITH_ID);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -87,7 +87,7 @@ public class RestaurantProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Cursor cur = null;
         if(uriMatcher.match(uri) == USER) {
-            cur = db.query(TABLE_USER, projection, USER_ID + "=" + uri.getPathSegments().get(1), selectionArgs, null, null, sortOrder);
+            cur = db.query(TABLE_USER, projection, USER_EMAIL + "=" + uri.getPathSegments().get(1), selectionArgs, null, null, sortOrder);
             return cur;
         } else{
             cur = db.query(TABLE_USER, null, null, null, null, null, null);
@@ -99,11 +99,11 @@ public class RestaurantProvider extends ContentProvider {
     public String getType(Uri uri) {
         switch(uriMatcher.match(uri)) {
             case USER_WITH_ID:
-                return"vnd.android.cursor.dir/vnd.contentprovider.User";
+                return"vnd.android.cursor.dir/vnd.example.User";
             case USER:
-                return"vnd.android.cursor.item/vnd.contentprovider.User";
+                return"vnd.android.cursor.item/vnd.example.User";
             default:
-                throw new IllegalArgumentException("Ugyldig URI" + uri);
+                throw new IllegalArgumentException("Unsupported URI" + uri);
         }
     }
 
@@ -115,6 +115,7 @@ public class RestaurantProvider extends ContentProvider {
         c.moveToLast();
         long minid= c.getLong(0);
         getContext().getContentResolver().notifyChange(uri, null);
+
         return ContentUris.withAppendedId(uri, minid);
     }
 

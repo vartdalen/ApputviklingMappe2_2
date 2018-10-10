@@ -3,20 +3,25 @@ package vica.apputviklingmappe2;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.util.Patterns;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.Toolbar;
+
+import static vica.apputviklingmappe2.ActivitySignup.CONTENT_URI;
 
 public class ActivityLogin extends Activity {
     private static final String TAG = "ActivityLogin";
-    private static final int REQUEST_SIGNUP = 10;
+    private static final int REQUEST_LOGIN = 10;
+    private static final int REQUEST_TEST = 20;
 
     private EditText loginEmail;
     private EditText loginPassword;
@@ -36,18 +41,18 @@ public class ActivityLogin extends Activity {
 
         setupToolbar();
 
-//        loginButtonLogin.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                login();
-//            }
-//        });
+        loginButtonLogin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
+        if (requestCode == REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
 
                 // TODO: Implement successful signup logic here
@@ -55,6 +60,10 @@ public class ActivityLogin extends Activity {
                 this.finish();
             }
             if (resultCode == RESULT_CANCELED) {
+                this.finish();
+            }
+        }else if(requestCode == REQUEST_TEST){
+            if (resultCode == RESULT_OK){
                 this.finish();
             }
         }
@@ -69,9 +78,15 @@ public class ActivityLogin extends Activity {
 
         return super.onKeyDown(keyCode, event);
     }
+
     public void loadSignup(View v) {
         Intent intent = new Intent(getApplicationContext(), ActivitySignup.class);
-        startActivityForResult(intent, REQUEST_SIGNUP);
+        startActivityForResult(intent, REQUEST_LOGIN);
+    }
+
+    public void loadDBTest() {
+        Intent intent = new Intent(getApplicationContext(), DBTest.class);
+        startActivityForResult(intent, REQUEST_TEST);
     }
 
     public void quit() {
@@ -106,41 +121,6 @@ public class ActivityLogin extends Activity {
         });
     }
 
-//    public void login() {
-//        Log.d(TAG, "Login");
-//
-//        if (!validate()) {
-//            onLoginFailed();
-//            return;
-//        }
-//
-//        buttonLogin.setEnabled(false);
-//
-//        final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this,
-//                R.style.ThemeOverlay_AppCompat_Dark);
-//        progressDialog.setIndeterminate(true);
-//        progressDialog.setMessage("Authenticating...");
-//        progressDialog.show();
-//
-//        String email = inputEmail.getText().toString();
-//        String password = inputPassword.getText().toString();
-//
-//        // TODO: Implement your own authentication logic here.
-//
-//        new Handler().postDelayed(
-//                new Runnable() {
-//                    public void run() {
-//                        // On complete call either onLoginSuccess or onLoginFailed
-//                        onLoginSuccess();
-//                        // onLoginFailed();
-//                        progressDialog.dismiss();
-//                    }
-//                }, 3000);
-//    }
-
-
-
-
 //    @Override
 //    public void onBackPressed() {
 //        // disable going back to the MainActivity
@@ -159,23 +139,59 @@ public class ActivityLogin extends Activity {
 
     public boolean validate() {
         boolean valid = true;
+        // Input fra user i activity_login
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
 
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            loginEmail.setError("enter a valid email address");
+        // Henter data fra databasen for å sammenligne
+        Cursor curEmail = getContentResolver().query(CONTENT_URI, new String[]{email}, null, null, null);
+        Cursor curPassword = getContentResolver().query(CONTENT_URI, new String[]{password}, null, null, null);
+
+        if (curEmail == null) {
+            loginEmail.setError("Enter a valid email address!");
             valid = false;
-        } else {
-            loginEmail.setError(null);
+        } else if(email == curEmail.toString() && password == curPassword.toString()) {
+            Toast.makeText(this, "Login successfully!", Toast.LENGTH_SHORT).show();
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            loginPassword.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            loginPassword.setError(null);
-        }
+//        if (password.isEmpty()) {
+//            loginPassword.setError("Enter a valid password");
+//            valid = false;
+//        } else {
+//            loginPassword.setError(null);
+//        }
 
         return valid;
+    }
+
+    public void login() {
+        Log.d(TAG, "Login");
+
+        if (validate()) {
+            loadDBTest();
+        }else{
+//            onLoginFailed();
+            return;
+        }
+
+//        buttonLogin.setEnabled(false);
+
+//        final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this,
+//                R.style.ThemeOverlay_AppCompat_Dark);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Authenticating...");
+//        progressDialog.show();
+
+        // TODO: Implement your own authentication logic here.
+
+//        new Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either onLoginSuccess or onLoginFailed
+//                        onLoginSuccess();
+//                        // onLoginFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000);
     }
 }

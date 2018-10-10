@@ -17,16 +17,7 @@ import android.widget.Toast;
 public class ActivitySignup extends Activity {
 
     private Toolbar toolbar;
-
-    public final static String PROVIDER = "vica.contentprovider";
-    public static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER + "/User");
-
-    // Label table user columns
-    public final static String USER_FIRSTNAME = "Firstname";
-    public final static String USER_LASTNAME = "Lastname";
-    public final static String USER_EMAIL = "Email";
-    public final static String USER_PHONE = "Phonenumber";
-    public final static String USER_PASSWORD = "Password";
+    public static final Uri CONTENT_URI = Uri.parse("content://"+ R.string.PROVIDER + "/User");
 
     private EditText firstname;
     private EditText lastname;
@@ -98,12 +89,12 @@ public class ActivitySignup extends Activity {
     public void signup_button(View v){
         ContentValues values = new ContentValues();
 
-        values.put(USER_FIRSTNAME, firstname.getText().toString());
-        values.put(USER_LASTNAME, lastname.getText().toString());
-        values.put(USER_EMAIL, email.getText().toString());
-        values.put(USER_PHONE, phonenr.getText().toString());
-        values.put(USER_PASSWORD, password.getText().toString());
-
+        values.put(getString(R.string.USER_FIRSTNAME), firstname.getText().toString());
+        values.put(getString(R.string.USER_LASTNAME), lastname.getText().toString());
+        values.put(getString(R.string.USER_EMAIL), email.getText().toString());
+        values.put(getString(R.string.USER_PHONE), phonenr.getText().toString());
+        values.put(getString(R.string.USER_PASSWORD), password.getText().toString());
+        
         if((getContentResolver().insert( CONTENT_URI, values) != null)){
             firstname.setText("");
             lastname.setText("");

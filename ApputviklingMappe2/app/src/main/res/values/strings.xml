@@ -24,4 +24,12 @@
     <string name="confirmation_quit1">Really quit?</string>
     <string name="confirmation_quit2">Current game will not be saved.</string>
 
+    <!--Database Strings-->
+    <string name="PROVIDER">vica.contentprovider</string>
+    <string name="USER_FIRSTNAME">Firstname</string>
+    <string name="USER_LASTNAME">Lastname</string>
+    <string name="USER_EMAIL">Email</string>
+    <string name="USER_PHONE">Phonenumber</string>
+    <string name="USER_PASSWORD">Password</string>
+
 </resources>

@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
         values.put("Lastname", "Admin");
         values.put("Email", "admin@gmail.no");
         values.put("Phonenumber", "46842543");
+        values.put("Password", "123123");
 
         getContentResolver().insert(CONTENT_URI, values);
     }
