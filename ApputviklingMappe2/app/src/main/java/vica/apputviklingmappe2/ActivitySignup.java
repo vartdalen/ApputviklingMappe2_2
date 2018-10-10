@@ -33,7 +33,8 @@ public class ActivitySignup extends Activity {
     private EditText email;
     private EditText phonenr;
     private EditText password;
-
+    private EditText emailCf;
+    private EditText passwordCf;
     private Button signup_button;
 
     @Override
@@ -41,15 +42,19 @@ public class ActivitySignup extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        firstname = (EditText)findViewById(R.id.signup_first_name);
-//        lastname = (EditText)findViewById(R.id.lastname);
-//        email = (EditText)findViewById(R.id.signup_email);
-//        phonenr = (EditText)findViewById(R.id.phonenr);
-//        password  = (EditText)findViewById(R.id.signup_password);
-
-        signup_button = (Button)findViewById(R.id.signup_button);
-
+        setupSignUp();
         setupToolbar();
+    }
+
+    private void setupSignUp(){
+        firstname = (EditText)findViewById(R.id.signup_first_name);
+        lastname = (EditText)findViewById(R.id.signup_last_name);
+        email = (EditText)findViewById(R.id.signup_email);
+        emailCf = (EditText)findViewById(R.id.signup_confirm_email);
+        phonenr = (EditText)findViewById(R.id.signup_phone);
+        password  = (EditText)findViewById(R.id.signup_password);
+        passwordCf = (EditText)findViewById(R.id.signup_confirm_password);
+        signup_button = (Button)findViewById(R.id.signup_button);
     }
 
     private void setupToolbar() {
@@ -93,31 +98,24 @@ public class ActivitySignup extends Activity {
     public void signup_button(View v){
         ContentValues values = new ContentValues();
 
-        String firstnameV = firstname.getText().toString();
-//        String lastnameV = lastname.getText().toString();
-//        String emailV = email.getText().toString();
-//        String addressV = address.getText().toString();
-//        String phonenrV = phonenr.getText().toString();
-//        String passwordV = password.getText().toString();
-//        String zipcodeV = zipcode.getText().toString();
-//        String zipareaV = ziparea.getText().toString();
+        values.put(USER_FIRSTNAME, firstname.getText().toString());
+        values.put(USER_LASTNAME, lastname.getText().toString());
+        values.put(USER_EMAIL, email.getText().toString());
+        values.put(USER_PHONE, phonenr.getText().toString());
+        values.put(USER_PASSWORD, password.getText().toString());
 
-        values.put(USER_FIRSTNAME, firstnameV);
-//        values.put(USER_LASTNAME, lastnameV);
-//        values.put(USER_EMAIL, emailV);
-//        values.put(USER_ADDRESS, addressV);
-//        values.put(USER_PHONE, phonenrV);
-//        values.put(USER_PASSWORD, passwordV);
-//        values.put(ZIP_CODE, zipcodeV);
-//        values.put(AREA, zipareaV);
+        if((getContentResolver().insert( CONTENT_URI, values) != null)){
+            firstname.setText("");
+            lastname.setText("");
+            email.setText("");
+            emailCf.setText("");
+            phonenr.setText("");
+            password.setText("");
+            passwordCf.setText("");
 
-        Uri uri = getContentResolver().insert( CONTENT_URI, values);
-        firstname.setText("");
-//        lastname.setText("");
-//        email.setText("");
-//        phonenr.setText("");
-//        password.setText("");
-
-        Toast.makeText(this, "Registered!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User created!", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Registration failed!!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
