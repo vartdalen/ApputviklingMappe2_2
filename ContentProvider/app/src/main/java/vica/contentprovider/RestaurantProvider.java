@@ -19,8 +19,8 @@ public class RestaurantProvider extends ContentProvider {
     public final static String PROVIDER = "vica.contentprovider";
     private final static String DB_NAME = "vica.db";
     private final static int DB_VERSION = 1;
-    private static final int BOK = 1;
-    private static final int MBOK = 2;
+    private static final int USER = 1;
+    private static final int USER_WITH_ID = 2;
 
     // Label table name
     private final static String TABLE_USER = "User";
@@ -28,16 +28,14 @@ public class RestaurantProvider extends ContentProvider {
     private final static String TABLE_RESTAURANT = "Restaurant";
     private final static String TABLE_ORDER = "Order";
     private final static String TABLE_ORDERLINE = "Orderline";
-    private final static String TABLE_MAIL = "Mail";
 
     // Label table user columns
     public final static String USER_ID = "idUser";
     public final static String USER_FIRSTNAME = "Firstname";
+    public final static String USER_EMAIL = "Email";
     public final static String USER_LASTNAME = "Lastname";
-    public final static String USER_ADDRESS = "Address";
     public final static String USER_PHONE = "Phonenumber";
-    public final static String ZIP_CODE = "Zip_Code";
-    public final static String AREA = "Zip_Area";
+    public final static String USER_PASSWORD = "Password";
 
     RestaurantProvider.DatabaseHelper DBhelper;
     SQLiteDatabase db;
@@ -47,8 +45,8 @@ public class RestaurantProvider extends ContentProvider {
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER, "User", MBOK);
-        uriMatcher.addURI(PROVIDER, "User/#", BOK);
+        uriMatcher.addURI(PROVIDER, "User", USER_WITH_ID);
+        uriMatcher.addURI(PROVIDER, "User/#", USER);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -62,10 +60,9 @@ public class RestaurantProvider extends ContentProvider {
                     + USER_ID + " INTEGER PRIMARY KEY,"
                     + USER_FIRSTNAME + " TEXT,"
                     + USER_LASTNAME + " TEXT,"
-                    + USER_ADDRESS + " TEXT,"
+                    + USER_EMAIL + " TEXT,"
                     + USER_PHONE + " TEXT,"
-                    + ZIP_CODE + " TEXT,"
-                    + AREA + " TEXT );";
+                    + USER_PASSWORD + " TEXT);";
 
             Log.d("DatabaseHelper", " oncreated sql" + sql);
             db.execSQL(sql);
@@ -86,19 +83,25 @@ public class RestaurantProvider extends ContentProvider {
         return true;
     }
 
-    @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        Cursor cur = null;
+        if(uriMatcher.match(uri) == USER) {
+            cur = db.query(TABLE_USER, projection, USER_ID + "=" + uri.getPathSegments().get(1), selectionArgs, null, null, sortOrder);
+            return cur;
+        } else{
+            cur = db.query(TABLE_USER, null, null, null, null, null, null);
+            return cur;
+        }
     }
 
     @Override
     public String getType(Uri uri) {
         switch(uriMatcher.match(uri)) {
-            case MBOK:
-                return"vnd.android.cursor.dir/vnd.example.bok";
-            case BOK:
-                return"vnd.android.cursor.item/vnd.example.bok";
+            case USER_WITH_ID:
+                return"vnd.android.cursor.dir/vnd.contentprovider.User";
+            case USER:
+                return"vnd.android.cursor.item/vnd.contentprovider.User";
             default:
                 throw new IllegalArgumentException("Ugyldig URI" + uri);
         }
@@ -110,7 +113,8 @@ public class RestaurantProvider extends ContentProvider {
         db.insert(TABLE_USER, null, values);
         Cursor c = db.query(TABLE_USER, null, null, null, null, null, null);
         c.moveToLast();
-        long minid= c.getLong(0);getContext().getContentResolver().notifyChange(uri, null);
+        long minid= c.getLong(0);
+        getContext().getContentResolver().notifyChange(uri, null);
         return ContentUris.withAppendedId(uri, minid);
     }
 
