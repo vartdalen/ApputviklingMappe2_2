@@ -157,9 +157,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/signup_password_feedback"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/button_primary"
                 android:padding="12dp"
                 android:text="@string/signup"
+                android:background="@drawable/button_primary"
                 android:theme="@style/ButtonTheme"
                 android:onClick="signup"/>
         </RelativeLayout>

@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">ApputviklingMappe2</string>
 
-    <!-- Registration -->
+    <!-- User info -->
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="phone">Phone</string>
     <string name="user_level">User level</string>
+    <string name="confirm_email">Confirm email</string>
+    <string name="confirm_password">Confirm pw</string>
 
+    <!-- Navigation -->
     <string name="main_menu">Main Menu</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
@@ -17,9 +20,8 @@
     <string name ="quit">Quit</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
-    <string name="confirm_email">Confirm email</string>
-    <string name="confirm_password">Confirm pw</string>
+    <string name="book_table">Book a table</string>
+    <string name="add_friend">Add a friend</string>
 
     <!--Confirmation Messages-->
     <string name="confirmation_quit1">Really quit?</string>

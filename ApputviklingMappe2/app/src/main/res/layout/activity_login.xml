@@ -57,20 +57,20 @@
                 android:id="@+id/login_button_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/ButtonTheme"
                 android:layout_marginTop="34dp"
                 android:text="@string/login"
-                android:background="@drawable/button_primary"/>
+                android:background="@drawable/button_primary"
+                android:theme="@style/ButtonTheme"/>
 
             <Button
                 android:id="@+id/login_button_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/ButtonTheme"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/create_account"
-                android:background="@drawable/button_secondary">
+                android:background="@drawable/button_secondary"
+                android:theme="@style/ButtonTheme">
             </Button>
         </LinearLayout>
     </ScrollView>

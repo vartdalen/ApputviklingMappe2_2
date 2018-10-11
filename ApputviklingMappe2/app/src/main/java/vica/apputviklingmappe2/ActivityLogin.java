@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +26,13 @@ public class ActivityLogin extends Activity {
     private TextView feedback;
     private Button buttonLogin;
     private Button buttonSignup;
+
     private Toolbar toolbar;
+    private SharedPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -134,6 +138,7 @@ public class ActivityLogin extends Activity {
     }
 
     public void onLoginSuccess() {
+        preferences.edit().putInt(getString(R.string.user_level), 1).apply();
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
         startActivityForResult(intent, REQUEST_LOGIN);
