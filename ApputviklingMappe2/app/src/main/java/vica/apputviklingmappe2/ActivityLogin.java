@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
-import static vica.apputviklingmappe2.ActivitySignup.CONTENT_URI;
+import static vica.apputviklingmappe2.DB.CONTENT_URI;
 
 public class ActivityLogin extends Activity {
     private static final int REQUEST_LOGIN = 10;
@@ -178,7 +178,8 @@ public class ActivityLogin extends Activity {
     public boolean validate() {
         boolean valid;
 
-        if (getEmail(email.getText().toString()).equals(email.getText().toString()) && getPassword(password.getText().toString()).equals(password.getText().toString())) {
+        if (getEmail(email.getText().toString()).equals(email.getText().toString()) && email.getText().toString().length() > 0
+                && getPassword(password.getText().toString()).equals(password.getText().toString()) && password.getText().toString().length() > 0) {
             valid = true;
             return valid;
         } else {

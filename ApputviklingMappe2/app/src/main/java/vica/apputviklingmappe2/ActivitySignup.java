@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,11 +15,11 @@ import android.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
 
+import static vica.apputviklingmappe2.DB.CONTENT_URI;
+
 public class ActivitySignup extends Activity {
 
     private Toolbar toolbar;
-    public static String PROVIDER = "vica.contentprovider" ;
-    public static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER + "/User");
 
     private EditText firstName;
     private TextView firstNameFeedback;
@@ -51,7 +52,7 @@ public class ActivitySignup extends Activity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_FIRST_USER); finish();
+                finish();
             }
         });
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -116,6 +117,20 @@ public class ActivitySignup extends Activity {
         confirm_quit.show();
     }
 
+    public String getEmail(String email) {
+        String[] projection = {getString(R.string.USER_ID)}; // table columns
+        String selection = getString(R.string.USER_ID) + "="+"'"+email+"'";
+
+        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            stringBuilderQueryResult.append(cursor.getString(0));
+            cursor.close();
+        }
+        return stringBuilderQueryResult.toString();
+    }
+
     public void signup(View v){
         ContentValues values = new ContentValues();
 
@@ -134,9 +149,13 @@ public class ActivitySignup extends Activity {
                 && email.getText().length() > 0 && emailConfirmFeedback.getText().length() == 0
                 && password.getText().length() > 0 && passwordFeedback.getText().length() == 0 ) {
 
-            if((getContentResolver().insert( CONTENT_URI, values) != null)){
-                setResult(RESULT_OK);
-                this.finish();
+            if(getEmail(email.getText().toString()).equals(email.getText().toString())){
+                    emailConfirmFeedback.setText("Email already used");
+            }else{
+                if((getContentResolver().insert( CONTENT_URI, values) != null)){
+                    setResult(RESULT_OK);
+                    this.finish();
+                }
             }
         }
     }
