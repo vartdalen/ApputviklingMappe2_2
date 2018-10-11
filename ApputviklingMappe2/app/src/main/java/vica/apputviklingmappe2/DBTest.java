@@ -3,6 +3,7 @@ package vica.apputviklingmappe2;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -78,6 +79,8 @@ public class DBTest extends Activity {
             cursor.moveToFirst();
             stringBuilderQueryResult.append(cursor.getString(0));
             view_showall.setText(stringBuilderQueryResult);
+            Log.d("PASSORD: ", stringBuilderQueryResult.toString());
+
             cursor.close();
         } else {
             Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();

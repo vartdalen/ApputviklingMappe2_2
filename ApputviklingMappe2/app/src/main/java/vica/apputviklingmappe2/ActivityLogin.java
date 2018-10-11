@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -27,6 +28,8 @@ public class ActivityLogin extends Activity {
     private Button loginButtonLogin;
     private Button loginButtonSignup;
     private Toolbar toolbar;
+
+    SQLiteDatabase db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,9 +133,10 @@ public class ActivityLogin extends Activity {
     public String getEmail(String email) {
         String[] projection = {getString(R.string.USER_ID)}; // table columns
 
-        String selection = "Email = "+"'"+email+"'";
+        String selection = getString(R.string.USER_ID) + "="+"'"+email+"'";
 
         Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        Cursor cursor = db.rawQuery("SELECT Email FROM User WHERE Email ="+"'"+email+"'",null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
 
         if (cursor.moveToFirst()) {
@@ -140,7 +144,7 @@ public class ActivityLogin extends Activity {
             stringBuilderQueryResult.append(cursor.getString(0));
             cursor.close();
         } else {
-            Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
+            Log.d("EMAIL: ", stringBuilderQueryResult.toString());
         }
         return stringBuilderQueryResult.toString();
     }
@@ -148,33 +152,46 @@ public class ActivityLogin extends Activity {
     public String getPassword(String password) {
         String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
 
-        String selection = "Password = "+"'"+password+"'";
+        String selection = getString(R.string.USER_PASSWORD)+ "="+"'"+password+"'";
 
         Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        Cursor cursor = db.rawQuery("SELECT Password FROM User WHERE Password ="+"'"+password+"'", null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
 
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            stringBuilderQueryResult.append(cursor.getString(4));
+            stringBuilderQueryResult.append(cursor.getString(0));
             cursor.close();
         } else {
-            Toast.makeText(this, "Password not found!", Toast.LENGTH_SHORT).show();
+            Log.d("PASSORD: ", stringBuilderQueryResult.toString());
         }
         return stringBuilderQueryResult.toString();
     }
 
+//    public Cursor getEmail(String email){
+//        return db.rawQuery("SELECT Email FROM User WHERE Email ="+email,null);
+//    }
+//    public Cursor getPassword(String password){
+//        return db.rawQuery("SELECT Password FROM User WHERE Password ="+password, null);
+//    }
+
     public boolean validate() {
         boolean valid;
-        String email = loginEmail.getText().toString();
-        String password = loginPassword.getText().toString();
 
-        if (getEmail(email) == null || getPassword(password) == null) {
-            loginEmail.setError("Wrong password or email!");
-            valid = false;
-        } else {
+        if (getEmail(loginEmail.getText().toString()) == loginEmail.getText().toString() && getPassword(loginPassword.getText().toString()) == loginPassword.getText().toString()) {
             valid = true;
+            System.out.println("Email true: " + getEmail(loginEmail.getText().toString()));
+            System.out.println("Password true: " + getPassword(loginPassword.getText().toString()));
+            return valid;
+        } else {
+            loginEmail.setError("Invalid email or password");
+            System.out.println("Email false: " + getEmail(loginEmail.getText().toString()));
+            System.out.println("Password false: " + getPassword(loginPassword.getText().toString()));
+            System.out.println("Email input: " + loginEmail.getText().toString());
+            System.out.println("Password input: " + loginPassword.getText().toString());
+            valid = false;
+            return valid;
         }
-        return valid;
     }
 
     public void login(View v) {
@@ -183,6 +200,8 @@ public class ActivityLogin extends Activity {
             startActivity(intent);
         }else{
             Toast.makeText(this, "Wrong password or email!", Toast.LENGTH_SHORT).show();
+            System.out.println("Email validatefailed: " + getEmail(loginEmail.getText().toString()));
+            System.out.println("Password validatefailed: " + getPassword(loginPassword.getText().toString()));
         }
 
 //        buttonLogin.setEnabled(false);
