@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,16 +17,8 @@ import android.widget.EditText;
 public class ActivitySignup extends Activity {
 
     private Toolbar toolbar;
-
-    public final static String PROVIDER = "vica.contentprovider";
+    public static String PROVIDER = "vica.contentprovider" ;
     public static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER + "/User");
-
-    // Label table user columns
-    public final static String USER_FIRSTNAME = "Firstname";
-    public final static String USER_LASTNAME = "Lastname";
-    public final static String USER_EMAIL = "Email";
-    public final static String USER_PHONE = "Phonenumber";
-    public final static String USER_PASSWORD = "Password";
 
     private EditText firstName;
     private TextView firstNameFeedback;
@@ -58,7 +51,7 @@ public class ActivitySignup extends Activity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                setResult(RESULT_FIRST_USER); finish();
             }
         });
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -126,11 +119,11 @@ public class ActivitySignup extends Activity {
     public void signup(View v){
         ContentValues values = new ContentValues();
 
-        values.put(USER_FIRSTNAME, firstName.getText().toString());
-        values.put(USER_LASTNAME, lastName.getText().toString());
-        values.put(USER_EMAIL, email.getText().toString());
-        values.put(USER_PHONE, phone.getText().toString());
-        values.put(USER_PASSWORD, password.getText().toString());
+        values.put(getString(R.string.USER_FIRSTNAME), firstName.getText().toString());
+        values.put(getString(R.string.USER_LASTNAME), lastName.getText().toString());
+        values.put(getString(R.string.USER_ID), email.getText().toString());
+        values.put(getString(R.string.USER_PHONE), phone.getText().toString());
+        values.put(getString(R.string.USER_PASSWORD), password.getText().toString());
 
         System.out.println(password.getText().length());
         System.out.println(passwordConfirm.getText().length());
@@ -146,6 +139,5 @@ public class ActivitySignup extends Activity {
                 this.finish();
             }
         }
-
     }
 }

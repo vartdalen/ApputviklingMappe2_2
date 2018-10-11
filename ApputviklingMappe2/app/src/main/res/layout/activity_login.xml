@@ -60,7 +60,8 @@
                 android:layout_marginTop="34dp"
                 android:text="@string/login"
                 android:background="@drawable/button_primary"
-                android:theme="@style/ButtonTheme"/>
+                android:theme="@style/ButtonTheme"
+                android:onClick="login"/>
 
             <Button
                 android:id="@+id/login_button_signup"

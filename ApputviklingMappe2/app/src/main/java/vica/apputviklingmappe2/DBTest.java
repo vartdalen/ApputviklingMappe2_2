@@ -26,23 +26,63 @@ public class DBTest extends Activity {
     }
 
     // Retrieves data from database by using a stringbuilder and sends the string to the textview
+//    public void showall(View v) {
+//
+//        Cursor cur = getContentResolver().query(CONTENT_URI, null, null, null, null);
+//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+//
+//        if(cur != null && cur.moveToFirst()) {
+//            do {
+//                stringBuilderQueryResult.append(
+//                        (cur.getString(0)) + " " + // id (email)
+//                        (cur.getString(1)) + " " + // firstname
+//                        (cur.getString(2)) + " " + // lastname
+//                        (cur.getString(3)) + " " + // phone
+//                        (cur.getString(4)) + " " + "\r\n"); // password
+//            }
+//            while(cur.moveToNext());
+//            cur.close();
+//            view_showall.setText(stringBuilderQueryResult);
+//        }
+//        else{
+//            Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+//    public void showall(View v) {
+//        String[] projection = {getString(R.string.USER_ID)}; // table columns
+//
+//        String selection = "Email = 'admin@live.no'";
+//
+//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+//
+//        if (cursor.moveToFirst()) {
+//            cursor.moveToFirst();
+//            stringBuilderQueryResult.append(cursor.getString(0));
+//            view_showall.setText(stringBuilderQueryResult);
+//            cursor.close();
+//        } else {
+//            Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
     public void showall(View v) {
-        Cursor cur = getContentResolver().query(CONTENT_URI, null, null, null, null);
+        String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
+
+        String selection = "Password = '123123'";
+
+        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
 
-        if(cur != null && cur.moveToFirst()) {
-            do {
-                stringBuilderQueryResult.append(
-                        (cur.getString(1)) + " " +
-                        (cur.getString(2)) + " " +
-                        (cur.getString(3)) + " " +
-                        (cur.getString(4)) + " " + "\r\n");
-            }
-            while(cur.moveToNext());
-            cur.close();
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            stringBuilderQueryResult.append(cursor.getString(0));
             view_showall.setText(stringBuilderQueryResult);
-        }
-        else{
+            Log.d("PASSORD: ", stringBuilderQueryResult.toString());
+
+            cursor.close();
+        } else {
             Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();
         }
     }
