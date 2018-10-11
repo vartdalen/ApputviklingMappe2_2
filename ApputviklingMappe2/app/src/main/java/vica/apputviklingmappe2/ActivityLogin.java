@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import static vica.apputviklingmappe2.ActivitySignup.CONTENT_URI;
@@ -132,13 +131,10 @@ public class ActivityLogin extends Activity {
 
     public String getEmail(String email) {
         String[] projection = {getString(R.string.USER_ID)}; // table columns
-
         String selection = getString(R.string.USER_ID) + "="+"'"+email+"'";
 
         Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
-//        Cursor cursor = db.rawQuery("SELECT Email FROM User WHERE Email ="+"'"+email+"'",null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
-
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
             stringBuilderQueryResult.append(cursor.getString(0));
@@ -151,11 +147,9 @@ public class ActivityLogin extends Activity {
 
     public String getPassword(String password) {
         String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
-
         String selection = getString(R.string.USER_PASSWORD)+ "="+"'"+password+"'";
 
         Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
-//        Cursor cursor = db.rawQuery("SELECT Password FROM User WHERE Password ="+"'"+password+"'", null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
 
         if (cursor.moveToFirst()) {
@@ -168,27 +162,13 @@ public class ActivityLogin extends Activity {
         return stringBuilderQueryResult.toString();
     }
 
-//    public Cursor getEmail(String email){
-//        return db.rawQuery("SELECT Email FROM User WHERE Email ="+email,null);
-//    }
-//    public Cursor getPassword(String password){
-//        return db.rawQuery("SELECT Password FROM User WHERE Password ="+password, null);
-//    }
-
     public boolean validate() {
         boolean valid;
 
-        if (getEmail(loginEmail.getText().toString()) == loginEmail.getText().toString() && getPassword(loginPassword.getText().toString()) == loginPassword.getText().toString()) {
+        if (getEmail(loginEmail.getText().toString()).equals(loginEmail.getText().toString()) && getPassword(loginPassword.getText().toString()).equals(loginPassword.getText().toString())) {
             valid = true;
-            System.out.println("Email true: " + getEmail(loginEmail.getText().toString()));
-            System.out.println("Password true: " + getPassword(loginPassword.getText().toString()));
             return valid;
         } else {
-            loginEmail.setError("Invalid email or password");
-            System.out.println("Email false: " + getEmail(loginEmail.getText().toString()));
-            System.out.println("Password false: " + getPassword(loginPassword.getText().toString()));
-            System.out.println("Email input: " + loginEmail.getText().toString());
-            System.out.println("Password input: " + loginPassword.getText().toString());
             valid = false;
             return valid;
         }
@@ -199,9 +179,6 @@ public class ActivityLogin extends Activity {
             Intent intent = new Intent(getApplicationContext(), DBTest.class);
             startActivity(intent);
         }else{
-            Toast.makeText(this, "Wrong password or email!", Toast.LENGTH_SHORT).show();
-            System.out.println("Email validatefailed: " + getEmail(loginEmail.getText().toString()));
-            System.out.println("Password validatefailed: " + getPassword(loginPassword.getText().toString()));
         }
 
 //        buttonLogin.setEnabled(false);
