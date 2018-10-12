@@ -30,12 +30,18 @@ public class RestaurantProvider extends ContentProvider {
     private final static String TABLE_ORDER = "Order";
     private final static String TABLE_ORDERLINE = "Orderline";
 
-    // Label table user columns
+    // Label table User columns
     public final static String USER_ID = "Email";
     public final static String USER_FIRSTNAME = "Firstname";
     public final static String USER_LASTNAME = "Lastname";
     public final static String USER_PHONE = "Phonenumber";
     public final static String USER_PASSWORD = "Password";
+
+    // Label table Friends columns
+    public final static String FRIEND_ID = "Email";
+    public final static String FRIEND_FIRSTNAME = "Firstname";
+    public final static String FRIEND_LASTNAME = "Lastname";
+    public final static String FRIEND_PHONE = "Phonenumber";
 
     RestaurantProvider.DatabaseHelper DBhelper;
     SQLiteDatabase db;
@@ -81,18 +87,6 @@ public class RestaurantProvider extends ContentProvider {
         db = DBhelper.getWritableDatabase();
         return true;
     }
-
-//    @Override
-//    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-//        Cursor cur = null;
-//        if(uriMatcher.match(uri) == USER) {
-//            cur = db.query(TABLE_USER, projection, USER_ID + "=" + uri.getPathSegments().get(1), selectionArgs, null, null, sortOrder);
-//            return cur;
-//        } else{
-//            cur = db.query(TABLE_USER, null, null, null, null, null, null);
-//            return cur;
-//        }
-//    }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {

@@ -33,6 +33,8 @@ public class ActivityLogin extends Activity {
     private Toolbar toolbar;
     private SharedPreferences preferences;
 
+    DB db = new DB();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -146,40 +148,40 @@ public class ActivityLogin extends Activity {
         startActivityForResult(intent, REQUEST_LOGIN);
     }
 
-    public String getEmail(String email) {
-        String[] projection = {getString(R.string.USER_ID)}; // table columns
-        String selection = getString(R.string.USER_ID) + "="+"'"+email+"'";
+//    public String getEmail(String email) {
+//        String[] projection = {getString(R.string.USER_ID)}; // table columns
+//        String selection = getString(R.string.USER_ID) + "="+"'"+email+"'";
+//
+//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+//        if (cursor.moveToFirst()) {
+//            cursor.moveToFirst();
+//            stringBuilderQueryResult.append(cursor.getString(0));
+//            cursor.close();
+//        }
+//        return stringBuilderQueryResult.toString();
+//    }
 
-        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
-        StringBuilder stringBuilderQueryResult = new StringBuilder("");
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            stringBuilderQueryResult.append(cursor.getString(0));
-            cursor.close();
-        }
-        return stringBuilderQueryResult.toString();
-    }
-
-    public String getPassword(String password) {
-        String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
-        String selection = getString(R.string.USER_PASSWORD)+ "="+"'"+password+"'";
-
-        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
-        StringBuilder stringBuilderQueryResult = new StringBuilder("");
-
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            stringBuilderQueryResult.append(cursor.getString(0));
-            cursor.close();
-        }
-        return stringBuilderQueryResult.toString();
-    }
+//    public String getPassword(String password) {
+//        String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
+//        String selection = getString(R.string.USER_PASSWORD)+ "="+"'"+password+"'";
+//
+//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+//
+//        if (cursor.moveToFirst()) {
+//            cursor.moveToFirst();
+//            stringBuilderQueryResult.append(cursor.getString(0));
+//            cursor.close();
+//        }
+//        return stringBuilderQueryResult.toString();
+//    }
 
     public boolean validate() {
         boolean valid;
 
-        if (getEmail(email.getText().toString()).equals(email.getText().toString()) && email.getText().toString().length() > 0
-                && getPassword(password.getText().toString()).equals(password.getText().toString()) && password.getText().toString().length() > 0) {
+        if (db.getEmail(email.getText().toString(), this).equals(email.getText().toString()) && email.getText().toString().length() > 0
+                && db.getPassword(password.getText().toString(), this).equals(password.getText().toString()) && password.getText().toString().length() > 0) {
             valid = true;
             return valid;
         } else {
