@@ -2,13 +2,11 @@ package vica.apputviklingmappe2;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,20 +27,18 @@ public class ActivityLogin extends Activity {
     private Button buttonSignup;
 
     private Toolbar toolbar;
-    private SharedPreferences preferences;
     private Helper helper;
+    private Session session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        session = new Session(ActivityLogin.this);
         helper = new Helper();
         setupToolbar();
         setupFields();
-
-        System.out.println(preferences.getInt(getString(R.string.user_level), 0));
     }
 
     @Override
@@ -52,7 +48,7 @@ public class ActivityLogin extends Activity {
                 feedback.setTextColor(getColor(R.color.colorOk));
                 feedback.setText(getString(R.string.ok_signup));
             }
-            if (resultCode == RESULT_FIRST_USER) {
+            if (resultCode == ResultCodes.RESULT_QUIT) {
                 this.finish();
             }
         }
@@ -123,7 +119,7 @@ public class ActivityLogin extends Activity {
     }
 
     public void onLoginSuccess() {
-        preferences.edit().putInt(getString(R.string.user_level), 1).apply();
+        session.setUserLevel(1);
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
         startActivityForResult(intent, REQUEST_LOGIN);

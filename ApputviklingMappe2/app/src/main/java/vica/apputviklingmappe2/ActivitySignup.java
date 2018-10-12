@@ -56,7 +56,7 @@ public class ActivitySignup extends Activity {
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                setResult(RESULT_FIRST_USER);
+                setResult(ResultCodes.RESULT_QUIT);
                 helper.quit(ActivitySignup.this);
                 return true;
             }
