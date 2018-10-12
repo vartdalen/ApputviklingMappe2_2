@@ -19,8 +19,6 @@ import static vica.apputviklingmappe2.DB.CONTENT_URI;
 
 public class ActivitySignup extends Activity {
 
-    private Toolbar toolbar;
-
     private EditText firstName;
     private TextView firstNameFeedback;
     private EditText lastName;
@@ -35,11 +33,15 @@ public class ActivitySignup extends Activity {
     private TextView passwordFeedback;
     private Button signupButton;
 
+    private Toolbar toolbar;
+    private Helper helper;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        helper = new Helper();
         setupToolbar();
         setupFields();
         setupListeners();
@@ -58,7 +60,8 @@ public class ActivitySignup extends Activity {
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                quit();
+                setResult(RESULT_FIRST_USER);
+                helper.quit(ActivitySignup.this);
                 return true;
             }
         });
@@ -95,26 +98,6 @@ public class ActivitySignup extends Activity {
         passwordFeedback = (TextView)findViewById(R.id.signup_password_feedback);
         passwordConfirm  = (EditText)findViewById(R.id.signup_password_confirm);
         signupButton = (Button)findViewById(R.id.signup_button);
-    }
-
-    public void quit() {
-        AlertDialog confirm_quit = new AlertDialog.Builder(ActivitySignup.this).create();
-        confirm_quit.setTitle(getString(R.string.quit));
-        confirm_quit.setMessage(getString(R.string.confirmation_quit1));
-        confirm_quit.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        setResult(RESULT_FIRST_USER);
-                        finish();
-                    }
-                });
-        confirm_quit.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        confirm_quit.show();
     }
 
     public String getEmail(String email) {
