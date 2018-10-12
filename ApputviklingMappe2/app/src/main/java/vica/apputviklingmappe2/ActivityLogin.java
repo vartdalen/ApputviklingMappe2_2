@@ -1,9 +1,7 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -43,6 +41,8 @@ public class ActivityLogin extends Activity {
         helper = new Helper();
         setupToolbar();
         setupFields();
+
+        System.out.println(preferences.getInt(getString(R.string.user_level), 0));
     }
 
     @Override

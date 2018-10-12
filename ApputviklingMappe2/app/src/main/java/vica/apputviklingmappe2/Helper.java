@@ -3,9 +3,6 @@ package vica.apputviklingmappe2;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toolbar;
 
 public class Helper {
 
