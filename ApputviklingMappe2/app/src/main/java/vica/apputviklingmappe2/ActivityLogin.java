@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -18,8 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
-
-import static vica.apputviklingmappe2.DB.CONTENT_URI;
 
 public class ActivityLogin extends Activity {
     private static final int REQUEST_LOGIN = 10;
@@ -147,35 +144,6 @@ public class ActivityLogin extends Activity {
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
         startActivityForResult(intent, REQUEST_LOGIN);
     }
-
-//    public String getEmail(String email) {
-//        String[] projection = {getString(R.string.USER_ID)}; // table columns
-//        String selection = getString(R.string.USER_ID) + "="+"'"+email+"'";
-//
-//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
-//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
-//        if (cursor.moveToFirst()) {
-//            cursor.moveToFirst();
-//            stringBuilderQueryResult.append(cursor.getString(0));
-//            cursor.close();
-//        }
-//        return stringBuilderQueryResult.toString();
-//    }
-
-//    public String getPassword(String password) {
-//        String[] projection = {getString(R.string.USER_PASSWORD)}; // table columns
-//        String selection = getString(R.string.USER_PASSWORD)+ "="+"'"+password+"'";
-//
-//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
-//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
-//
-//        if (cursor.moveToFirst()) {
-//            cursor.moveToFirst();
-//            stringBuilderQueryResult.append(cursor.getString(0));
-//            cursor.close();
-//        }
-//        return stringBuilderQueryResult.toString();
-//    }
 
     public boolean validate() {
         boolean valid;

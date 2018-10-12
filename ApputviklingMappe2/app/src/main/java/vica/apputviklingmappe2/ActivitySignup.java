@@ -35,6 +35,8 @@ public class ActivitySignup extends Activity {
     private TextView passwordFeedback;
     private Button signupButton;
 
+    DB db = new DB();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,20 +119,6 @@ public class ActivitySignup extends Activity {
         confirm_quit.show();
     }
 
-    public String getEmail(String email) {
-        String[] projection = {getString(R.string.USER_ID)}; // table columns
-        String selection = getString(R.string.USER_ID) + "="+"'"+email+"'";
-
-        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
-        StringBuilder stringBuilderQueryResult = new StringBuilder("");
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            stringBuilderQueryResult.append(cursor.getString(0));
-            cursor.close();
-        }
-        return stringBuilderQueryResult.toString();
-    }
-
     public void signup(View v){
         ContentValues values = new ContentValues();
 
@@ -149,7 +137,7 @@ public class ActivitySignup extends Activity {
                 && email.getText().length() > 0 && emailConfirmFeedback.getText().length() == 0
                 && password.getText().length() > 0 && passwordFeedback.getText().length() == 0 ) {
 
-            if(getEmail(email.getText().toString()).equals(email.getText().toString())){
+            if(db.getEmail(email.getText().toString(), this).equals(email.getText().toString())){
                     emailConfirmFeedback.setText("Email already used");
             }else{
                 if((getContentResolver().insert( CONTENT_URI, values) != null)){
