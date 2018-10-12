@@ -18,7 +18,6 @@ import android.widget.Toolbar;
 import static vica.apputviklingmappe2.DB.CONTENT_URI;
 
 public class ActivityLogin extends Activity {
-    private static final int REQUEST_LOGIN = 10;
 
     private EditText email;
     private EditText password;
@@ -32,10 +31,16 @@ public class ActivityLogin extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        session = new Session(ActivityLogin.this);
+        if(session.getUserLevel() > 0) {
+            finish();
+            Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
+            startActivity(intent);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        session = new Session(ActivityLogin.this);
         helper = new Helper();
         setupToolbar();
         setupFields();
@@ -43,7 +48,7 @@ public class ActivityLogin extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_LOGIN) {
+        if (requestCode == RequestCodes.REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
                 feedback.setTextColor(getColor(R.color.colorOk));
                 feedback.setText(getString(R.string.ok_signup));
@@ -93,7 +98,7 @@ public class ActivityLogin extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityLogin.this, ActivitySignup.class);
-                startActivityForResult(intent, REQUEST_LOGIN);
+                startActivityForResult(intent, RequestCodes.REQUEST_LOGIN);
             }
         });
     }
@@ -122,7 +127,7 @@ public class ActivityLogin extends Activity {
         session.setUserLevel(1);
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
-        startActivityForResult(intent, REQUEST_LOGIN);
+        startActivityForResult(intent, RequestCodes.REQUEST_LOGIN);
     }
 
     public String getEmail(String email) {
@@ -156,7 +161,6 @@ public class ActivityLogin extends Activity {
 
     public boolean validate() {
         boolean valid;
-
         if (getEmail(email.getText().toString()).equals(email.getText().toString()) && email.getText().toString().length() > 0
                 && getPassword(password.getText().toString()).equals(password.getText().toString()) && password.getText().toString().length() > 0) {
             valid = true;
@@ -164,14 +168,6 @@ public class ActivityLogin extends Activity {
         } else {
             valid = false;
             return valid;
-        }
-    }
-
-    public void login(View v) {
-        if (validate()) {
-            Intent intent = new Intent(getApplicationContext(), DBTest.class);
-            startActivity(intent);
-        }else{
         }
     }
 }

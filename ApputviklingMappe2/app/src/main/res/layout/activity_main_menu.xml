@@ -23,15 +23,19 @@
             android:src="@mipmap/ic_launcher" />
 
         <Button
+            android:id="@+id/main_menu_button_book_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:background="@drawable/button_primary"
             android:text="@string/book_table"
             android:theme="@style/ButtonTheme" />
 
         <Button
+            android:id="@+id/main_menu_button_add_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:background="@drawable/button_primary"
             android:text="@string/add_friend"
             android:theme="@style/ButtonTheme" />
