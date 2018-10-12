@@ -7,10 +7,10 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+import static vica.contentprovider.RestaurantProvider.CONTENT_FRIENDS_URI;
+import static vica.contentprovider.RestaurantProvider.CONTENT_USER_URI;
 
-    public static String PROVIDER = "vica.contentprovider" ;
-    public static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER + "/User");
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,14 @@ public class MainActivity extends Activity {
         values.put("Phonenumber", "46842543");
         values.put("Password", "123123");
 
-        getContentResolver().insert(CONTENT_URI, values);
+        ContentValues values1 = new ContentValues();
+        values1.put("Firstname", "Rasmus");
+        values1.put("Lastname", "Ola");
+        values1.put("Email", "venn1@live.no");
+        values1.put("Phonenumber", "46842543");
+        values1.put("UserEmail", "admin@live.no");
+
+        getContentResolver().insert(CONTENT_USER_URI, values);
+        getContentResolver().insert(CONTENT_FRIENDS_URI, values1);
     }
 }

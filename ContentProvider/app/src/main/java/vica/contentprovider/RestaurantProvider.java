@@ -18,41 +18,67 @@ public class RestaurantProvider extends ContentProvider {
 
     // Database and Provider related stuff
     public final static String PROVIDER = "vica.contentprovider";
-    private final static String DB_NAME = "vica.db";
+    public final static String DB_NAME = "vica.db";
     private final static int DB_VERSION = 1;
     private static final int USER = 1;
     private static final int USER_WITH_ID = 2;
+    private static final int FRIEND = 3;
+    private static final int FRIEND_WITH_ID = 4;
 
-    // Label table name
+
+    // Table names
     private final static String TABLE_USER = "User";
     private final static String TABLE_FRIENDS = "Friends";
     private final static String TABLE_RESTAURANT = "Restaurant";
     private final static String TABLE_ORDER = "Order";
     private final static String TABLE_ORDERLINE = "Orderline";
 
-    // Label table User columns
+    // Table User columns
     public final static String USER_ID = "Email";
     public final static String USER_FIRSTNAME = "Firstname";
     public final static String USER_LASTNAME = "Lastname";
     public final static String USER_PHONE = "Phonenumber";
     public final static String USER_PASSWORD = "Password";
 
-    // Label table Friends columns
-    public final static String FRIEND_ID = "Email";
+    // Table Friends columns
+    public final static String FRIEND_ID = "ID";
+    public final static String FRIEND_EMAIL = "Email";
     public final static String FRIEND_FIRSTNAME = "Firstname";
     public final static String FRIEND_LASTNAME = "Lastname";
     public final static String FRIEND_PHONE = "Phonenumber";
+    public final static String FRIEND_FK = "UserEmail";
 
-    RestaurantProvider.DatabaseHelper DBhelper;
+    // Table User create-statement
+    private static final String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
+            + USER_ID + " TEXT PRIMARY KEY,"
+            + USER_FIRSTNAME + " TEXT,"
+            + USER_LASTNAME + " TEXT,"
+            + USER_PHONE + " TEXT,"
+            + USER_PASSWORD + " TEXT);";
+
+    // Table Friends create-statement
+    private static final String CREATE_FRIENDS_TABLE = "CREATE TABLE " + TABLE_FRIENDS + "("
+            + FRIEND_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + FRIEND_FIRSTNAME + " TEXT,"
+            + FRIEND_LASTNAME + " TEXT,"
+            + FRIEND_PHONE + " TEXT,"
+            + FRIEND_EMAIL + " TEXT,"
+            + FRIEND_FK + " TEXT,"
+            + "FOREIGN KEY ("+FRIEND_FK+") REFERENCES "+TABLE_USER+"("+USER_ID+"));";
+
+    RestaurantProvider.DatabaseHelper DBHelper;
     SQLiteDatabase db;
 
-    public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER + "/ User");
+    public static final Uri CONTENT_USER_URI = Uri.parse("content://" + PROVIDER + "/User");
+    public static final Uri CONTENT_FRIENDS_URI = Uri.parse("content://" + PROVIDER + "/Friends");
     private static final UriMatcher uriMatcher;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER, "User", USER);
         uriMatcher.addURI(PROVIDER, "User/#", USER_WITH_ID);
+        uriMatcher.addURI(PROVIDER, "Friends", FRIEND);
+        uriMatcher.addURI(PROVIDER, "Friends/#", FRIEND_WITH_ID);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -62,15 +88,8 @@ public class RestaurantProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            String sql = "CREATE TABLE " + TABLE_USER + "("
-                    + USER_ID + " TEXT PRIMARY KEY,"
-                    + USER_FIRSTNAME + " TEXT,"
-                    + USER_LASTNAME + " TEXT,"
-                    + USER_PHONE + " TEXT,"
-                    + USER_PASSWORD + " TEXT);";
-
-            Log.d("DatabaseHelper", " oncreated sql" + sql);
-            db.execSQL(sql);
+            db.execSQL(CREATE_USER_TABLE);
+            db.execSQL(CREATE_FRIENDS_TABLE);
         }
 
         @Override
@@ -83,55 +102,76 @@ public class RestaurantProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        DBhelper = new RestaurantProvider.DatabaseHelper(getContext());
-        db = DBhelper.getWritableDatabase();
+        DBHelper = new RestaurantProvider.DatabaseHelper(getContext());
+        db = DBHelper.getWritableDatabase();
         return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(TABLE_USER);
-
         int uriType = uriMatcher.match(uri);
 
         switch (uriType) {
             case USER_WITH_ID:
+                queryBuilder.setTables(TABLE_USER);
                 queryBuilder.appendWhere(USER_ID + "=" + uri.getLastPathSegment());
                 break;
             case USER:
+                queryBuilder.setTables(TABLE_USER);
+                break;
+            case FRIEND_WITH_ID:
+                queryBuilder.setTables(TABLE_FRIENDS);
+                queryBuilder.appendWhere(FRIEND_ID + "=" + uri.getLastPathSegment());
+                break;
+            case FRIEND:
+                queryBuilder.setTables(TABLE_FRIENDS);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
         }
 
-        Cursor cursor = queryBuilder.query(DBhelper.getReadableDatabase(), projection, selection, null, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(DBHelper.getReadableDatabase(), projection, selection, null, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
     @Override
-    public String getType(Uri uri) {
-        switch(uriMatcher.match(uri)) {
+    public Uri insert(Uri uri, ContentValues values) {
+        SQLiteDatabase db = DBHelper.getWritableDatabase();
+        int uriType = uriMatcher.match(uri);
+        long minid = 0;
+        Cursor c;
+
+        switch (uriType) {
             case USER_WITH_ID:
-                return"vnd.android.cursor.dir/vnd.example.User";
+                db.insert(TABLE_USER, null, values);
+                c = db.query(TABLE_USER, null, null, null, null, null, null);
+                break;
             case USER:
-                return"vnd.android.cursor.item/vnd.example.User";
+                db.insert(TABLE_USER, null, values);
+                c = db.query(TABLE_USER, null, null, null, null, null, null);
+                break;
+            case FRIEND_WITH_ID:
+                db.insert(TABLE_FRIENDS, null, values);
+                c = db.query(TABLE_FRIENDS, null, null, null, null, null, null);
+                break;
+            case FRIEND:
+                db.insert(TABLE_FRIENDS, null, values);
+                c = db.query(TABLE_FRIENDS, null, null, null, null, null, null);
+                break;
             default:
-                throw new IllegalArgumentException("Unsupported URI" + uri);
+                throw new IllegalArgumentException("Unknown URI");
         }
+        c.moveToLast();
+        minid = c.getLong(0);
+        getContext().getContentResolver().notifyChange(uri, null);
+        return ContentUris.withAppendedId(uri, minid);
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        SQLiteDatabase db = DBhelper.getWritableDatabase();
-        db.insert(TABLE_USER, null, values);
-        Cursor c = db.query(TABLE_USER, null, null, null, null, null, null);
-        c.moveToLast();
-        long minid = c.getLong(0);
-        getContext().getContentResolver().notifyChange(uri, null);
-
-        return ContentUris.withAppendedId(uri, minid);
+    public String getType(Uri uri) {
+        return "";
     }
 
     @Override

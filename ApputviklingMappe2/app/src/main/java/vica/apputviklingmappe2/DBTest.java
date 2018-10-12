@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static vica.apputviklingmappe2.DB.CONTENT_FRIENDS_URI;
 import static vica.apputviklingmappe2.DB.CONTENT_URI;
 
 public class DBTest extends Activity {
@@ -25,19 +26,42 @@ public class DBTest extends Activity {
     }
 
     // Retrieves data from database by using a stringbuilder and sends the string to the textview
+//    public void showall(View v) {
+//
+//        Cursor cur = getContentResolver().query(CONTENT_URI, null, null, null, null);
+//        StringBuilder stringBuilderQueryResult = new StringBuilder("");
+//
+//        if(cur != null && cur.moveToFirst()) {
+//            do {
+//                stringBuilderQueryResult.append(
+//                        (cur.getString(0)) + " " + // id (email)
+//                        (cur.getString(1)) + " " + // firstname
+//                        (cur.getString(2)) + " " + // lastname
+//                        (cur.getString(3)) + " " + // phone
+//                        (cur.getString(4)) + " " + "\r\n"); // password
+//            }
+//            while(cur.moveToNext());
+//            cur.close();
+//            view_showall.setText(stringBuilderQueryResult);
+//        }
+//        else{
+//            Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
     public void showall(View v) {
 
-        Cursor cur = getContentResolver().query(CONTENT_URI, null, null, null, null);
+        Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, null, null, null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
 
         if(cur != null && cur.moveToFirst()) {
             do {
                 stringBuilderQueryResult.append(
-                        (cur.getString(0)) + " " + // id (email)
-                        (cur.getString(1)) + " " + // firstname
-                        (cur.getString(2)) + " " + // lastname
-                        (cur.getString(3)) + " " + // phone
-                        (cur.getString(4)) + " " + "\r\n"); // password
+                        (cur.getString(0)) + " " + // id
+                                (cur.getString(1)) + " " + // firstname
+                                (cur.getString(2)) + " " + // lastname
+                                (cur.getString(3)) + " " + // phone
+                                (cur.getString(4)) + " " + "\r\n"); // user's email
             }
             while(cur.moveToNext());
             cur.close();

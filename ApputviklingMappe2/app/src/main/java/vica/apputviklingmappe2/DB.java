@@ -9,6 +9,7 @@ public class DB extends Activity{
 
     public static String PROVIDER = "vica.contentprovider" ;
     public static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER + "/User");
+    public static final Uri CONTENT_FRIENDS_URI = Uri.parse("content://" + PROVIDER + "/Friends");
 
     public String getEmail(String email, Context context) {
         String[] projection = {context.getString(R.string.USER_ID)}; // table columns
