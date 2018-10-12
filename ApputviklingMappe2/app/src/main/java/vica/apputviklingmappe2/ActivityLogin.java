@@ -157,12 +157,4 @@ public class ActivityLogin extends Activity {
             return valid;
         }
     }
-
-    public void login(View v) {
-        if (validate()) {
-            Intent intent = new Intent(getApplicationContext(), DBTest.class);
-            startActivity(intent);
-        }else{
-        }
-    }
 }

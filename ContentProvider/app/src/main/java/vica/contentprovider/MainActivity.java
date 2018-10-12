@@ -18,6 +18,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         ContentValues values = new ContentValues();
+        values.put("Userlevel", 1);
         values.put("Firstname", "Admin");
         values.put("Lastname", "Admin");
         values.put("Email", "admin@live.no");

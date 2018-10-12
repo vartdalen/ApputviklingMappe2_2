@@ -35,6 +35,7 @@ public class RestaurantProvider extends ContentProvider {
 
     // Table User columns
     public final static String USER_ID = "Email";
+    public final static String USER_LEVEL = "Userlevel";
     public final static String USER_FIRSTNAME = "Firstname";
     public final static String USER_LASTNAME = "Lastname";
     public final static String USER_PHONE = "Phonenumber";
@@ -51,6 +52,7 @@ public class RestaurantProvider extends ContentProvider {
     // Table User create-statement
     private static final String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + USER_ID + " TEXT PRIMARY KEY,"
+            + USER_LEVEL + " INTEGER NOT NULL,"
             + USER_FIRSTNAME + " TEXT,"
             + USER_LASTNAME + " TEXT,"
             + USER_PHONE + " TEXT,"

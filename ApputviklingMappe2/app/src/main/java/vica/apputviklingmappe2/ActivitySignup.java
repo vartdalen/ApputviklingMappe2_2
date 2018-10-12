@@ -121,7 +121,7 @@ public class ActivitySignup extends Activity {
 
     public void signup(View v){
         ContentValues values = new ContentValues();
-
+        values.put(getString(R.string.USER_LEVEL), 1);
         values.put(getString(R.string.USER_FIRSTNAME), firstName.getText().toString());
         values.put(getString(R.string.USER_LASTNAME), lastName.getText().toString());
         values.put(getString(R.string.USER_ID), email.getText().toString());
