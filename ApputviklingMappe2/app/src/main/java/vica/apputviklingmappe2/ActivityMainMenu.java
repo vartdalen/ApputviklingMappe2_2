@@ -82,11 +82,11 @@ public class ActivityMainMenu extends Activity {
     }
 
     private void setupFields() {
-        addFriendButton = (Button) findViewById(R.id.main_menu_button_add_friends);
+        addFriendButton = (Button) findViewById(R.id.main_menu_button_manage_friends);
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityMainMenu.this, ActivityAddFriend.class);
+                Intent intent = new Intent(ActivityMainMenu.this, ActivityManageFriends.class);
                 startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
             }
         });

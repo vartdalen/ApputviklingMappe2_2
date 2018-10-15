@@ -32,12 +32,12 @@
             android:theme="@style/ButtonTheme" />
 
         <Button
-            android:id="@+id/main_menu_button_add_friends"
+            android:id="@+id/main_menu_button_manage_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/button_primary"
-            android:text="@string/add_a_friend"
+            android:text="@string/manage_friends"
             android:theme="@style/ButtonTheme" />
     </LinearLayout>
 </LinearLayout>

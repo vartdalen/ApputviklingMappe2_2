@@ -1,8 +1,10 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -97,6 +99,23 @@ public class ActivitySignup extends Activity {
     }
 
     public void signup(View v){
+
+        final ProgressDialog progressDialog = new ProgressDialog(ActivitySignup.this);
+        progressDialog.setMessage(getString(R.string.validating));
+        progressDialog.show();
+
+        new Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        if (validate()) {
+                            onSignupSuccess();
+                        }
+                        progressDialog.dismiss();
+                    }
+                }, 1500);
+    }
+
+    private boolean validate() {
         ContentValues values = new ContentValues();
         values.put(getString(R.string.USER_LEVEL), 1);
         values.put(getString(R.string.USER_FIRSTNAME), firstName.getText().toString());
@@ -105,23 +124,31 @@ public class ActivitySignup extends Activity {
         values.put(getString(R.string.USER_PHONE), phone.getText().toString());
         values.put(getString(R.string.USER_PASSWORD), password.getText().toString());
 
-        System.out.println(password.getText().length());
-        System.out.println(passwordConfirm.getText().length());
-
-        if(firstName.getText().length() > 0 && firstNameFeedback.getText().length() == 0
+        if (firstName.getText().length() > 0 && firstNameFeedback.getText().length() == 0
                 && lastName.getText().length() > 0 && lastNameFeedback.getText().length() == 0
                 && phone.getText().length() > 0 && phoneFeedback.getText().length() == 0
                 && email.getText().length() > 0 && emailConfirmFeedback.getText().length() == 0
                 && password.getText().length() > 0 && passwordFeedback.getText().length() == 0 ) {
 
-            if(db.getEmail(email.getText().toString(), this).equals(email.getText().toString())){
-                    emailConfirmFeedback.setText(getString(R.string.error_email3));
-            }else{
-                if((getContentResolver().insert( CONTENT_URI, values) != null)){
-                    setResult(RESULT_OK);
-                    this.finish();
+            if (db.getEmail(email.getText().toString(), this).equals(email.getText().toString())){
+                emailConfirmFeedback.setText(getString(R.string.error_email3));
+                return false;
+            } else {
+                if ((getContentResolver().insert( CONTENT_URI, values) != null)){
+                    return true;
+                } else {
+                    passwordFeedback.setText(getString(R.string.error_signup2));
+                    return false;
                 }
             }
+        } else {
+            passwordFeedback.setText(getString(R.string.error_signup1));
+            return false;
         }
+    }
+
+    private void onSignupSuccess() {
+        setResult(RESULT_OK);
+        this.finish();
     }
 }
