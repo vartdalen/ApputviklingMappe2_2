@@ -17,11 +17,13 @@
     <string name="logout">Logout</string>
     <string name="signup">Sign up</string>
     <string name="create_account">Create account</string>
+    <string name="add_friend">Add friend</string>
+    <string name="delete_friend">Delete friend</string>
     <string name ="quit">Quit</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="book_table">Book a table</string>
-    <string name="add_friend">Add a friend</string>
+    <string name="add_a_friend">Add a friend</string>
 
     <!--Confirmation Messages-->
     <string name="confirmation_quit1">Really quit?</string>
@@ -34,18 +36,26 @@
     <string name="error_phone">Must be 8 digits</string>
     <string name="error_email1">Invalid email</string>
     <string name="error_email2">Emails must match</string>
+    <string name="error_email3">Email is already in use</string>
     <string name="error_password1">Must be 6–20 characters, at least one number and at least one letter</string>
     <string name="error_password2">Passwords must match</string>
     <string name="error_login">Invalid email or password</string>
     <string name="ok_signup">Signup successful</string>
     <string name="ok_logout">Logout successful</string>
 
-    <!--Database Strings-->
+    <!--User-table database Strings-->
     <string name="USER_ID">Email</string>
     <string name="USER_LEVEL">Userlevel</string>
     <string name="USER_FIRSTNAME">Firstname</string>
     <string name="USER_LASTNAME">Lastname</string>
     <string name="USER_PHONE">Phonenumber</string>
     <string name="USER_PASSWORD">Password</string>
+
+    <!--Friend-table database Strings-->
+    <string name="FRIEND_ID">_id</string>
+    <string name="FRIEND_FIRSTNAME">Firstname</string>
+    <string name="FRIEND_LASTNAME">Lastname</string>
+    <string name="FRIEND_PHONE">Phonenumber</string>
+    <string name="FRIEND_FK">UserEmail</string>
 
 </resources>

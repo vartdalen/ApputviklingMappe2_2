@@ -2,7 +2,6 @@ package vica.apputviklingmappe2;
 
 import android.app.Activity;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -116,7 +115,7 @@ public class ActivitySignup extends Activity {
                 && password.getText().length() > 0 && passwordFeedback.getText().length() == 0 ) {
 
             if(db.getEmail(email.getText().toString(), this).equals(email.getText().toString())){
-                    emailConfirmFeedback.setText("Email already used");
+                    emailConfirmFeedback.setText(getString(R.string.error_email3));
             }else{
                 if((getContentResolver().insert( CONTENT_URI, values) != null)){
                     setResult(RESULT_OK);
