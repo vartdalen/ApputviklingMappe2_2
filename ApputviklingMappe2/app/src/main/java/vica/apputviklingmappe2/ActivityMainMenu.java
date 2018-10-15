@@ -1,41 +1,57 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toolbar;
 
 public class ActivityMainMenu extends Activity {
-    private static final int REQUEST_MAIN_MENU = 11;
+
+    private Button addFriendButton;
 
     private Toolbar toolbar;
-    private SharedPreferences preferences;
+    private Helper helper;
+    private Session session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(preferences.getInt(getString(R.string.user_level), 0) < 1) {
+        session = new Session(ActivityMainMenu.this);
+        if(session.getUserLevel() < 1) {
             finish();
             Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
-            startActivityForResult(intent, REQUEST_MAIN_MENU);
+            startActivity(intent);
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        helper = new Helper();
         setupToolbar();
-        System.out.println(preferences.getInt(getString(R.string.user_level), 0));
+        setupFields();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RequestCodes.REQUEST_MAIN_MENU)
+            if (resultCode == ResultCodes.RESULT_LOGOUT) {
+                session.destroy();
+                finish();
+                Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
+                startActivity(intent);
+            }
+            if (resultCode == ResultCodes.RESULT_QUIT) {
+                this.finish();
+            }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            quit();
+            helper.quit(ActivityMainMenu.this);
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -49,39 +65,31 @@ public class ActivityMainMenu extends Activity {
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                preferences.edit().putInt(getString(R.string.user_level), 0).apply();
+                session.destroy();
                 finish();
                 Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
-                startActivityForResult(intent, REQUEST_MAIN_MENU);
+                startActivity(intent);
                 return true;
             }
         });
         toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                quit();
+                helper.quit(ActivityMainMenu.this);
                 return true;
             }
         });
     }
 
-    public void quit() {
-        AlertDialog confirm_quit = new AlertDialog.Builder(ActivityMainMenu.this).create();
-        confirm_quit.setTitle(getString(R.string.quit));
-        confirm_quit.setMessage(getString(R.string.confirmation_quit1));
-        confirm_quit.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-        confirm_quit.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        confirm_quit.show();
+    private void setupFields() {
+        addFriendButton = (Button) findViewById(R.id.main_menu_button_add_friends);
+        addFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityMainMenu.this, ActivityAddFriend.class);
+                startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
+            }
+        });
     }
 
 }

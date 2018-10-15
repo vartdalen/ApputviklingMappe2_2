@@ -42,11 +42,10 @@ public class RestaurantProvider extends ContentProvider {
     public final static String USER_PASSWORD = "Password";
 
     // Table Friends columns
-    public final static String FRIEND_ID = "ID";
+    public final static String FRIEND_ID = "Phonenumber";
     public final static String FRIEND_EMAIL = "Email";
     public final static String FRIEND_FIRSTNAME = "Firstname";
     public final static String FRIEND_LASTNAME = "Lastname";
-    public final static String FRIEND_PHONE = "Phonenumber";
     public final static String FRIEND_FK = "UserEmail";
 
     // Table User create-statement
@@ -60,10 +59,9 @@ public class RestaurantProvider extends ContentProvider {
 
     // Table Friends create-statement
     private static final String CREATE_FRIENDS_TABLE = "CREATE TABLE " + TABLE_FRIENDS + "("
-            + FRIEND_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + FRIEND_ID + " TEXT PRIMARY KEY,"
             + FRIEND_FIRSTNAME + " TEXT,"
             + FRIEND_LASTNAME + " TEXT,"
-            + FRIEND_PHONE + " TEXT,"
             + FRIEND_EMAIL + " TEXT,"
             + FRIEND_FK + " TEXT,"
             + "FOREIGN KEY ("+FRIEND_FK+") REFERENCES "+TABLE_USER+"("+USER_ID+"));";

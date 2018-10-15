@@ -1,15 +1,12 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import static vica.apputviklingmappe2.DB.CONTENT_URI;
+
 public class ActivityLogin extends Activity {
-    private static final int REQUEST_LOGIN = 10;
 
     private EditText email;
     private EditText password;
@@ -28,28 +26,35 @@ public class ActivityLogin extends Activity {
     private Button buttonSignup;
 
     private Toolbar toolbar;
-    private SharedPreferences preferences;
-
-    DB db = new DB();
+    private Helper helper;
+    private Session session;
+    private DB db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        session = new Session(ActivityLogin.this);
+        if(session.getUserLevel() > 0) {
+            finish();
+            Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
+            startActivity(intent);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        db = new DB();
+        helper = new Helper();
         setupToolbar();
         setupFields();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_LOGIN) {
+        if (requestCode == RequestCodes.REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
                 feedback.setTextColor(getColor(R.color.colorOk));
                 feedback.setText(getString(R.string.ok_signup));
             }
-            if (resultCode == RESULT_FIRST_USER) {
+            if (resultCode == ResultCodes.RESULT_QUIT) {
                 this.finish();
             }
         }
@@ -58,29 +63,10 @@ public class ActivityLogin extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-                quit();
+                helper.quit(ActivityLogin.this);
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    public void quit() {
-        AlertDialog confirm_quit = new AlertDialog.Builder(ActivityLogin.this).create();
-        confirm_quit.setTitle(getString(R.string.quit));
-        confirm_quit.setMessage(getString(R.string.confirmation_quit1));
-        confirm_quit.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-        confirm_quit.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        confirm_quit.show();
     }
 
     private void setupToolbar() {
@@ -91,7 +77,7 @@ public class ActivityLogin extends Activity {
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                quit();
+                helper.quit(ActivityLogin.this);
                 return true;
             }
         });
@@ -113,7 +99,7 @@ public class ActivityLogin extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityLogin.this, ActivitySignup.class);
-                startActivityForResult(intent, REQUEST_LOGIN);
+                startActivityForResult(intent, RequestCodes.REQUEST_LOGIN);
             }
         });
     }
@@ -139,10 +125,10 @@ public class ActivityLogin extends Activity {
     }
 
     public void onLoginSuccess() {
-        preferences.edit().putInt(getString(R.string.user_level), 1).apply();
+        session.setUserLevel(1);
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
-        startActivityForResult(intent, REQUEST_LOGIN);
+        startActivityForResult(intent, RequestCodes.REQUEST_LOGIN);
     }
 
     public boolean validate() {

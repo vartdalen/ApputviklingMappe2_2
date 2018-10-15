@@ -26,10 +26,10 @@ public class MainActivity extends Activity {
         values.put("Password", "123123");
 
         ContentValues values1 = new ContentValues();
+        values1.put("Phonenumber", "46842543");
         values1.put("Firstname", "Rasmus");
         values1.put("Lastname", "Ola");
         values1.put("Email", "venn1@live.no");
-        values1.put("Phonenumber", "46842543");
         values1.put("UserEmail", "admin@live.no");
 
         getContentResolver().insert(CONTENT_USER_URI, values);
