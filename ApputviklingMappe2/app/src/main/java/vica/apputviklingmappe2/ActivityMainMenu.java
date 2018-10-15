@@ -86,7 +86,7 @@ public class ActivityMainMenu extends Activity {
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityMainMenu.this, ActivityAddFriend.class);
+                Intent intent = new Intent(ActivityMainMenu.this, ActivityManageFriends.class);
                 startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
             }
         });

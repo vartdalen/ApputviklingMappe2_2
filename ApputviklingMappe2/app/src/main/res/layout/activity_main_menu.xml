@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/button_primary"
-            android:text="@string/add_friend"
+            android:text="@string/manage_friends"
             android:theme="@style/ButtonTheme" />
     </LinearLayout>
 </LinearLayout>

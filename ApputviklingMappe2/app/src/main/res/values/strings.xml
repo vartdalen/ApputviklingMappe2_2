@@ -21,7 +21,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="book_table">Book a table</string>
-    <string name="add_friend">Add a friend</string>
+    <string name="manage_friends">Manage friends</string>
+    <string name="add_friend">Add friend</string>
+    <string name="delete_friend">Delete friend</string>
 
     <!--Confirmation Messages-->
     <string name="confirmation_quit1">Really quit?</string>

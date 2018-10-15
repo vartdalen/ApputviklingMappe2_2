@@ -108,7 +108,6 @@ public class ActivityLogin extends Activity {
         final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this);
         progressDialog.setMessage(getString(R.string.authenticating));
         progressDialog.show();
-        // TODO: Implement your own authentication logic here.
 
         new Handler().postDelayed(
                 new Runnable() {
