@@ -1,6 +1,7 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,5 +39,15 @@ public class DB extends Activity{
             cursor.close();
         }
         return stringBuilderQueryResult.toString();
+    }
+
+    public void addFriend(Context context, String firstname, String lastname, String phone){
+        ContentValues values = new ContentValues();
+        values.put(context.getString(R.string.FRIEND_FIRSTNAME), firstname);
+        values.put(context.getString(R.string.FRIEND_LASTNAME), lastname);
+        values.put(context.getString(R.string.FRIEND_PHONE), phone);
+        values.put(context.getString(R.string.FRIEND_FK), "");
+
+        context.getContentResolver().insert(CONTENT_FRIENDS_URI, values);
     }
 }
