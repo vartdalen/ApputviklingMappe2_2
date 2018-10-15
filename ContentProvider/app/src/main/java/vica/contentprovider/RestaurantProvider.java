@@ -170,8 +170,25 @@ public class RestaurantProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = DBHelper.getWritableDatabase();
+        int uriType = uriMatcher.match(uri);
+        int rowsDeleted = 0;
+
+        switch (uriType) {
+            case USER_WITH_ID:
+                break;
+            case USER:
+                break;
+            case FRIEND_WITH_ID:
+                break;
+            case FRIEND:
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI");
+        }
+
+        return rowsDeleted;
     }
 
     @Override
