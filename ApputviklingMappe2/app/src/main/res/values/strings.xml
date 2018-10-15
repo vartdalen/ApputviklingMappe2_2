@@ -36,7 +36,7 @@
     <string name="error_email2">Emails must match</string>
     <string name="error_password1">Must be 6–20 characters, at least one number and at least one letter</string>
     <string name="error_password2">Passwords must match</string>
-    <string name="error_login">Invalid username or password</string>
+    <string name="error_login">Invalid email or password</string>
     <string name="ok_signup">Signup successful</string>
     <string name="ok_logout">Logout successful</string>
 
