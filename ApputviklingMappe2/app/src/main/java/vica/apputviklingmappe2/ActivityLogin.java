@@ -2,7 +2,6 @@ package vica.apputviklingmappe2;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -14,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
-
-import static vica.apputviklingmappe2.DB.CONTENT_URI;
 
 public class ActivityLogin extends Activity {
 
@@ -124,22 +121,19 @@ public class ActivityLogin extends Activity {
     }
 
     public void onLoginSuccess() {
-        session.setUserLevel(1);
+        session.setEmail(email.getText().toString());
+        session.setUserLevel(Integer.parseInt(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_LEVEL)}, getString(R.string.USER_ID)+ "="+"'"+email.getText().toString()+"'", this)));
+
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
         startActivityForResult(intent, RequestCodes.REQUEST_LOGIN);
     }
 
     public boolean validate() {
-        boolean valid;
-
-        if (db.getEmail(email.getText().toString(), this).equals(email.getText().toString()) && email.getText().toString().length() > 0
-                && db.getPassword(password.getText().toString(), this).equals(password.getText().toString()) && password.getText().toString().length() > 0) {
-            valid = true;
-            return valid;
+        if (db.verifyUser(email.getText().toString(), password.getText().toString(), this)) {
+            return true;
         } else {
-            valid = false;
-            return valid;
+            return false;
         }
     }
 }

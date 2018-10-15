@@ -12,7 +12,7 @@ import android.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
 
-import static vica.apputviklingmappe2.DB.CONTENT_URI;
+import static vica.apputviklingmappe2.DB.CONTENT_USER_URI;
 
 public class ActivitySignup extends Activity {
 
@@ -134,7 +134,7 @@ public class ActivitySignup extends Activity {
                 emailConfirmFeedback.setText(getString(R.string.error_email3));
                 return false;
             } else {
-                if ((getContentResolver().insert( CONTENT_URI, values) != null)){
+                if ((getContentResolver().insert(CONTENT_USER_URI, values) != null)){
                     return true;
                 } else {
                     passwordFeedback.setText(getString(R.string.error_signup2));

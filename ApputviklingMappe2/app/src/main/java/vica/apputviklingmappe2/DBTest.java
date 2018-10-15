@@ -8,9 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static vica.apputviklingmappe2.DB.CONTENT_FRIENDS_URI;
-import static vica.apputviklingmappe2.DB.CONTENT_URI;
-
 public class DBTest extends Activity {
 
     TextView view_showall;
@@ -28,7 +25,7 @@ public class DBTest extends Activity {
     // Retrieves data from database by using a stringbuilder and sends the string to the textview
 //    public void showall(View v) {
 //
-//        Cursor cur = getContentResolver().query(CONTENT_URI, null, null, null, null);
+//        Cursor cur = getContentResolver().query(CONTENT_USER_URI, null, null, null, null);
 //        StringBuilder stringBuilderQueryResult = new StringBuilder("");
 //
 //        if(cur != null && cur.moveToFirst()) {
@@ -51,7 +48,7 @@ public class DBTest extends Activity {
 
     public void showall(View v) {
 
-        Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, null, null, null);
+        Cursor cur = getContentResolver().query(DB.CONTENT_FRIENDS_URI, null, null, null, null);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
 
         if(cur != null && cur.moveToFirst()) {
@@ -77,7 +74,7 @@ public class DBTest extends Activity {
 //
 //        String selection = "Email = 'admin@live.no'";
 //
-//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        Cursor cursor = getContentResolver().query(CONTENT_USER_URI, projection, selection, null, null);
 //        StringBuilder stringBuilderQueryResult = new StringBuilder("");
 //
 //        if (cursor.moveToFirst()) {
@@ -95,7 +92,7 @@ public class DBTest extends Activity {
 //
 //        String selection = "Password = '123123'";
 //
-//        Cursor cursor = getContentResolver().query(CONTENT_URI, projection, selection, null, null);
+//        Cursor cursor = getContentResolver().query(CONTENT_USER_URI, projection, selection, null, null);
 //        StringBuilder stringBuilderQueryResult = new StringBuilder("");
 //
 //        if (cursor.moveToFirst()) {
