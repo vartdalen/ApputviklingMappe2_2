@@ -170,11 +170,6 @@ public class RestaurantProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
-        return "";
-    }
-
-    @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
     }
@@ -182,5 +177,10 @@ public class RestaurantProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        return "";
     }
 }
