@@ -106,7 +106,7 @@ public class ActivityLogin extends Activity {
 
     public void login() {
         final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this);
-        progressDialog.setMessage(getString(R.string.validating));
+        progressDialog.setMessage(getString(R.string.authenticating));
         progressDialog.show();
         // TODO: Implement your own authentication logic here.
 
@@ -121,7 +121,7 @@ public class ActivityLogin extends Activity {
                         }
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 1500);
     }
 
     public void onLoginSuccess() {

@@ -29,14 +29,18 @@
 
     <!--Validation Messages-->
     <string name="validating">Validating…</string>
+    <string name="authenticating">Authenticating…</string>
     <string name="error_first_name">Invalid first name</string>
     <string name="error_last_name">Invalid last name</string>
     <string name="error_phone">Must be 8 digits</string>
     <string name="error_email1">Invalid email</string>
     <string name="error_email2">Emails must match</string>
+    <string name="error_email3">Email is already in use</string>
     <string name="error_password1">Must be 6–20 characters, at least one number and at least one letter</string>
     <string name="error_password2">Passwords must match</string>
     <string name="error_login">Invalid email or password</string>
+    <string name="error_signup1">Please complete the form before submitting</string>
+    <string name="error_signup2">Database error</string>
     <string name="ok_signup">Signup successful</string>
     <string name="ok_logout">Logout successful</string>
 
