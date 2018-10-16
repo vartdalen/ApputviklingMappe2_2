@@ -28,13 +28,13 @@ public class MainActivity extends Activity {
         ContentValues values1 = new ContentValues();
         values1.put("Firstname", "Rasmus");
         values1.put("Lastname", "Ola");
-        values1.put("Phonenumber", "46842543");
+        values1.put("Phonenumber", "46842541");
         values1.put("UserEmail", "admin@live.no");
 
         ContentValues values2 = new ContentValues();
         values2.put("Firstname", "Carlo");
         values2.put("Lastname", "Nguyen");
-        values2.put("Phonenumber", "46842543");
+        values2.put("Phonenumber", "46842542");
         values2.put("UserEmail", "admin@live.no");
 
         ContentValues values3 = new ContentValues();

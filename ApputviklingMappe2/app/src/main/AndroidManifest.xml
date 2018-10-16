@@ -21,7 +21,6 @@
         </activity>
         <activity android:name=".ActivitySignup"></activity>
         <activity android:name=".ActivityMainMenu"></activity>
-        <activity android:name=".DBTest"></activity>
         <activity android:name=".ActivityManageFriends"></activity>
     </application>
 

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +51,6 @@ public class ActivityManageFriends extends Activity {
         }
     }
     private void populateFriendList() {
-        friendList = (ListView)findViewById(R.id.friend_list);
         Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, null, null, null);
         listAdapter = new ArrayAdapter<>(this, R.layout.list_add_friend, R.id.friend_textview, friendListArray);
         friendList.setAdapter(listAdapter);
@@ -88,7 +88,7 @@ public class ActivityManageFriends extends Activity {
                     public void onClick(View v) {
                         if(!friend_first_name.getText().toString().isEmpty() && !friend_last_name.getText().toString().isEmpty() && !friend_phone.getText().toString().isEmpty()) {
                             db.addFriend(ActivityManageFriends.this, friend_first_name.getText().toString(), friend_last_name.getText().toString(), friend_phone.getText().toString());
-                            friendListArray.add(friendListArray.size()+1 + " " + friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
+                            friendListArray.add(friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
                             listAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
@@ -97,7 +97,24 @@ public class ActivityManageFriends extends Activity {
                 dialog.show();
             }
         });
+
         buttonDelete = (Button) findViewById(R.id.friend_delete_button);
+        friendList = (ListView)findViewById(R.id.friend_list);
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(ActivityManageFriends.this, friendListArray.get(position), Toast.LENGTH_SHORT).show();
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
+//                    listAdapter.notifyDataSetChanged();
+                        Toast.makeText(ActivityManageFriends.this, "Are you sure you want to delete this friend?", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
     }
 
     private void setupToolbar() {

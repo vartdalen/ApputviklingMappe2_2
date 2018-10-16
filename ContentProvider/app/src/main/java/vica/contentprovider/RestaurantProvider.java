@@ -170,13 +170,57 @@ public class RestaurantProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = DBHelper.getWritableDatabase();
+        int uriType = uriMatcher.match(uri);
+        int rowsDeleted = 0;
+
+        switch (uriType) {
+            case USER:
+                rowsDeleted = db.delete(TABLE_USER, selection, selectionArgs);
+                break;
+            case USER_WITH_ID:
+                rowsDeleted = db.delete(TABLE_USER, selection, selectionArgs);
+                break;
+            case FRIEND:
+                rowsDeleted = db.delete(TABLE_FRIENDS, selection, selectionArgs);
+                break;
+            case FRIEND_WITH_ID:
+               rowsDeleted = db.delete(TABLE_FRIENDS, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI");
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return rowsDeleted;
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = DBHelper.getWritableDatabase();
+        int uriType = uriMatcher.match(uri);
+        int rowsUpdated = 0;
+
+        switch (uriType) {
+            case USER:
+                rowsUpdated = db.update(TABLE_USER, values, selection, selectionArgs);
+                break;
+            case USER_WITH_ID:
+                rowsUpdated = db.update(TABLE_USER, values, USER_ID + " = " + uri.getPathSegments().get(1), selectionArgs);
+                break;
+            case FRIEND:
+                rowsUpdated = db.update(TABLE_FRIENDS, values, selection, selectionArgs);
+                break;
+            case FRIEND_WITH_ID:
+                rowsUpdated = db.update(TABLE_FRIENDS, values, FRIEND_ID + " = " + uri.getPathSegments().get(1), selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI");
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return rowsUpdated;
     }
 
     @Override
