@@ -84,12 +84,14 @@ public class ActivityManageFriends extends Activity {
                 Button friend_add_button = (Button) view.findViewById(R.id.friend_dialog_add_button);
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
+                final String sql = getString(R.string.FRIEND_ID) + " DESC LIMIT 1";
                 friend_add_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(!friend_first_name.getText().toString().isEmpty() && !friend_last_name.getText().toString().isEmpty() && !friend_phone.getText().toString().isEmpty()) {
-                            db.addFriend(ActivityManageFriends.this, friend_first_name.getText().toString(), friend_last_name.getText().toString(), friend_phone.getText().toString());
-                            friendListArray.add(friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
+                            db.addFriend(ActivityManageFriends.this, friend_first_name.getText().toString(), friend_last_name.getText().toString(), friend_phone.getText().toString(), session.getEmail().toString());
+                            friendListArray.add(Integer.parseInt(db.getInfo(CONTENT_FRIENDS_URI, new String[]{getString(R.string.FRIEND_ID)}, null, sql,ActivityManageFriends.this))+ " "
+                                    + friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
                             listAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
@@ -103,15 +105,15 @@ public class ActivityManageFriends extends Activity {
         friendList = (ListView)findViewById(R.id.friend_list);
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 Toast.makeText(ActivityManageFriends.this, friendListArray.get(position), Toast.LENGTH_SHORT).show();
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 //                        db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
-//                    listAdapter.notifyDataSetChanged();
-                        Toast.makeText(ActivityManageFriends.this, "Are you sure you want to delete this friend?", Toast.LENGTH_SHORT).show();
+//                        listAdapter.notifyDataSetChanged();
 
+                        db.stringParser(friendListArray.get(position));
                     }
                 });
             }

@@ -6,15 +6,21 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class DB extends Activity{
 
     public static String PROVIDER = "vica.contentprovider" ;
     public static final Uri CONTENT_USER_URI = Uri.parse("content://"+ PROVIDER + "/User");
     public static final Uri CONTENT_FRIENDS_URI = Uri.parse("content://" + PROVIDER + "/Friends");
 
-    public String getInfo(Uri uri, String[] projection, String selection, Context context ) {
+    public String getInfo(Uri uri, String[] projection, String selection, String sortOrder, Context context ) {
 
-        Cursor cursor = context.getContentResolver().query(uri, projection, selection, null, null);
+        Cursor cursor = context.getContentResolver().query(uri, projection, selection, null, sortOrder);
         StringBuilder stringBuilderQueryResult = new StringBuilder("");
 
         if (cursor.moveToFirst()) {
@@ -54,12 +60,12 @@ public class DB extends Activity{
         return stringBuilderQueryResult.toString();
     }
 
-    public void addFriend(Context context, String firstname, String lastname, String phone){
+    public void addFriend(Context context, String firstname, String lastname, String phone, String userEmail){
         ContentValues values = new ContentValues();
         values.put(context.getString(R.string.FRIEND_FIRSTNAME), firstname);
         values.put(context.getString(R.string.FRIEND_LASTNAME), lastname);
         values.put(context.getString(R.string.FRIEND_PHONE), phone);
-        values.put(context.getString(R.string.FRIEND_FK), "");
+        values.put(context.getString(R.string.FRIEND_FK), userEmail);
 
         context.getContentResolver().insert(CONTENT_FRIENDS_URI, values);
     }
@@ -71,6 +77,21 @@ public class DB extends Activity{
             }
         }
         return false;
+    }
+
+    public String stringParser(String listString){
+        if(listString != null){
+            LinkedList<String> res = new LinkedList<>();
+            Pattern p = Pattern.compile("\\d+");
+            Matcher m = p.matcher(listString);
+            while(m.find()){
+                res.add(m.group());
+            }
+            System.out.println(res.get(0));
+        }else{
+            listString = "Error parsing";
+        }
+        return listString;
     }
 
     public void deleteFriend(Context context, String phone, String id){
