@@ -54,7 +54,7 @@ public class ActivityLogin extends Activity {
                 feedback.setText(getString(R.string.ok_signup));
             }
             if (resultCode == ResultCodes.RESULT_QUIT) {
-                this.finish();
+                finish();
             }
         }
     }

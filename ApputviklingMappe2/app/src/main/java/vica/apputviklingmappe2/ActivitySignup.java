@@ -30,7 +30,7 @@ public class ActivitySignup extends Activity {
     private EditText password;
     private EditText passwordConfirm;
     private TextView passwordFeedback;
-    private Button signupButton;
+    private Button buttonSignup;
 
     private Toolbar toolbar;
     private Helper helper;
@@ -97,7 +97,7 @@ public class ActivitySignup extends Activity {
         password  = (EditText)findViewById(R.id.signup_password);
         passwordFeedback = (TextView)findViewById(R.id.signup_password_feedback);
         passwordConfirm  = (EditText)findViewById(R.id.signup_password_confirm);
-        signupButton = (Button)findViewById(R.id.signup_button);
+        buttonSignup = (Button)findViewById(R.id.signup_button);
     }
 
     public void signup(View v) {

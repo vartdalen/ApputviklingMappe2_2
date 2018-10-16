@@ -34,20 +34,21 @@ public class ActivityManageFriends extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_friends);
         session = new Session(ActivityManageFriends.this);
-        helper = new Helper();
-        db = new DB();
-        setupToolbar();
-        setupFields();
-        populateFriendList();
-
         if(session.getUserLevel() < 1) {
             finish();
             Intent intent = new Intent(ActivityManageFriends.this, ActivityLogin.class);
             startActivity(intent);
         }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_manage_friends);
+
+        helper = new Helper();
+        db = new DB();
+        setupToolbar();
+        setupFields();
+        populateFriendList();
     }
     private void populateFriendList() {
         String selection = getString(R.string.FRIEND_FK) + "=" + "'"+session.getEmail()+"'";
