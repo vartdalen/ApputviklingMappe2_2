@@ -7,11 +7,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ public class ActivityManageFriends extends Activity {
         }
     }
     private void populateFriendList() {
-        friendList = (ListView)findViewById(R.id.friend_list);
-        Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, null, null, null);
+        String selection = getString(R.string.FRIEND_FK) + "=" + "'"+session.getEmail()+"'";
+        Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, selection, null, null);
         listAdapter = new ArrayAdapter<>(this, R.layout.list_add_friend, R.id.friend_textview, friendListArray);
         friendList.setAdapter(listAdapter);
         if(cur != null && cur.moveToFirst()) {
@@ -66,7 +66,7 @@ public class ActivityManageFriends extends Activity {
             cur.close();
         }
         else{
-            Toast.makeText(this, "Failed query!", Toast.LENGTH_SHORT).show();
+
         }
     }
     private void setupFields() {
@@ -83,12 +83,14 @@ public class ActivityManageFriends extends Activity {
                 Button friend_add_button = (Button) view.findViewById(R.id.friend_dialog_add_button);
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
+                final String sql = getString(R.string.FRIEND_ID) + " DESC LIMIT 1";
                 friend_add_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(!friend_first_name.getText().toString().isEmpty() && !friend_last_name.getText().toString().isEmpty() && !friend_phone.getText().toString().isEmpty()) {
-                            db.addFriend(ActivityManageFriends.this, friend_first_name.getText().toString(), friend_last_name.getText().toString(), friend_phone.getText().toString());
-                            friendListArray.add(friendListArray.size()+1 + " " + friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
+                            db.addFriend(ActivityManageFriends.this, friend_first_name.getText().toString(), friend_last_name.getText().toString(), friend_phone.getText().toString(), session.getEmail().toString());
+                            friendListArray.add(Integer.parseInt(db.getInfo(CONTENT_FRIENDS_URI, new String[]{getString(R.string.FRIEND_ID)}, null, sql,ActivityManageFriends.this))+ " "
+                                    + friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
                             listAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
@@ -97,7 +99,23 @@ public class ActivityManageFriends extends Activity {
                 dialog.show();
             }
         });
+
         buttonDelete = (Button) findViewById(R.id.friend_delete_button);
+        friendList = (ListView)findViewById(R.id.friend_list);
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
+                        friendListArray.remove(position);
+                        listAdapter.notifyDataSetChanged();
+
+                    }
+                });
+            }
+        });
     }
 
     private void setupToolbar() {
