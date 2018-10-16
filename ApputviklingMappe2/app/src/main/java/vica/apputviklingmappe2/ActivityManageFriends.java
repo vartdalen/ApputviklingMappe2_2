@@ -16,7 +16,7 @@ import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
-import static vica.apputviklingmappe2.DB.CONTENT_FRIENDS_URI;
+import static vica.apputviklingmappe2.DB.CONTENT_FRIEND_URI;
 
 public class ActivityManageFriends extends Activity {
 
@@ -51,7 +51,7 @@ public class ActivityManageFriends extends Activity {
     }
     private void populateFriendList() {
         String selection = getString(R.string.FRIEND_FK) + "=" + "'"+session.getEmail()+"'";
-        Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, selection, null, null);
+        Cursor cur = getContentResolver().query(CONTENT_FRIEND_URI, null, selection, null, null);
         listAdapter = new ArrayAdapter<>(this, R.layout.list_add_friend, R.id.friend_textview, friendListArray);
         friendList.setAdapter(listAdapter);
         if(cur != null && cur.moveToFirst()) {
@@ -89,7 +89,7 @@ public class ActivityManageFriends extends Activity {
                     public void onClick(View v) {
                         if(!friend_first_name.getText().toString().isEmpty() && !friend_last_name.getText().toString().isEmpty() && !friend_phone.getText().toString().isEmpty()) {
                             db.addFriend(ActivityManageFriends.this, friend_first_name.getText().toString(), friend_last_name.getText().toString(), friend_phone.getText().toString(), session.getEmail().toString());
-                            friendListArray.add(Integer.parseInt(db.getInfo(CONTENT_FRIENDS_URI, new String[]{getString(R.string.FRIEND_ID)}, null, sql,ActivityManageFriends.this))+ " "
+                            friendListArray.add(Integer.parseInt(db.getInfo(CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_ID)}, null, sql,ActivityManageFriends.this))+ " "
                                     + friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
                             listAdapter.notifyDataSetChanged();
                             dialog.dismiss();

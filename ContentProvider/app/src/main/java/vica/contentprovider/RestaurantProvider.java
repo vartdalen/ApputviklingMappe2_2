@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 public class RestaurantProvider extends ContentProvider {
@@ -24,10 +22,11 @@ public class RestaurantProvider extends ContentProvider {
     private static final int USER_WITH_ID = 2;
     private static final int FRIEND = 3;
     private static final int FRIEND_WITH_ID = 4;
+    private static final int RESTAURANT = 5;
 
     // Table names
     private final static String TABLE_USER = "User";
-    private final static String TABLE_FRIENDS = "Friends";
+    private final static String TABLE_FRIEND = "Friend";
     private final static String TABLE_RESTAURANT = "Restaurant";
     private final static String TABLE_ORDER = "Order";
     private final static String TABLE_ORDERLINE = "Orderline";
@@ -47,6 +46,13 @@ public class RestaurantProvider extends ContentProvider {
     public final static String FRIEND_PHONE = "Phonenumber";
     public final static String FRIEND_FK = "UserEmail";
 
+    // Table Restaurant columns
+    public final static String RESTAURANT_ID = "_id";
+    public final static String RESTAURANT_NAME = "Name";
+    public final static String RESTAURANT_ADDRESS = "Address";
+    public final static String RESTAURANT_PHONE = "Phonenumber";
+    public final static String RESTAURANT_TYPE = "Type";
+
     // Table User create-statement
     private static final String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + USER_ID + " TEXT PRIMARY KEY,"
@@ -57,7 +63,7 @@ public class RestaurantProvider extends ContentProvider {
             + USER_PASSWORD + " TEXT);";
 
     // Table Friends create-statement
-    private static final String CREATE_FRIENDS_TABLE = "CREATE TABLE " + TABLE_FRIENDS + "("
+    private static final String CREATE_FRIEND_TABLE = "CREATE TABLE " + TABLE_FRIEND + "("
             + FRIEND_ID + " Integer PRIMARY KEY AUTOINCREMENT,"
             + FRIEND_FIRSTNAME + " TEXT,"
             + FRIEND_LASTNAME + " TEXT,"
@@ -65,19 +71,29 @@ public class RestaurantProvider extends ContentProvider {
             + FRIEND_FK + " TEXT,"
             + "FOREIGN KEY ("+FRIEND_FK+") REFERENCES "+TABLE_USER+"("+USER_ID+"));";
 
+    // Table Friends create-statement
+    private static final String CREATE_RESTAURANT_TABLE = "CREATE TABLE " + TABLE_RESTAURANT + "("
+            + RESTAURANT_ID + " Integer PRIMARY KEY AUTOINCREMENT,"
+            + RESTAURANT_NAME + " TEXT,"
+            + RESTAURANT_ADDRESS + " TEXT,"
+            + RESTAURANT_PHONE + " TEXT,"
+            + RESTAURANT_TYPE + " TEXT);";
+
     RestaurantProvider.DatabaseHelper DBHelper;
     SQLiteDatabase db;
 
     public static final Uri CONTENT_USER_URI = Uri.parse("content://" + PROVIDER + "/User");
-    public static final Uri CONTENT_FRIENDS_URI = Uri.parse("content://" + PROVIDER + "/Friends");
+    public static final Uri CONTENT_FRIEND_URI = Uri.parse("content://" + PROVIDER + "/Friend");
+    public static final Uri CONTENT_RESTAURANT_URI = Uri.parse("content://" + PROVIDER + "/Restaurant");
     private static final UriMatcher uriMatcher;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER, "User", USER);
         uriMatcher.addURI(PROVIDER, "User/#", USER_WITH_ID);
-        uriMatcher.addURI(PROVIDER, "Friends", FRIEND);
-        uriMatcher.addURI(PROVIDER, "Friends/#", FRIEND_WITH_ID);
+        uriMatcher.addURI(PROVIDER, "Friend", FRIEND);
+        uriMatcher.addURI(PROVIDER, "Friend/#", FRIEND_WITH_ID);
+        uriMatcher.addURI(PROVIDER, "Restaurant", RESTAURANT);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -88,7 +104,8 @@ public class RestaurantProvider extends ContentProvider {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_USER_TABLE);
-            db.execSQL(CREATE_FRIENDS_TABLE);
+            db.execSQL(CREATE_FRIEND_TABLE);
+            db.execSQL(CREATE_RESTAURANT_TABLE);
         }
 
         @Override
@@ -120,11 +137,14 @@ public class RestaurantProvider extends ContentProvider {
                 queryBuilder.setTables(TABLE_USER);
                 break;
             case FRIEND_WITH_ID:
-                queryBuilder.setTables(TABLE_FRIENDS);
+                queryBuilder.setTables(TABLE_FRIEND);
                 queryBuilder.appendWhere(FRIEND_ID + "=" + uri.getLastPathSegment());
                 break;
             case FRIEND:
-                queryBuilder.setTables(TABLE_FRIENDS);
+                queryBuilder.setTables(TABLE_FRIEND);
+                break;
+            case RESTAURANT:
+                queryBuilder.setTables(TABLE_RESTAURANT);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
@@ -152,12 +172,16 @@ public class RestaurantProvider extends ContentProvider {
                 c = db.query(TABLE_USER, null, null, null, null, null, null);
                 break;
             case FRIEND_WITH_ID:
-                db.insert(TABLE_FRIENDS, null, values);
-                c = db.query(TABLE_FRIENDS, null, null, null, null, null, null);
+                db.insert(TABLE_FRIEND, null, values);
+                c = db.query(TABLE_FRIEND, null, null, null, null, null, null);
                 break;
             case FRIEND:
-                db.insert(TABLE_FRIENDS, null, values);
-                c = db.query(TABLE_FRIENDS, null, null, null, null, null, null);
+                db.insert(TABLE_FRIEND, null, values);
+                c = db.query(TABLE_FRIEND, null, null, null, null, null, null);
+                break;
+            case RESTAURANT:
+                db.insert(TABLE_RESTAURANT, null, values);
+                c = db.query(TABLE_RESTAURANT, null,null,null,null,null,null);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
@@ -182,10 +206,13 @@ public class RestaurantProvider extends ContentProvider {
                 rowsDeleted = db.delete(TABLE_USER, selection, selectionArgs);
                 break;
             case FRIEND:
-                rowsDeleted = db.delete(TABLE_FRIENDS, selection, selectionArgs);
+                rowsDeleted = db.delete(TABLE_FRIEND, selection, selectionArgs);
                 break;
             case FRIEND_WITH_ID:
-               rowsDeleted = db.delete(TABLE_FRIENDS, selection, selectionArgs);
+               rowsDeleted = db.delete(TABLE_FRIEND, selection, selectionArgs);
+                break;
+            case RESTAURANT:
+                rowsDeleted = db.delete(TABLE_RESTAURANT, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
@@ -209,10 +236,10 @@ public class RestaurantProvider extends ContentProvider {
                 rowsUpdated = db.update(TABLE_USER, values, USER_ID + " = " + uri.getPathSegments().get(1), selectionArgs);
                 break;
             case FRIEND:
-                rowsUpdated = db.update(TABLE_FRIENDS, values, selection, selectionArgs);
+                rowsUpdated = db.update(TABLE_FRIEND, values, selection, selectionArgs);
                 break;
             case FRIEND_WITH_ID:
-                rowsUpdated = db.update(TABLE_FRIENDS, values, FRIEND_ID + " = " + uri.getPathSegments().get(1), selectionArgs);
+                rowsUpdated = db.update(TABLE_FRIEND, values, FRIEND_ID + " = " + uri.getPathSegments().get(1), selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
