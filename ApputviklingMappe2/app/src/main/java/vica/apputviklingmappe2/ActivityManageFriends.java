@@ -51,7 +51,8 @@ public class ActivityManageFriends extends Activity {
         }
     }
     private void populateFriendList() {
-        Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, null, null, null);
+        String selection = getString(R.string.FRIEND_FK) + "=" + "'"+session.getEmail()+"'";
+        Cursor cur = getContentResolver().query(CONTENT_FRIENDS_URI, null, selection, null, null);
         listAdapter = new ArrayAdapter<>(this, R.layout.list_add_friend, R.id.friend_textview, friendListArray);
         friendList.setAdapter(listAdapter);
         if(cur != null && cur.moveToFirst()) {
