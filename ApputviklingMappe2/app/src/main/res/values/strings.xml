@@ -24,6 +24,7 @@
     <string name="manage_friends">Manage friends</string>
     <string name="add_friend">Add friend</string>
     <string name="delete_friend">Delete friend</string>
+    <string name ="manage_restaurants">Manage Restaurants</string>
     <string name="preferences">Preferences</string>
 
     <!--Confirmation Messages-->

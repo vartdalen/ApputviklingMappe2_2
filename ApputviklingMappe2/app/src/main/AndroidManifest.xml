@@ -23,6 +23,7 @@
         <activity android:name=".ActivityMainMenu"></activity>
         <activity android:name=".ActivityManageFriends"></activity>
         <activity android:name=".ActivityPreferences"></activity>
+        <activity android:name=".ActivityManageRestaurants"></activity>
     </application>
 
 </manifest>

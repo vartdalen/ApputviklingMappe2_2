@@ -11,7 +11,9 @@ import android.widget.Toolbar;
 
 public class ActivityMainMenu extends Activity {
 
-    private Button addFriendButton;
+    private Button buttonBookTable;
+    private Button buttonAddFriend;
+    private Button buttonManageRestaurants;
 
     private Toolbar toolbar;
     private Helper helper;
@@ -29,6 +31,7 @@ public class ActivityMainMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        helper = new Helper();
         setupFields();
         setupToolbar();
     }
@@ -43,7 +46,7 @@ public class ActivityMainMenu extends Activity {
                 startActivity(intent);
             }
             if (resultCode == ResultCodes.RESULT_QUIT) {
-                this.finish();
+                finish();
             }
     }
 
@@ -89,15 +92,27 @@ public class ActivityMainMenu extends Activity {
     }
 
     private void setupFields() {
-        helper = new Helper();
-        addFriendButton = (Button) findViewById(R.id.main_menu_button_manage_friends);
-        addFriendButton.setOnClickListener(new View.OnClickListener() {
+        buttonAddFriend = (Button) findViewById(R.id.main_menu_button_manage_friends);
+        buttonAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityMainMenu.this, ActivityManageFriends.class);
                 startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
             }
         });
+
+        buttonManageRestaurants = (Button) findViewById(R.id.main_menu_button_manage_restaurants);
+        if(session.getUserLevel() < 2 ) {
+            buttonManageRestaurants.setVisibility(View.GONE);
+        } else {
+            buttonManageRestaurants.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ActivityMainMenu.this, ActivityManageRestaurants.class);
+                    startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
+                }
+            });
+        }
     }
 
 }
