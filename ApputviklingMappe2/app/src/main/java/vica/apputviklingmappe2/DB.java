@@ -50,4 +50,10 @@ public class DB extends Activity{
 
         context.getContentResolver().insert(CONTENT_FRIENDS_URI, values);
     }
+
+    public void deleteFriend(Context context, String phone, String id){
+        String selection = context.getString(R.string.FRIEND_PHONE)+ "= ?" + " AND " + context.getString(R.string.FRIEND_ID)+ "= ?";
+        String[] selectionArgs = {phone, id};
+        context.getContentResolver().delete(CONTENT_FRIENDS_URI, selection, selectionArgs);
+    }
 }
