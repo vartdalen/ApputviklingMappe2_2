@@ -106,14 +106,13 @@ public class ActivityManageFriends extends Activity {
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Toast.makeText(ActivityManageFriends.this, friendListArray.get(position), Toast.LENGTH_SHORT).show();
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
-//                        listAdapter.notifyDataSetChanged();
+                        db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
+                        friendListArray.remove(position);
+                        listAdapter.notifyDataSetChanged();
 
-                        db.stringParser(friendListArray.get(position));
                     }
                 });
             }

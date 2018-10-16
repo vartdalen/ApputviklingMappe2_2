@@ -8,6 +8,6 @@
         android:state_focused="false"
         android:drawable="@drawable/friend_listview_normal" />
     <item
-        android:state_selected="true"
+        android:state_selected="false"
         android:drawable="@drawable/friend_listview_selected" />
 </selector>

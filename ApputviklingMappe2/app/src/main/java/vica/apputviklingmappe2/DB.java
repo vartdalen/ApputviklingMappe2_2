@@ -79,7 +79,7 @@ public class DB extends Activity{
         return false;
     }
 
-    public String stringParser(String listString){
+    private String stringParser(String listString){
         if(listString != null){
             LinkedList<String> res = new LinkedList<>();
             Pattern p = Pattern.compile("\\d+");
@@ -87,16 +87,16 @@ public class DB extends Activity{
             while(m.find()){
                 res.add(m.group());
             }
-            System.out.println(res.get(0));
+            listString = res.get(0);
+            return listString;
         }else{
-            listString = "Error parsing";
+            return "";
         }
-        return listString;
     }
 
-    public void deleteFriend(Context context, String phone, String id){
-        String selection = context.getString(R.string.FRIEND_PHONE)+ "= ?" + " AND " + context.getString(R.string.FRIEND_ID)+ "= ?";
-        String[] selectionArgs = {phone, id};
+    public void deleteFriend(Context context, String id){
+        String selection = context.getString(R.string.FRIEND_ID)+ "= ?";
+        String[] selectionArgs = {stringParser(id)};
         context.getContentResolver().delete(CONTENT_FRIENDS_URI, selection, selectionArgs);
     }
 }
