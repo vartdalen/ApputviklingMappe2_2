@@ -23,7 +23,7 @@ public class ActivityManageRestaurants extends Activity {
         }
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_manage_restaurants);
 
         helper = new Helper();
         setupFields();
@@ -37,7 +37,7 @@ public class ActivityManageRestaurants extends Activity {
     private void setupToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_logged_in);
-        toolbar.setTitle(getString(R.string.main_menu));
+        toolbar.setTitle(getString(R.string.manage_restaurants));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

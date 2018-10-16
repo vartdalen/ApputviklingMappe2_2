@@ -80,7 +80,7 @@ public class ActivitySignup extends Activity {
         password.addTextChangedListener(passwordOnTextChangedListener);
         OnTextChangedListener passwordConfirmOnTextChangedListener = new OnTextChangedListener(passwordConfirm, password, passwordFeedback, "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$", getString(R.string.error_password1), getString(R.string.error_password2));
         passwordConfirm.addTextChangedListener(passwordConfirmOnTextChangedListener);
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
