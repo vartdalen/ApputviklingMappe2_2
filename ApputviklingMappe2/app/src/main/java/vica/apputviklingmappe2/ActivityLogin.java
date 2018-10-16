@@ -121,8 +121,13 @@ public class ActivityLogin extends Activity {
     }
 
     public void onLoginSuccess() {
+        String sqlSelectionOnUserId = getString(R.string.USER_ID)+ "="+"'"+email.getText().toString()+"'";
+
         session.setEmail(email.getText().toString());
-        session.setUserLevel(Integer.parseInt(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_LEVEL)}, getString(R.string.USER_ID)+ "="+"'"+email.getText().toString()+"'", this)));
+        session.setUserLevel(Integer.parseInt(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_LEVEL)}, sqlSelectionOnUserId, this)));
+        session.setFirstName(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_FIRSTNAME)}, sqlSelectionOnUserId, this));
+        session.setLastName(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_LASTNAME)}, sqlSelectionOnUserId, this));
+        session.setPhone(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_PHONE)}, sqlSelectionOnUserId, this));
 
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
