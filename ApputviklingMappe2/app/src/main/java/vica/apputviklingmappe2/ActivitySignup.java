@@ -14,8 +14,6 @@ import android.widget.EditText;
 
 import java.security.NoSuchAlgorithmException;
 
-import static vica.apputviklingmappe2.DB.CONTENT_USER_URI;
-
 public class ActivitySignup extends Activity {
 
     private EditText firstName;
@@ -82,6 +80,12 @@ public class ActivitySignup extends Activity {
         password.addTextChangedListener(passwordOnTextChangedListener);
         OnTextChangedListener passwordConfirmOnTextChangedListener = new OnTextChangedListener(passwordConfirm, password, passwordFeedback, "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$", getString(R.string.error_password1), getString(R.string.error_password2));
         passwordConfirm.addTextChangedListener(passwordConfirmOnTextChangedListener);
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signup();
+            }
+        });
     }
 
     private void setupFields() {
@@ -100,7 +104,7 @@ public class ActivitySignup extends Activity {
         signupButton = (Button)findViewById(R.id.signup_button);
     }
 
-    public void signup(View v) {
+    public void signup() {
 
         final ProgressDialog progressDialog = new ProgressDialog(ActivitySignup.this);
         progressDialog.setMessage(getString(R.string.validating));
@@ -139,7 +143,7 @@ public class ActivitySignup extends Activity {
                 emailConfirmFeedback.setText(getString(R.string.error_email3));
                 return false;
             } else {
-                if ((getContentResolver().insert(CONTENT_USER_URI, values) != null)){
+                if ((getContentResolver().insert(DB.CONTENT_USER_URI, values) != null)){
                     return true;
                 } else {
                     passwordFeedback.setText(getString(R.string.error_signup2));
