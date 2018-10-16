@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Map;
+
 public class Session {
     private SharedPreferences prefs;
     private Context context;
@@ -14,7 +16,15 @@ public class Session {
     }
 
     public void destroy() {
-        prefs.edit().clear().apply();
+        Map<String,?> prefMap = prefs.getAll();
+        for(Map.Entry<String,?> prefToReset : prefMap.entrySet()) {
+            if (!prefToReset.getKey().equals(context.getString(R.string.notifications))
+            && !prefToReset.getKey().equals(context.getString(R.string.notify_friends))
+            && !prefToReset.getKey().equals(context.getString(R.string.notify_friends_frequency))
+            && !prefToReset.getKey().equals(context.getString(R.string.reminder_message))) {
+                prefs.edit().remove(prefToReset.getKey()).apply();
+            }
+        }
     }
 
     public void setUserLevel(int userLevel) {
@@ -57,5 +67,18 @@ public class Session {
     }
     public String getPhone() {
         return prefs.getString(context.getString(R.string.phone),"");
+    }
+
+    public String getPrefNotification() {
+        return prefs.getString(context.getString(R.string.notifications), "");
+    }
+    public String getPrefNotifyFriends() {
+        return prefs.getString(context.getString(R.string.notify_friends), "");
+    }
+    public String getPrefReminderMessage() {
+        return prefs.getString(context.getString(R.string.reminder_message), "");
+    }
+    public String getPrefNotifyFriendsFrequency() {
+        return prefs.getString(context.getString(R.string.notify_friends_frequency), "");
     }
 }

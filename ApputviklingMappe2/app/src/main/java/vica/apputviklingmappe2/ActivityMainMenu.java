@@ -29,9 +29,8 @@ public class ActivityMainMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        helper = new Helper();
-        setupToolbar();
         setupFields();
+        setupToolbar();
     }
 
     @Override
@@ -65,6 +64,14 @@ public class ActivityMainMenu extends Activity {
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(ActivityMainMenu.this, ActivityPreferences.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
                 session.destroy();
                 finish();
                 Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
@@ -72,7 +79,7 @@ public class ActivityMainMenu extends Activity {
                 return true;
             }
         });
-        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        toolbar.getMenu().getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 helper.quit(ActivityMainMenu.this);
@@ -82,6 +89,7 @@ public class ActivityMainMenu extends Activity {
     }
 
     private void setupFields() {
+        helper = new Helper();
         addFriendButton = (Button) findViewById(R.id.main_menu_button_manage_friends);
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override

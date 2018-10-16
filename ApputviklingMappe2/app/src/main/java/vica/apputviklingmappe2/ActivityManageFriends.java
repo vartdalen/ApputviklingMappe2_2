@@ -113,12 +113,20 @@ public class ActivityManageFriends extends Activity {
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(ActivityManageFriends.this, ActivityPreferences.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
                 setResult(ResultCodes.RESULT_LOGOUT);
                 finish();
                 return true;
             }
         });
-        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        toolbar.getMenu().getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 setResult(ResultCodes.RESULT_QUIT);

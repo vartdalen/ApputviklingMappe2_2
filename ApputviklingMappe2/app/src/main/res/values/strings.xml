@@ -24,10 +24,10 @@
     <string name="manage_friends">Manage friends</string>
     <string name="add_friend">Add friend</string>
     <string name="delete_friend">Delete friend</string>
+    <string name="preferences">Preferences</string>
 
     <!--Confirmation Messages-->
     <string name="confirmation_quit1">Really quit?</string>
-    <string name="confirmation_quit2">Current game will not be saved</string>
 
     <!--Validation Messages-->
     <string name="validating">Validating…</string>
@@ -45,6 +45,18 @@
     <string name="error_signup2">Database error</string>
     <string name="ok_signup">Signup successful</string>
     <string name="ok_logout">Logout successful</string>
+
+    <!--Preferences-->
+    <string name="personal">Personal</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_summary">Reminder of today\'s appointments</string>
+    <string name="social">Social</string>
+    <string name="notify_friends">Notify friends</string>
+    <string name="notify_friends_summary">Notify invited friends by SMS</string>
+    <string name="reminder_message">Reminder message</string>
+    <string name="reminder_message_summary">Customize the text in your friend notification</string>
+    <string name="notify_friends_frequency">Frequency</string>
+    <string name="notify_friends_frequency_summary">Control friend reminder frequency</string>
 
     <!--User-table database Strings-->
     <string name="USER_ID">Email</string>

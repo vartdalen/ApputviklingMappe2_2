@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import java.security.NoSuchAlgorithmException;
+
 public class ActivityLogin extends Activity {
 
     private EditText email;
@@ -101,44 +103,49 @@ public class ActivityLogin extends Activity {
         });
     }
 
-    public void login() {
-        final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this);
-        progressDialog.setMessage(getString(R.string.authenticating));
-        progressDialog.show();
-
-        new Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        if (!validate()) {
-                            feedback.setTextColor(getColor(R.color.colorError));
-                            feedback.setText(getString(R.string.error_login));
-                        } else {
-                            onLoginSuccess();
-                        }
-                        progressDialog.dismiss();
-                    }
-                }, 1500);
-    }
-
-    public void onLoginSuccess() {
+    private void setupSession() {
         String sqlSelectionOnUserId = getString(R.string.USER_ID)+ "="+"'"+email.getText().toString()+"'";
-
         session.setEmail(email.getText().toString());
         session.setUserLevel(Integer.parseInt(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_LEVEL)}, sqlSelectionOnUserId, this)));
         session.setFirstName(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_FIRSTNAME)}, sqlSelectionOnUserId, this));
         session.setLastName(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_LASTNAME)}, sqlSelectionOnUserId, this));
         session.setPhone(db.getInfo(DB.CONTENT_USER_URI, new String[]{getString(R.string.USER_PHONE)}, sqlSelectionOnUserId, this));
+    }
 
+    private void login() {
+        final ProgressDialog progressDialog = new ProgressDialog(ActivityLogin.this);
+        progressDialog.setMessage(getString(R.string.authenticating));
+        progressDialog.show();
+
+        new Handler().postDelayed(new Runnable() {
+                    public void run() {
+            try {
+                if (!validate()) {
+                    feedback.setTextColor(getColor(R.color.colorError));
+                    feedback.setText(getString(R.string.error_login));
+                } else {
+                    onLoginSuccess();
+                }
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            progressDialog.dismiss();
+            }
+        }, 1500);
+    }
+
+    private void onLoginSuccess() {
+        setupSession();
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
         startActivityForResult(intent, RequestCodes.REQUEST_LOGIN);
     }
 
-    public boolean validate() {
-        if (db.verifyUser(email.getText().toString(), password.getText().toString(), this)) {
+    private boolean validate() throws NoSuchAlgorithmException {
+        if (db.verifyUser(email.getText().toString(), helper.hash(password.getText().toString()), this)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
+
 }

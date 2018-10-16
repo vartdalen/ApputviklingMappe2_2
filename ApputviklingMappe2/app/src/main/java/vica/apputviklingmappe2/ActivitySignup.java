@@ -12,6 +12,8 @@ import android.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.security.NoSuchAlgorithmException;
+
 import static vica.apputviklingmappe2.DB.CONTENT_USER_URI;
 
 public class ActivitySignup extends Activity {
@@ -98,31 +100,34 @@ public class ActivitySignup extends Activity {
         signupButton = (Button)findViewById(R.id.signup_button);
     }
 
-    public void signup(View v){
+    public void signup(View v) {
 
         final ProgressDialog progressDialog = new ProgressDialog(ActivitySignup.this);
         progressDialog.setMessage(getString(R.string.validating));
         progressDialog.show();
 
-        new Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        if (validate()) {
-                            onSignupSuccess();
-                        }
-                        progressDialog.dismiss();
+        new Handler().postDelayed( new Runnable() {
+            public void run() {
+                try {
+                    if (validate()) {
+                        onSignupSuccess();
                     }
-                }, 1500);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+        }, 1500);
     }
 
-    private boolean validate() {
+    private boolean validate() throws NoSuchAlgorithmException {
         ContentValues values = new ContentValues();
         values.put(getString(R.string.USER_LEVEL), 1);
         values.put(getString(R.string.USER_FIRSTNAME), firstName.getText().toString());
         values.put(getString(R.string.USER_LASTNAME), lastName.getText().toString());
         values.put(getString(R.string.USER_ID), email.getText().toString());
         values.put(getString(R.string.USER_PHONE), phone.getText().toString());
-        values.put(getString(R.string.USER_PASSWORD), password.getText().toString());
+        values.put(getString(R.string.USER_PASSWORD), helper.hash(password.getText().toString()));
 
         if (firstName.getText().length() > 0 && firstNameFeedback.getText().length() == 0
                 && lastName.getText().length() > 0 && lastNameFeedback.getText().length() == 0

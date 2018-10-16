@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Helper {
 
     public void quit(final Activity activity) {
@@ -23,5 +27,11 @@ public class Helper {
                     }
                 });
         confirm_quit.show();
+    }
+
+    public String hash(String unhashed) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashed = digest.digest(unhashed.getBytes(StandardCharsets.UTF_8));
+        return new String(hashed);
     }
 }

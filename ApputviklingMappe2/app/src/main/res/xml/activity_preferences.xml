@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <PreferenceCategory
+        android:title="@string/personal">
+        <SwitchPreference
+            android:title="@string/notifications"
+            android:summary="@string/notifications_summary"
+            android:key="@string/notifications"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/social">
+        <SwitchPreference
+            android:title="@string/notify_friends"
+            android:summary="@string/notify_friends_summary"
+            android:key="@string/notify_friends"/>
+            <EditTextPreference
+                android:title="@string/reminder_message"
+                android:summary="@string/reminder_message_summary"
+                android:key="@string/reminder_message"/>
+            <ListPreference
+                android:title="@string/notify_friends_frequency"
+                android:summary="@string/notify_friends_frequency_summary"
+                android:key="@string/notify_friends_frequency"
+                android:entries="@array/frequency_value"
+                android:entryValues="@array/frequency_index"
+                android:defaultValue="0"/>
+    </PreferenceCategory>
+</android.preference.PreferenceScreen>
