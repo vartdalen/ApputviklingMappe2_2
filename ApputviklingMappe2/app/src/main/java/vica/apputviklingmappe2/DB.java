@@ -6,15 +6,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import java.util.LinkedList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class DB extends Activity{
 
     public static String PROVIDER = "vica.contentprovider" ;
     public static final Uri CONTENT_USER_URI = Uri.parse("content://"+ PROVIDER + "/User");
     public static final Uri CONTENT_FRIEND_URI = Uri.parse("content://" + PROVIDER + "/Friend");
+    private Helper helper = new Helper();
 
     public String getInfo(Uri uri, String[] projection, String selection, String sortOrder, Context context ) {
         Cursor cursor = context.getContentResolver().query(uri, projection, selection, null, sortOrder);
@@ -61,24 +58,9 @@ public class DB extends Activity{
         return false;
     }
 
-    private String stringParser(String listString){
-        if(listString != null){
-            LinkedList<String> res = new LinkedList<>();
-            Pattern p = Pattern.compile("\\d+");
-            Matcher m = p.matcher(listString);
-            while(m.find()){
-                res.add(m.group());
-            }
-            listString = res.get(0);
-            return listString;
-        }else{
-            return "";
-        }
-    }
-
     public void deleteFriend(Context context, String id){
         String selection = context.getString(R.string.FRIEND_ID)+ "= ?";
-        String[] selectionArgs = {stringParser(id)};
+        String[] selectionArgs = {helper.stringParser(id)};
         context.getContentResolver().delete(CONTENT_FRIEND_URI, selection, selectionArgs);
     }
 }

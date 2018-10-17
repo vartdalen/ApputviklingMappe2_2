@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Helper {
 
@@ -33,5 +36,20 @@ public class Helper {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hashed = digest.digest(unhashed.getBytes(StandardCharsets.UTF_8));
         return new String(hashed);
+    }
+
+    public String stringParser(String listString){
+        if(listString != null){
+            LinkedList<String> res = new LinkedList<>();
+            Pattern p = Pattern.compile("\\d+");
+            Matcher m = p.matcher(listString);
+            while(m.find()){
+                res.add(m.group());
+            }
+            listString = res.get(0);
+            return listString;
+        }else{
+            return "";
+        }
     }
 }
