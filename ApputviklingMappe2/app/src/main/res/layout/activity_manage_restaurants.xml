@@ -15,30 +15,40 @@
         android:paddingRight="24dp"
         android:paddingTop="40dp">
         <ListView
-            android:id="@+id/friend_list"
+            android:id="@+id/restaurant_list"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:listSelector="@drawable/friend_listview_selector">
         </ListView>
         <Button
-            android:id="@+id/friend_add_button"
+            android:id="@+id/restaurant_add_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/friend_list"
+            android:layout_below="@id/restaurant_list"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="25dp"
             android:padding="12dp"
-            android:text="@string/add_friend"
+            android:text="@string/add"
             android:background="@drawable/button_primary"
             android:theme="@style/ButtonTheme"/>
         <Button
-            android:id="@+id/friend_delete_button"
+            android:id="@+id/restaurant_delete_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/friend_add_button"
+            android:layout_below="@id/restaurant_add_button"
             android:layout_marginBottom="16dp"
             android:padding="12dp"
-            android:text="@string/delete_friend"
+            android:text="@string/delete"
+            android:background="@drawable/button_primary"
+            android:theme="@style/ButtonTheme"/>
+        <Button
+            android:id="@+id/restaurant_edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurant_delete_button"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:text="@string/edit"
             android:background="@drawable/button_primary"
             android:theme="@style/ButtonTheme"/>
     </RelativeLayout>
