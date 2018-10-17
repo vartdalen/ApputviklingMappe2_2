@@ -53,7 +53,7 @@
         android:layout_marginBottom="16dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_primary"
-        android:text="@string/add_friend"
+        android:text="@string/add"
         android:theme="@style/ButtonTheme" />
 
 </RelativeLayout>
