@@ -12,7 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toolbar;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -78,20 +81,31 @@ public class ActivityManageFriends extends Activity {
             public void onClick(View v) {
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ActivityManageFriends.this);
                 View view = getLayoutInflater().inflate(R.layout.dialog_add_friend, null);
-                final EditText friend_first_name = (EditText) view.findViewById(R.id.friend_dialog_first_name);
-                final EditText friend_last_name = (EditText) view.findViewById(R.id.friend_dialog_last_name);
-                final EditText friend_phone = (EditText) view.findViewById(R.id.friend_dialog_phone);
+                final EditText friendFirstName = (EditText) view.findViewById(R.id.friend_dialog_first_name);
+                final EditText friendLastName = (EditText) view.findViewById(R.id.friend_dialog_last_name);
+                final EditText friendPhone = (EditText) view.findViewById(R.id.friend_dialog_phone);
+                final TextView friendDialogFirstNameFeedback = (TextView) view.findViewById(R.id.friend_dialog_firstname_feedback);
+                final TextView friendDialogLastNameFeedback = (TextView) view.findViewById(R.id.friend_dialog_lastname_feedback);
+                final TextView friendDialogPhoneFeedback = (TextView) view.findViewById(R.id.friend_dialog_phone_feedback);
                 Button friend_add_button = (Button) view.findViewById(R.id.friend_dialog_add_button);
+
+                OnTextChangedListener firstNameOnTextChangedListener = new OnTextChangedListener(friendFirstName, null, friendDialogFirstNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_first_name), null);
+                friendFirstName.addTextChangedListener(firstNameOnTextChangedListener);
+                OnTextChangedListener lastNameOnTextChangedListener = new OnTextChangedListener(friendLastName, null, friendDialogLastNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_last_name), null);
+                friendLastName.addTextChangedListener(lastNameOnTextChangedListener);
+                OnTextChangedListener phoneOnTextChangedListener = new OnTextChangedListener(friendPhone, null, friendDialogPhoneFeedback, "^[0-9]{8}$", getString(R.string.error_phone), null);
+                friendPhone.addTextChangedListener(phoneOnTextChangedListener);
+
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
                 final String sql = getString(R.string.FRIEND_ID) + " DESC LIMIT 1";
                 friend_add_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!friend_first_name.getText().toString().isEmpty() && !friend_last_name.getText().toString().isEmpty() && !friend_phone.getText().toString().isEmpty()) {
-                            db.addFriend(ActivityManageFriends.this, friend_first_name.getText().toString(), friend_last_name.getText().toString(), friend_phone.getText().toString(), session.getEmail().toString());
+                        if(!friendFirstName.getText().toString().isEmpty() && !friendLastName.getText().toString().isEmpty() && !friendPhone.getText().toString().isEmpty()) {
+                            db.addFriend(ActivityManageFriends.this, friendFirstName.getText().toString(), friendLastName.getText().toString(), friendPhone.getText().toString(), session.getEmail().toString());
                             friendListArray.add(Integer.parseInt(db.getInfo(CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_ID)}, null, sql,ActivityManageFriends.this))+ " "
-                                    + friend_first_name.getText().toString() + " " + friend_last_name.getText().toString() + " " + friend_phone.getText().toString());
+                                    + friendFirstName.getText().toString() + " " + friendLastName.getText().toString() + " " + friendPhone.getText().toString());
                             listAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
