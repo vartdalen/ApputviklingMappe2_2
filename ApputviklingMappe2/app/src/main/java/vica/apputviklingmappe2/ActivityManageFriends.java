@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
@@ -124,17 +123,14 @@ public class ActivityManageFriends extends Activity {
         friendList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try{
-                    if(friendList.isItemChecked(position)) {
-                        friendList.setItemChecked(position, true);
-                        friendList.getChildAt(position).setBackgroundColor(Color.RED);
-                    } else {
-                        friendList.setItemChecked(position, false);
-                        friendList.getChildAt(position).setBackgroundColor(Color.WHITE);
-                    }
-                }catch (NullPointerException e){
-                    System.out.println("Hore");
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                if(friendList.isItemChecked(position)) {
+                    friendList.setItemChecked(position, true);
+                    helper.animateBackground(view, getColor(R.color.colorPrimaryDark), getColor(R.color.colorPrimaryFade));
+                } else {
+                    friendList.setItemChecked(position, false);
+                    helper.animateBackground(view, getColor(R.color.colorPrimaryFade), getColor(R.color.colorText));
                 }
             }
         });
