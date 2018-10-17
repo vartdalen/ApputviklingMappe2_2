@@ -109,11 +109,15 @@ public class ActivityManageFriends extends Activity {
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
-                        friendListArray.remove(position);
-                        listAdapter.notifyDataSetChanged();
-
+                        try{
+                            db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
+                            listAdapter.remove(friendListArray.get(position));
+                            listAdapter.notifyDataSetChanged();
+                            friendList.setAdapter(listAdapter);
+                            recreate();
+                        }catch (IndexOutOfBoundsException e){}
                     }
+
                 });
             }
         });
