@@ -1,8 +1,14 @@
 package vica.apputviklingmappe2;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.view.View;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -51,5 +57,13 @@ public class Helper {
         }else{
             return "";
         }
+    }
+
+    public void animateBackground(View v, int colorStart, int colorEnd) {
+
+        ValueAnimator valueAnimator = ObjectAnimator.ofInt(v, "BackgroundColor", colorStart, colorEnd);
+        valueAnimator.setDuration(300);
+        valueAnimator.setEvaluator(new ArgbEvaluator());
+        valueAnimator.start();
     }
 }

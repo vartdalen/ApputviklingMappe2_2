@@ -122,13 +122,14 @@ public class ActivityManageFriends extends Activity {
         friendList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
                 if(friendList.isItemChecked(position)) {
                     friendList.setItemChecked(position, true);
-                    friendList.getChildAt(position).setBackgroundColor(Color.RED);
+                    helper.animateBackground(view, getColor(R.color.colorPrimaryDark), getColor(R.color.colorPrimaryFade));
                 } else {
                     friendList.setItemChecked(position, false);
-                    friendList.getChildAt(position).setBackgroundColor(Color.WHITE);
+                    helper.animateBackground(view, getColor(R.color.colorPrimaryFade), getColor(R.color.colorText));
                 }
             }
         });
