@@ -17,7 +17,7 @@
         <ListView
             android:id="@+id/friend_list"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:background="@drawable/friend_listview_border"
             android:listSelector="@drawable/friend_listview_selector">
         </ListView>
@@ -40,6 +40,16 @@
             android:layout_marginBottom="16dp"
             android:padding="12dp"
             android:text="@string/delete"
+            android:background="@drawable/button_primary"
+            android:theme="@style/ButtonTheme"/>
+        <Button
+            android:id="@+id/friend_edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/friend_delete_button"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:text="@string/edit"
             android:background="@drawable/button_primary"
             android:theme="@style/ButtonTheme"/>
     </RelativeLayout>

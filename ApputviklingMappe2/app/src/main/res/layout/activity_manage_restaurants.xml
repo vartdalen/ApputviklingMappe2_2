@@ -17,7 +17,7 @@
         <ListView
             android:id="@+id/restaurant_list"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:listSelector="@drawable/friend_listview_selector">
         </ListView>
         <Button
