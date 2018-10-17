@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import android.widget.Toolbar;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static vica.apputviklingmappe2.DB.CONTENT_FRIEND_URI;
 
@@ -53,6 +56,7 @@ public class ActivityManageFriends extends Activity {
         setupFields();
         populateFriendList();
     }
+
     private void populateFriendList() {
         String selection = getString(R.string.FRIEND_FK) + "=" + "'"+session.getEmail()+"'";
         Cursor cur = getContentResolver().query(CONTENT_FRIEND_URI, null, selection, null, null);
@@ -69,10 +73,8 @@ public class ActivityManageFriends extends Activity {
             while(cur.moveToNext());
             cur.close();
         }
-        else{
-
-        }
     }
+
     private void setupFields() {
         friendListArray = new ArrayList<>();
         buttonAdd = (Button) findViewById(R.id.friend_add_button);
@@ -117,22 +119,35 @@ public class ActivityManageFriends extends Activity {
 
         buttonDelete = (Button) findViewById(R.id.friend_delete_button);
         friendList = (ListView)findViewById(R.id.friend_list);
+        friendList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                buttonDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try{
-                            db.deleteFriend(ActivityManageFriends.this, friendListArray.get(position));
-                            listAdapter.remove(friendListArray.get(position));
-                            listAdapter.notifyDataSetChanged();
-                            friendList.setAdapter(listAdapter);
-                            recreate();
-                        }catch (IndexOutOfBoundsException e){}
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(friendList.isItemChecked(position)) {
+                    friendList.setItemChecked(position, true);
+                    friendList.getChildAt(position).setBackgroundColor(Color.RED);
+                } else {
+                    friendList.setItemChecked(position, false);
+                    friendList.getChildAt(position).setBackgroundColor(Color.WHITE);
+                }
+            }
+        });
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SparseBooleanArray checked = friendList.getCheckedItemPositions();
+                ArrayList<String> temp = new ArrayList<>();
+                for(String s : friendListArray) {
+                    if(checked.get(friendListArray.indexOf(s))) {
+                        db.deleteFriend(ActivityManageFriends.this, helper.stringParser(s));
+                    } else {
+                        temp.add(s);
                     }
-
-                });
+                }
+                friendListArray.clear();
+                friendListArray.addAll(temp);
+                listAdapter.notifyDataSetChanged();
+                friendList.setAdapter(listAdapter);
             }
         });
     }
