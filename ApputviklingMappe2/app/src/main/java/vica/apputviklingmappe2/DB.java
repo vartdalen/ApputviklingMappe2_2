@@ -11,7 +11,6 @@ public class DB extends Activity{
     public static String PROVIDER = "vica.contentprovider" ;
     public static final Uri CONTENT_USER_URI = Uri.parse("content://"+ PROVIDER + "/User");
     public static final Uri CONTENT_FRIEND_URI = Uri.parse("content://" + PROVIDER + "/Friend");
-    private Helper helper = new Helper();
 
     public String getInfo(Uri uri, String[] projection, String selection, String sortOrder, Context context ) {
         Cursor cursor = context.getContentResolver().query(uri, projection, selection, null, sortOrder);
@@ -59,8 +58,7 @@ public class DB extends Activity{
     }
 
     public void deleteFriend(Context context, String id){
-        String selection = context.getString(R.string.FRIEND_ID)+ "= ?";
-        String[] selectionArgs = {helper.stringParser(id)};
-        context.getContentResolver().delete(CONTENT_FRIEND_URI, selection, selectionArgs);
+        String selection = context.getString(R.string.FRIEND_ID)+"="+"'"+id+"'";
+        context.getContentResolver().delete(CONTENT_FRIEND_URI, selection, null);
     }
 }
