@@ -136,6 +136,7 @@ public class ActivityManageFriends extends Activity {
                 System.out.println(friendList.isItemChecked((int) id));
             }
         });
+
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,49 +155,69 @@ public class ActivityManageFriends extends Activity {
                 friendList.setAdapter(listAdapter);
             }
         });
+
+        // When edit button is pressed
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(friendList.getCheckedItemCount() > 1){
-                    return;
+                SparseBooleanArray checked = friendList.getCheckedItemPositions();
+                int booleanCounter = 0;
+                String id = "";
+                String unparsed = "";
+                for(int i = 0; i < friendListArray.size(); i++){
+                    if(checked.get(i)){
+                        booleanCounter++;
+                    }
                 }
-
-                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ActivityManageFriends.this);
-                View view = getLayoutInflater().inflate(R.layout.dialog_edit_friend, null);
-                final EditText friendFirstName = (EditText) view.findViewById(R.id.friend_dialog_edit_first_name);
-                final EditText friendLastName = (EditText) view.findViewById(R.id.friend_dialog_edit_last_name);
-                final EditText friendPhone = (EditText) view.findViewById(R.id.friend_dialog_edit_phone);
-                final TextView friendDialogFirstNameFeedback = (TextView) view.findViewById(R.id.friend_dialog_edit_firstname_feedback);
-                final TextView friendDialogLastNameFeedback = (TextView) view.findViewById(R.id.friend_dialog_edit_lastname_feedback);
-                final TextView friendDialogPhoneFeedback = (TextView) view.findViewById(R.id.friend_dialog_edit_phone_feedback);
-                Button friend_dialog_edit_button = (Button) view.findViewById(R.id.friend_dialog_edit_button);
-
-                OnTextChangedListener firstNameOnTextChangedListener = new OnTextChangedListener(friendFirstName, null, friendDialogFirstNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_first_name), null);
-                friendFirstName.addTextChangedListener(firstNameOnTextChangedListener);
-                OnTextChangedListener lastNameOnTextChangedListener = new OnTextChangedListener(friendLastName, null, friendDialogLastNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_last_name), null);
-                friendLastName.addTextChangedListener(lastNameOnTextChangedListener);
-                OnTextChangedListener phoneOnTextChangedListener = new OnTextChangedListener(friendPhone, null, friendDialogPhoneFeedback, "^[0-9]{8}$", getString(R.string.error_phone), null);
-                friendPhone.addTextChangedListener(phoneOnTextChangedListener);
-
-                dialogBuilder.setView(view);
-                final AlertDialog dialog = dialogBuilder.create();
-                final String sql = getString(R.string.FRIEND_ID) + " DESC LIMIT 1";
-                friend_dialog_edit_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!friendFirstName.getText().toString().isEmpty() && !friendLastName.getText().toString().isEmpty() && !friendPhone.getText().toString().isEmpty()) {
-//                            db.addFriend(ActivityManageFriends.this, friendFirstName.getText().toString(), friendLastName.getText().toString(), friendPhone.getText().toString(), session.getEmail().toString());
-//                            friendListArray.add(Integer.parseInt(db.getInfo(CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_ID)}, null, sql,ActivityManageFriends.this))+ " "
-//                                    + friendFirstName.getText().toString() + " " + friendLastName.getText().toString() + " " + friendPhone.getText().toString());
-//                            listAdapter.notifyDataSetChanged();
-                            dialog.dismiss();
+                if(booleanCounter == 1){
+                    for(String s : friendListArray) {
+                        if(checked.get(friendListArray.indexOf(s))) {
+                            id = helper.stringParser(s);
+                            unparsed = s;
                         }
                     }
-                });
-                dialog.show();
+                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ActivityManageFriends.this);
+                    View view = getLayoutInflater().inflate(R.layout.dialog_edit_friend, null);
+                    final EditText friendFirstName = (EditText) view.findViewById(R.id.friend_dialog_edit_first_name);
+                    final EditText friendLastName = (EditText) view.findViewById(R.id.friend_dialog_edit_last_name);
+                    final EditText friendPhone = (EditText) view.findViewById(R.id.friend_dialog_edit_phone);
+                    final TextView friendDialogFirstNameFeedback = (TextView) view.findViewById(R.id.friend_dialog_edit_firstname_feedback);
+                    final TextView friendDialogLastNameFeedback = (TextView) view.findViewById(R.id.friend_dialog_edit_lastname_feedback);
+                    final TextView friendDialogPhoneFeedback = (TextView) view.findViewById(R.id.friend_dialog_edit_phone_feedback);
+                    Button friend_dialog_edit_button = (Button) view.findViewById(R.id.friend_dialog_edit_button);
+
+                    OnTextChangedListener firstNameOnTextChangedListener = new OnTextChangedListener(friendFirstName, null, friendDialogFirstNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_first_name), null);
+                    friendFirstName.addTextChangedListener(firstNameOnTextChangedListener);
+                    OnTextChangedListener lastNameOnTextChangedListener = new OnTextChangedListener(friendLastName, null, friendDialogLastNameFeedback, "^[A-Z][A-Za-z '-]+$", getString(R.string.error_last_name), null);
+                    friendLastName.addTextChangedListener(lastNameOnTextChangedListener);
+                    OnTextChangedListener phoneOnTextChangedListener = new OnTextChangedListener(friendPhone, null, friendDialogPhoneFeedback, "^[0-9]{8}$", getString(R.string.error_phone), null);
+                    friendPhone.addTextChangedListener(phoneOnTextChangedListener);
+
+                    friendFirstName.setText(db.getInfo(CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_FIRSTNAME)}, getString(R.string.FRIEND_ID)+"="+id,null,ActivityManageFriends.this));
+                    friendLastName.setText(db.getInfo(CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_LASTNAME)}, getString(R.string.FRIEND_ID)+"="+id,null,ActivityManageFriends.this));
+                    friendPhone.setText(db.getInfo(CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+id,null,ActivityManageFriends.this));
+
+                    dialogBuilder.setView(view);
+                    final AlertDialog dialog = dialogBuilder.create();
+                    final String sql = getString(R.string.FRIEND_ID) + " DESC LIMIT 1";
+                    final String finalId = id;
+                    final String finalUnparsed = unparsed;
+                    friend_dialog_edit_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!friendFirstName.getText().toString().isEmpty() && !friendLastName.getText().toString().isEmpty() && !friendPhone.getText().toString().isEmpty())
+                            {
+                                db.editFriend(ActivityManageFriends.this, finalId, friendFirstName.getText().toString(), friendLastName.getText().toString(), friendPhone.getText().toString());
+                                friendListArray.add(friendListArray.indexOf(finalUnparsed), finalId + " " + friendFirstName.getText().toString() + " " + friendLastName.getText() + friendPhone.getText().toString());
+                                listAdapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                    dialog.show();
+                }
             }
         });
-
     }
 
     private void setupToolbar() {
