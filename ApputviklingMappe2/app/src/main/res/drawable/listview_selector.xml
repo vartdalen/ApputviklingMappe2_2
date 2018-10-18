@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item-->
+        <!--android:drawable="@drawable/friend_listview_pressed" />-->
+    <item
+        android:state_selected="false"
+        android:drawable="@drawable/listview_normal" />
+    <item
+        android:drawable="@drawable/listview_selected" />
+</selector>

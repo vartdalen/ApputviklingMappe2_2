@@ -61,4 +61,13 @@ public class DB extends Activity{
         String selection = context.getString(R.string.FRIEND_ID)+"="+"'"+id+"'";
         context.getContentResolver().delete(CONTENT_FRIEND_URI, selection, null);
     }
+
+    public void editFriend(Context context, String id, String firstname, String lastname, String phone){
+        ContentValues values = new ContentValues();
+        values.put(context.getString(R.string.FRIEND_FIRSTNAME), firstname);
+        values.put(context.getString(R.string.FRIEND_LASTNAME), lastname);
+        values.put(context.getString(R.string.FRIEND_PHONE), phone);
+
+        context.getContentResolver().update(CONTENT_FRIEND_URI, values, context.getString(R.string.FRIEND_ID)+"="+id, null);
+    }
 }
