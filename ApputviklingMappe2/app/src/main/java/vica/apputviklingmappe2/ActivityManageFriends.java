@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -120,18 +122,18 @@ public class ActivityManageFriends extends Activity {
         buttonDelete = (Button) findViewById(R.id.friend_delete_button);
         buttonEdit = (Button) findViewById(R.id.friend_edit_button);
         friendList = (ListView)findViewById(R.id.friend_list);
-        friendList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        friendList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                if(friendList.isItemChecked(position)) {
-                    friendList.setItemChecked(position, true);
-                    helper.animateBackground(view, getColor(R.color.colorPrimaryDark), getColor(R.color.colorPrimaryFade));
-                } else {
-                    friendList.setItemChecked(position, false);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(!friendList.isItemChecked(friendList.getPositionForView(view))) {
+                    friendList.setItemChecked(friendList.getPositionForView(view), false);
                     helper.animateBackground(view, getColor(R.color.colorPrimaryFade), getColor(R.color.colorText));
+                } else {
+                    friendList.setItemChecked(friendList.getPositionForView(view), true);
+                    helper.animateBackground(view, getColor(R.color.colorPrimaryDark), getColor(R.color.colorPrimaryFade));
                 }
+                System.out.println(friendList.isItemChecked((int) id));
             }
         });
         buttonDelete.setOnClickListener(new View.OnClickListener() {
@@ -175,8 +177,6 @@ public class ActivityManageFriends extends Activity {
                 friendLastName.addTextChangedListener(lastNameOnTextChangedListener);
                 OnTextChangedListener phoneOnTextChangedListener = new OnTextChangedListener(friendPhone, null, friendDialogPhoneFeedback, "^[0-9]{8}$", getString(R.string.error_phone), null);
                 friendPhone.addTextChangedListener(phoneOnTextChangedListener);
-
-                friendFirstName.setText("Hei");
 
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
