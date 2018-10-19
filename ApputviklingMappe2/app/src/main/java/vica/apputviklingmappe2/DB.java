@@ -11,6 +11,7 @@ public class DB extends Activity{
     public static String PROVIDER = "vica.contentprovider" ;
     public static final Uri CONTENT_USER_URI = Uri.parse("content://"+ PROVIDER + "/User");
     public static final Uri CONTENT_FRIEND_URI = Uri.parse("content://" + PROVIDER + "/Friend");
+    public static final Uri CONTENT_RESTAURANT_URI = Uri.parse("content://" + PROVIDER + "/Restaurant");
 
     public String getInfo(Uri uri, String[] projection, String selection, String sortOrder, Context context ) {
         Cursor cursor = context.getContentResolver().query(uri, projection, selection, null, sortOrder);
@@ -38,6 +39,16 @@ public class DB extends Activity{
         return stringBuilderQueryResult.toString();
     }
 
+    public boolean verifyUser(String email, String password, Context context) {
+        if(getEmail(email, context).length() > 5) {
+            if(getInfo(CONTENT_USER_URI, new String[]{context.getString(R.string.USER_PASSWORD)}, context.getString(R.string.USER_ID)+ "="+"'"+email+"'",null, context).equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Friend db methods
     public void addFriend(Context context, String firstname, String lastname, String phone, String userEmail){
         ContentValues values = new ContentValues();
         values.put(context.getString(R.string.FRIEND_FIRSTNAME), firstname);
@@ -46,15 +57,6 @@ public class DB extends Activity{
         values.put(context.getString(R.string.FRIEND_FK), userEmail);
 
         context.getContentResolver().insert(CONTENT_FRIEND_URI, values);
-    }
-
-    public boolean verifyUser(String email, String password, Context context) {
-        if(getEmail(email, context).length() > 5) {
-            if(getInfo(CONTENT_USER_URI, new String[]{context.getString(R.string.USER_PASSWORD)}, context.getString(R.string.USER_ID)+ "="+"'"+email+"'",null, context).equals(password)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void deleteFriend(Context context, String id){
@@ -69,5 +71,28 @@ public class DB extends Activity{
         values.put(context.getString(R.string.FRIEND_PHONE), phone);
 
         context.getContentResolver().update(CONTENT_FRIEND_URI, values, context.getString(R.string.FRIEND_ID)+"="+id, null);
+    }
+
+    // Restaurant db methods
+    public void addRestaurant(Context context, String name, String address, String phone, String type){
+        ContentValues values = new ContentValues();
+        values.put(context.getString(R.string.RESTAURANT_NAME), name);
+        values.put(context.getString(R.string.RESTAURANT_ADDRESS), address);
+        values.put(context.getString(R.string.RESTAURANT_PHONE), phone);
+        values.put(context.getString(R.string.RESTAURANT_TYPE), type);
+        context.getContentResolver().insert(CONTENT_RESTAURANT_URI, values);
+    }
+    public void deleteRestaurant(Context context, String id){
+        String selection = context.getString(R.string.RESTAURANT_ID)+"="+"'"+id+"'";
+        context.getContentResolver().delete(CONTENT_RESTAURANT_URI, selection, null);
+    }
+
+    public void editRestaurant(Context context, String id, String name, String address, String phone, String type){
+        ContentValues values = new ContentValues();
+        values.put(context.getString(R.string.RESTAURANT_NAME), name);
+        values.put(context.getString(R.string.RESTAURANT_ADDRESS), address);
+        values.put(context.getString(R.string.RESTAURANT_PHONE), phone);
+        values.put(context.getString(R.string.RESTAURANT_TYPE), type);
+        context.getContentResolver().update(CONTENT_RESTAURANT_URI, values, context.getString(R.string.RESTAURANT_ID)+"="+id, null);
     }
 }

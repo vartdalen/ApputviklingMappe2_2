@@ -11,6 +11,11 @@
     <string name="confirm_email">Confirm email</string>
     <string name="confirm_password">Confirm pw</string>
 
+    <!-- Restaurant info -->
+    <string name="restaurant_name">Restaurant name</string>
+    <string name="restaurant_address">Restaurant address</string>
+    <string name="restaurant_type">Restaurant type</string>
+
     <!-- Navigation -->
     <string name="main_menu">Main Menu</string>
     <string name="login">Login</string>
@@ -45,6 +50,9 @@
     <string name="error_login">Invalid email or password</string>
     <string name="error_signup1">Please complete the form before submitting</string>
     <string name="error_signup2">Database error</string>
+    <string name="error_res_name">Invalid restaurant name</string>
+    <string name="error_res_address">Invalid restaurant address</string>
+    <string name="error_res_type">Invalid restaurant type</string>
     <string name="ok_signup">Signup successful</string>
     <string name="ok_logout">Logout successful</string>
 
@@ -74,5 +82,12 @@
     <string name="FRIEND_LASTNAME">Lastname</string>
     <string name="FRIEND_PHONE">Phonenumber</string>
     <string name="FRIEND_FK">UserEmail</string>
+
+    <!--Restaurant-table database Strings-->
+    <string name="RESTAURANT_ID">_id</string>
+    <string name="RESTAURANT_NAME">Name</string>
+    <string name="RESTAURANT_ADDRESS">Address</string>
+    <string name="RESTAURANT_PHONE">Phonenumber</string>
+    <string name="RESTAURANT_TYPE">Type</string>
 
 </resources>
