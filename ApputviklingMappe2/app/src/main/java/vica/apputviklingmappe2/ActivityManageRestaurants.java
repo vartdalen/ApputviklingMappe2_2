@@ -136,7 +136,6 @@ public class ActivityManageRestaurants extends Activity {
                     restaurantList.setItemChecked(restaurantList.getPositionForView(view), true);
                     helper.animateBackground(view, getColor(R.color.colorPrimaryDark), getColor(R.color.colorPrimaryFade));
                 }
-                System.out.println(restaurantList.isItemChecked((int) id));
             }
         });
 
@@ -204,11 +203,9 @@ public class ActivityManageRestaurants extends Activity {
                     restaurantPhone.setText(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_PHONE)}, getString(R.string.RESTAURANT_ID)+"="+id,null,ActivityManageRestaurants.this));
                     restaurantType.setText(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_TYPE)}, getString(R.string.RESTAURANT_ID)+"="+id,null,ActivityManageRestaurants.this));
 
-
                     dialogBuilder.setView(view);
                     final AlertDialog dialog = dialogBuilder.create();
                     final String finalId = id;
-                    final String finalUnparsed = unparsed;
                     restaurant_dialog_edit_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -218,9 +215,9 @@ public class ActivityManageRestaurants extends Activity {
                                     !restaurantType.getText().toString().isEmpty() && restaurantDialogTypeFeedback.getText().length() == 0)
                             {
                                 db.editRestaurant(ActivityManageRestaurants.this, finalId, restaurantName.getText().toString(), restaurantAddress.getText().toString(), restaurantPhone.getText().toString(), restaurantType.getText().toString());
-//                                restaurantListArray.add(restaurantListArray.indexOf(finalUnparsed), finalId + " " + restaurantName.getText().toString() + " " + restaurantAddress.getText() + " " + restaurantPhone.getText().toString() + " " + restaurantType.getText().toString());
+                                restaurantListArray.clear();
                                 listAdapter.notifyDataSetChanged();
-                                restaurantList.setAdapter(listAdapter);
+                                populateRestaurantList();
                                 dialog.dismiss();
                             }
                         }
