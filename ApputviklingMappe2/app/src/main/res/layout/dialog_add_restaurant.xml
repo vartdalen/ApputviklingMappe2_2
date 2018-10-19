@@ -11,70 +11,88 @@
 
     <!-- First Name Label -->
     <EditText
-        android:id="@+id/friend_dialog_edit_first_name"
+        android:id="@+id/restaurant_dialog_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -'"
-        android:hint="@string/first_name"
+        android:hint="@string/restaurant_name"
         android:inputType="textPersonName">
     </EditText>
     <TextView
-        android:id="@+id/friend_dialog_edit_firstname_feedback"
-        android:layout_width="145dp"
+        android:id="@+id/restaurant_dialog_name_feedback"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/friend_dialog_edit_first_name"
+        android:layout_below="@id/restaurant_dialog_name"
         android:layout_marginStart="5dp"
         android:textColor="@android:color/holo_red_dark"/>
 
-    <!-- Last Name Label -->
+    <!-- Address Label -->
     <EditText
-        android:id="@+id/friend_dialog_edit_last_name"
+        android:id="@+id/restaurant_dialog_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/friend_dialog_edit_first_name"
+        android:layout_below="@id/restaurant_dialog_name"
         android:layout_marginTop="14dp"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -'"
-        android:hint="@string/last_name"
+        android:hint="@string/restaurant_address"
         android:inputType="textPersonName">
     </EditText>
     <TextView
-        android:id="@+id/friend_dialog_edit_lastname_feedback"
-        android:layout_width="145dp"
+        android:id="@+id/restaurant_dialog_address_feedback"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/friend_dialog_edit_last_name"
+        android:layout_below="@id/restaurant_dialog_address"
         android:layout_marginStart="5dp"
         android:textColor="@android:color/holo_red_dark"/>
 
     <!-- Phone Label -->
     <EditText
-        android:id="@+id/friend_dialog_edit_phone"
+        android:id="@+id/restaurant_dialog_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/friend_dialog_edit_last_name"
+        android:layout_below="@+id/restaurant_dialog_address"
         android:layout_marginTop="14dp"
         android:layout_centerHorizontal="true"
         android:hint="@string/phone"
         android:inputType="phone">
     </EditText>
     <TextView
-        android:id="@+id/friend_dialog_edit_phone_feedback"
-        android:layout_width="145dp"
+        android:id="@+id/restaurant_dialog_phone_feedback"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/friend_dialog_edit_phone"
+        android:layout_below="@id/restaurant_dialog_phone"
         android:layout_marginStart="5dp"
         android:textColor="@android:color/holo_red_dark"/>
 
-    <!-- Add Friend Button -->
-    <Button
-        android:id="@+id/friend_dialog_edit_button"
+    <!-- Restaurant Type Label -->
+    <EditText
+        android:id="@+id/restaurant_dialog_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/friend_dialog_edit_phone"
+        android:layout_below="@+id/restaurant_dialog_phone"
+        android:layout_marginTop="14dp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/restaurant_type"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -'">
+    </EditText>
+    <TextView
+        android:id="@+id/restaurant_dialog_type_feedback"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/restaurant_dialog_type"
+        android:layout_marginStart="5dp"
+        android:textColor="@android:color/holo_red_dark"/>
+
+    <!-- Add Restaurant Button -->
+    <Button
+        android:id="@+id/restaurant_dialog_add_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurant_dialog_type_feedback"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="16dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_primary"
-        android:text="@string/edit"
+        android:text="@string/add"
         android:theme="@style/ButtonTheme" />
 
 </RelativeLayout>

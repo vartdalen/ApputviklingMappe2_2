@@ -241,6 +241,9 @@ public class RestaurantProvider extends ContentProvider {
             case FRIEND_WITH_ID:
                 rowsUpdated = db.update(TABLE_FRIEND, values, FRIEND_ID + " = " + uri.getPathSegments().get(1), selectionArgs);
                 break;
+            case RESTAURANT:
+                rowsUpdated = db.update(TABLE_RESTAURANT, values, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
         }

@@ -17,7 +17,10 @@
         <ListView
             android:id="@+id/restaurant_list"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="250dp"
+            android:background="@drawable/friend_listview_border"
+            android:listSelector="@android:color/transparent"
+            android:choiceMode="singleChoice">
         </ListView>
         <Button
             android:id="@+id/restaurant_add_button"
