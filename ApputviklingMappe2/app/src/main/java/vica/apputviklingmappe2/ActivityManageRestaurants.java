@@ -125,16 +125,14 @@ public class ActivityManageRestaurants extends Activity {
         buttonDelete = (Button) findViewById(R.id.restaurant_delete_button);
         buttonEdit = (Button) findViewById(R.id.restaurant_edit_button);
         restaurantList = (ListView)findViewById(R.id.restaurant_list);
-        restaurantList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        restaurantList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         restaurantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!restaurantList.isItemChecked(restaurantList.getPositionForView(view))) {
                     restaurantList.setItemChecked(restaurantList.getPositionForView(view), false);
-                    helper.animateBackground(view, getColor(R.color.colorPrimaryFade), getColor(R.color.colorText));
                 } else {
                     restaurantList.setItemChecked(restaurantList.getPositionForView(view), true);
-                    helper.animateBackground(view, getColor(R.color.colorPrimaryDark), getColor(R.color.colorPrimaryFade));
                 }
             }
         });
