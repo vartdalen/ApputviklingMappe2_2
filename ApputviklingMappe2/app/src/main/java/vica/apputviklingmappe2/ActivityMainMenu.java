@@ -92,6 +92,15 @@ public class ActivityMainMenu extends Activity {
     }
 
     private void setupFields() {
+        buttonBookTable = (Button) findViewById(R.id.main_menu_button_book_table);
+        buttonBookTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityMainMenu.this, ActivityBooking.class);
+                startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
+            }
+        });
+
         buttonAddFriend = (Button) findViewById(R.id.main_menu_button_manage_friends);
         buttonAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override

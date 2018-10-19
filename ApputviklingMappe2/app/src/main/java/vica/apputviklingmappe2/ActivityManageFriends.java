@@ -117,8 +117,6 @@ public class ActivityManageFriends extends Activity {
             }
         });
 
-        buttonDelete = (Button) findViewById(R.id.friend_delete_button);
-        buttonEdit = (Button) findViewById(R.id.friend_edit_button);
         friendList = (ListView)findViewById(R.id.friend_list);
         friendList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,6 +131,7 @@ public class ActivityManageFriends extends Activity {
             }
         });
 
+        buttonDelete = (Button) findViewById(R.id.friend_delete_button);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +151,7 @@ public class ActivityManageFriends extends Activity {
             }
         });
 
-        // When edit button is pressed
+        buttonEdit = (Button) findViewById(R.id.friend_edit_button);
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,14 +198,14 @@ public class ActivityManageFriends extends Activity {
                 friend_dialog_edit_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!friendFirstName.getText().toString().isEmpty() && !friendLastName.getText().toString().isEmpty() && !friendPhone.getText().toString().isEmpty())
-                        {
-                            db.editFriend(ActivityManageFriends.this, finalId, friendFirstName.getText().toString(), friendLastName.getText().toString(), friendPhone.getText().toString());
-                            friendListArray.clear();
-                            listAdapter.notifyDataSetChanged();
-                            populateFriendList();
-                            dialog.dismiss();
-                        }
+                    if(!friendFirstName.getText().toString().isEmpty() && !friendLastName.getText().toString().isEmpty() && !friendPhone.getText().toString().isEmpty())
+                    {
+                        db.editFriend(ActivityManageFriends.this, finalId, friendFirstName.getText().toString(), friendLastName.getText().toString(), friendPhone.getText().toString());
+                        friendListArray.clear();
+                        listAdapter.notifyDataSetChanged();
+                        populateFriendList();
+                        dialog.dismiss();
+                    }
                     }
                 });
                 dialog.show();

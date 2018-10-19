@@ -121,8 +121,6 @@ public class ActivityManageRestaurants extends Activity {
             }
         });
 
-        buttonDelete = (Button) findViewById(R.id.restaurant_delete_button);
-        buttonEdit = (Button) findViewById(R.id.restaurant_edit_button);
         restaurantList = (ListView)findViewById(R.id.restaurant_list);
         restaurantList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         restaurantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -136,6 +134,7 @@ public class ActivityManageRestaurants extends Activity {
             }
         });
 
+        buttonDelete = (Button) findViewById(R.id.restaurant_delete_button);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,6 +154,7 @@ public class ActivityManageRestaurants extends Activity {
             }
         });
 
+        buttonEdit = (Button) findViewById(R.id.restaurant_edit_button);
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
