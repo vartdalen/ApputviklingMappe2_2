@@ -122,18 +122,16 @@ public class ActivityManageFriends extends Activity {
         buttonDelete = (Button) findViewById(R.id.friend_delete_button);
         buttonEdit = (Button) findViewById(R.id.friend_edit_button);
         friendList = (ListView)findViewById(R.id.friend_list);
-        friendList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        friendList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!friendList.isItemChecked(friendList.getPositionForView(view))) {
-                    friendList.setItemChecked(friendList.getPositionForView(view), false);
-                    helper.animateBackground(view, getColor(R.color.colorPrimaryFade), getColor(R.color.colorText));
-                } else {
-                    friendList.setItemChecked(friendList.getPositionForView(view), true);
-                    helper.animateBackground(view, getColor(R.color.colorPrimaryDark), getColor(R.color.colorPrimaryFade));
+                int listPos = friendList.getPositionForView(view);
+                if(!friendList.isItemChecked(listPos)) {
+                    friendList.setItemChecked(listPos, false);
+                } else if (friendList.isItemChecked(listPos)){
+                    friendList.setItemChecked(listPos, true);
                 }
-                System.out.println(friendList.isItemChecked((int) id));
             }
         });
 
@@ -161,15 +159,15 @@ public class ActivityManageFriends extends Activity {
             @Override
             public void onClick(View v) {
                 SparseBooleanArray checked = friendList.getCheckedItemPositions();
-                int booleanCounter = 0;
+                int checkedCounter = 0;
                 String id = "";
                 String unparsed = "";
                 for(int i = 0; i < friendListArray.size(); i++){
                     if(checked.get(i)){
-                        booleanCounter++;
+                        checkedCounter++;
                     }
                 }
-                if(booleanCounter == 1){
+                if(checkedCounter == 1){
                     for(String s : friendListArray) {
                         if(checked.get(friendListArray.indexOf(s))) {
                             id = helper.stringParser(s);

@@ -64,7 +64,7 @@
         android:layout_marginStart="5dp"
         android:textColor="@android:color/holo_red_dark"/>
 
-    <!-- Add Friend Button -->
+    <!-- Edit Friend Button -->
     <Button
         android:id="@+id/friend_dialog_edit_button"
         android:layout_width="match_parent"
@@ -74,7 +74,7 @@
         android:layout_marginBottom="16dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_primary"
-        android:text="@string/add"
+        android:text="@string/edit"
         android:theme="@style/ButtonTheme" />
 
 </RelativeLayout>

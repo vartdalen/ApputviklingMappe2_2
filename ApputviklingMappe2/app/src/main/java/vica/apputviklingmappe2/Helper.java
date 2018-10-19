@@ -58,12 +58,4 @@ public class Helper {
             return "";
         }
     }
-
-    public void animateBackground(View v, int colorStart, int colorEnd) {
-
-        ValueAnimator valueAnimator = ObjectAnimator.ofInt(v, "BackgroundColor", colorStart, colorEnd);
-        valueAnimator.setDuration(300);
-        valueAnimator.setEvaluator(new ArgbEvaluator());
-        valueAnimator.start();
-    }
 }
