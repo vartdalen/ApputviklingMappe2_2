@@ -59,16 +59,6 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        if(!textDate.getText().toString().equals("Choose a date") && !textTime.getText().toString().equals("Choose a time")) {
-            savedInstanceState.putString("restaurant", restaurantList.getSelectedItem().toString());
-            savedInstanceState.putString("date", textDate.getText().toString());
-            savedInstanceState.putString("time", textTime.getText().toString());
-        }
-    }
-
-    @Override
     public void onDateSet(DatePicker view, int outYear, int outMonth, int outDay) {
         year = outYear;
         month = outMonth;
