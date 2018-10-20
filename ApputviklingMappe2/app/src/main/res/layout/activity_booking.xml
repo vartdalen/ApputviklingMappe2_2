@@ -18,19 +18,65 @@
         <ListView
             android:id="@+id/restaurant_list"
             android:layout_width="match_parent"
-            android:layout_height="382dp"
+            android:layout_height="250dp"
             android:background="@drawable/listview_border"
-            android:listSelector="@color/colorPrimaryFade"></ListView>
+            android:listSelector="@color/colorPrimaryFade">
+        </ListView>
+
+        <TextView
+            android:id="@+id/restaurant_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurant_list"
+            android:layout_marginTop="25dp"
+            android:padding="12dp"
+            android:text="@string/choose_date"
+            android:textSize="20dp"/>
+
+        <ImageButton
+            android:id="@+id/restaurant_date_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/restaurant_list"
+            android:layout_below="@+id/restaurant_list"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/ic_action_date"
+            android:background="@drawable/button_primary"
+            android:padding="12dp"
+            android:theme="@style/ButtonTheme" />
+
+        <TextView
+            android:id="@+id/restaurant_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurant_date"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:text="@string/choose_time"
+            android:textSize="20dp"/>
+
+        <ImageButton
+            android:id="@+id/restaurant_time_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/restaurant_list"
+            android:layout_below="@id/restaurant_date"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_action_time"
+            android:background="@drawable/button_primary"
+            android:padding="12dp"
+            android:theme="@style/ButtonTheme" />
 
         <Button
             android:id="@+id/restaurant_next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/restaurant_list"
+            android:layout_below="@id/restaurant_time_button"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/button_primary"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="25dp"
+            android:background="@drawable/button_primary"
             android:padding="12dp"
             android:text="@string/next"
             android:theme="@style/ButtonTheme" />
