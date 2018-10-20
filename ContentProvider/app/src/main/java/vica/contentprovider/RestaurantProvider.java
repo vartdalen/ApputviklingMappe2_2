@@ -23,12 +23,14 @@ public class RestaurantProvider extends ContentProvider {
     private static final int FRIEND = 3;
     private static final int FRIEND_WITH_ID = 4;
     private static final int RESTAURANT = 5;
+    private static final int ORDER = 6;
+    private static final int ORDERLINE = 7;
 
     // Table names
     private final static String TABLE_USER = "User";
     private final static String TABLE_FRIEND = "Friend";
     private final static String TABLE_RESTAURANT = "Restaurant";
-    private final static String TABLE_ORDER = "Order";
+    private final static String TABLE_ORDER = "Ordertable";
     private final static String TABLE_ORDERLINE = "Orderline";
 
     // Table User columns
@@ -52,6 +54,17 @@ public class RestaurantProvider extends ContentProvider {
     public final static String RESTAURANT_ADDRESS = "Address";
     public final static String RESTAURANT_PHONE = "Phonenumber";
     public final static String RESTAURANT_TYPE = "Type";
+
+    // Table Order columns
+    public final static String ORDER_ID = "_id";
+    public final static String ORDER_DATE = "Date";
+    public final static String ORDER_TIME = "Time";
+    public final static String ORDER_UserFK = "UserID";
+
+    // Table Orderline columns
+    public final static String ORDERLINE_ID = "_id";
+    public final static String ORDERLINE_OrderFK = "OrderID";
+    public final static String ORDERLINE_FriendFK = "FriendID";
 
     // Table User create-statement
     private static final String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
@@ -79,12 +92,29 @@ public class RestaurantProvider extends ContentProvider {
             + RESTAURANT_PHONE + " TEXT,"
             + RESTAURANT_TYPE + " TEXT);";
 
+    // Table Order create-statement
+    private static final String CREATE_ORDER_TABLE = "CREATE TABLE " + TABLE_ORDER + "("
+            + ORDER_ID + " Integer PRIMARY KEY AUTOINCREMENT,"
+            + ORDER_UserFK + " TEXT,"
+            + ORDER_DATE + " TEXT,"
+            + ORDER_TIME + " TEXT);";
+
+    // Table Orderline create-statement
+    private static final String CREATE_ORDERLINE_TABLE = "CREATE TABLE " + TABLE_ORDERLINE + "("
+            + ORDERLINE_ID + " Integer PRIMARY KEY AUTOINCREMENT,"
+            + ORDERLINE_OrderFK + " Integer,"
+            + ORDERLINE_FriendFK + " TEXT,"
+            + "FOREIGN KEY ("+ORDERLINE_OrderFK+") REFERENCES "+TABLE_ORDER+"("+ORDER_ID+"),"
+            + "FOREIGN KEY ("+ORDERLINE_FriendFK+") REFERENCES "+TABLE_FRIEND+"("+FRIEND_ID+"));";
+
     RestaurantProvider.DatabaseHelper DBHelper;
     SQLiteDatabase db;
 
     public static final Uri CONTENT_USER_URI = Uri.parse("content://" + PROVIDER + "/User");
     public static final Uri CONTENT_FRIEND_URI = Uri.parse("content://" + PROVIDER + "/Friend");
     public static final Uri CONTENT_RESTAURANT_URI = Uri.parse("content://" + PROVIDER + "/Restaurant");
+    public static final Uri CONTENT_ORDER_URI = Uri.parse("content://" + PROVIDER + "/Ordertable");
+    public static final Uri CONTENT_ORDERLINE_URI = Uri.parse("content://" + PROVIDER + "/Orderline");
     private static final UriMatcher uriMatcher;
 
     static {
@@ -94,6 +124,8 @@ public class RestaurantProvider extends ContentProvider {
         uriMatcher.addURI(PROVIDER, "Friend", FRIEND);
         uriMatcher.addURI(PROVIDER, "Friend/#", FRIEND_WITH_ID);
         uriMatcher.addURI(PROVIDER, "Restaurant", RESTAURANT);
+        uriMatcher.addURI(PROVIDER, "Ordertable", ORDER);
+        uriMatcher.addURI(PROVIDER, "Orderline", ORDERLINE);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -106,6 +138,8 @@ public class RestaurantProvider extends ContentProvider {
             db.execSQL(CREATE_USER_TABLE);
             db.execSQL(CREATE_FRIEND_TABLE);
             db.execSQL(CREATE_RESTAURANT_TABLE);
+            db.execSQL(CREATE_ORDER_TABLE);
+            db.execSQL(CREATE_ORDERLINE_TABLE);
         }
 
         @Override
@@ -146,6 +180,12 @@ public class RestaurantProvider extends ContentProvider {
             case RESTAURANT:
                 queryBuilder.setTables(TABLE_RESTAURANT);
                 break;
+            case ORDER:
+                queryBuilder.setTables(TABLE_ORDER);
+                break;
+            case ORDERLINE:
+                queryBuilder.setTables(TABLE_ORDERLINE);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
         }
@@ -183,6 +223,14 @@ public class RestaurantProvider extends ContentProvider {
                 db.insert(TABLE_RESTAURANT, null, values);
                 c = db.query(TABLE_RESTAURANT, null,null,null,null,null,null);
                 break;
+            case ORDER:
+                db.insert(TABLE_ORDER, null, values);
+                c = db.query(TABLE_ORDER, null,null,null,null,null,null);
+                break;
+            case ORDERLINE:
+                db.insert(TABLE_ORDERLINE, null, values);
+                c = db.query(TABLE_ORDERLINE, null,null,null,null,null,null);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
         }
@@ -213,6 +261,12 @@ public class RestaurantProvider extends ContentProvider {
                 break;
             case RESTAURANT:
                 rowsDeleted = db.delete(TABLE_RESTAURANT, selection, selectionArgs);
+                break;
+            case ORDER:
+                rowsDeleted = db.delete(TABLE_ORDER, selection, selectionArgs);
+                break;
+            case ORDERLINE:
+                rowsDeleted = db.delete(TABLE_ORDERLINE, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
