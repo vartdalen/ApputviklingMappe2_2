@@ -18,10 +18,10 @@ public class Session {
     public void destroy() {
         Map<String,?> prefMap = prefs.getAll();
         for(Map.Entry<String,?> prefToReset : prefMap.entrySet()) {
-            if (!prefToReset.getKey().equals(context.getString(R.string.notifications))
+            if (!prefToReset.getKey().equals(context.getString(R.string.personal_reminder))
             && !prefToReset.getKey().equals(context.getString(R.string.notify_friends))
             && !prefToReset.getKey().equals(context.getString(R.string.notify_friends_frequency))
-            && !prefToReset.getKey().equals(context.getString(R.string.reminder_message))) {
+            && !prefToReset.getKey().equals(context.getString(R.string.notify_friends_message))) {
                 prefs.edit().remove(prefToReset.getKey()).apply();
             }
         }
@@ -69,16 +69,16 @@ public class Session {
         return prefs.getString(context.getString(R.string.phone),"");
     }
 
-    public String getPrefNotification() {
-        return prefs.getString(context.getString(R.string.notifications), "");
+    public Boolean getPrefPersonalReminder() {
+        return prefs.getBoolean(context.getString(R.string.personal_reminder), false);
     }
-    public String getPrefNotifyFriends() {
-        return prefs.getString(context.getString(R.string.notify_friends), "");
+    public Boolean getPrefNotifyFriends() {
+        return prefs.getBoolean(context.getString(R.string.notify_friends), false);
     }
-    public String getPrefReminderMessage() {
-        return prefs.getString(context.getString(R.string.reminder_message), "");
+    public String getPrefNotifyFriendsMessage() {
+        return prefs.getString(context.getString(R.string.notify_friends_message), context.getString(R.string.default_reminder_message));
     }
-    public String getPrefNotifyFriendsFrequency() {
-        return prefs.getString(context.getString(R.string.notify_friends_frequency), "");
+    public int getPrefNotifyFriendsFrequency() {
+        return Integer.parseInt(prefs.getString(context.getString(R.string.notify_friends_frequency), "0"));
     }
 }

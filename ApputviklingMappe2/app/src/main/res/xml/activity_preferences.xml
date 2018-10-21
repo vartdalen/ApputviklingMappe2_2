@@ -7,9 +7,9 @@
     <PreferenceCategory
         android:title="@string/personal">
         <SwitchPreference
-            android:title="@string/notifications"
+            android:title="@string/personal_reminder"
             android:summary="@string/notifications_summary"
-            android:key="@string/notifications"/>
+            android:key="@string/personal_reminder"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/social">
@@ -18,9 +18,9 @@
             android:summary="@string/notify_friends_summary"
             android:key="@string/notify_friends"/>
             <EditTextPreference
-                android:title="@string/reminder_message"
-                android:summary="@string/reminder_message_summary"
-                android:key="@string/reminder_message"/>
+                android:title="@string/notify_friends_message"
+                android:summary="@string/notify_friends_message_summary"
+                android:key="@string/notify_friends_message"/>
             <ListPreference
                 android:title="@string/notify_friends_frequency"
                 android:summary="@string/notify_friends_frequency_summary"

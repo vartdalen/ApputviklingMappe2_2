@@ -10,6 +10,7 @@
     <string name="user_level">User level</string>
     <string name="confirm_email">Confirm email</string>
     <string name="confirm_password">Confirm pw</string>
+    <string name="api_23_phone_1">+15555215554</string>
 
     <!-- Restaurant info -->
     <string name="restaurant_name">Restaurant name</string>
@@ -58,18 +59,20 @@
     <string name="error_res_type">Invalid restaurant type</string>
     <string name="ok_signup">Signup successful</string>
     <string name="ok_logout">Logout successful</string>
+    <string name="friends_notified">Friends notified</string>
 
     <!--Preferences-->
     <string name="personal">Personal</string>
-    <string name="notifications">Notifications</string>
+    <string name="personal_reminder">Personal reminder</string>
     <string name="notifications_summary">Reminder of today\'s appointments</string>
     <string name="social">Social</string>
     <string name="notify_friends">Notify friends</string>
     <string name="notify_friends_summary">Notify invited friends by SMS</string>
-    <string name="reminder_message">Reminder message</string>
-    <string name="reminder_message_summary">Customize the text in your friend notification</string>
+    <string name="notify_friends_message">Notification message</string>
+    <string name="notify_friends_message_summary">Customize the text in your friend notification</string>
     <string name="notify_friends_frequency">Frequency</string>
-    <string name="notify_friends_frequency_summary">Control friend reminder frequency</string>
+    <string name="notify_friends_frequency_summary">Control frequency of friends being notified</string>
+    <string name="default_reminder_message">Your friend has booked a table and invited you!</string>
 
     <!--User-table database Strings-->
     <string name="USER_ID">Email</string>
