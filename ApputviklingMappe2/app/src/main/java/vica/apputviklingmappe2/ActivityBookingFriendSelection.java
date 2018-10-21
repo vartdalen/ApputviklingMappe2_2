@@ -114,7 +114,7 @@ public class ActivityBookingFriendSelection extends Activity {
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
                 final String sql = getString(R.string.ORDER_ID) + " DESC LIMIT 1";
-                final int ordeId = db.getId(DB.CONTENT_ORDER_URI, new String[]{getString(R.string.ORDER_ID)}, null, sql, ActivityBookingFriendSelection.this);
+                final int orderId = db.getId(DB.CONTENT_ORDER_URI, new String[]{getString(R.string.ORDER_ID)}, null, sql, ActivityBookingFriendSelection.this);
                 final int resId = Integer.parseInt(helper.stringParser(restaurantName));
                 booking_confirm_button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,12 +122,15 @@ public class ActivityBookingFriendSelection extends Activity {
                         db.createOrder(ActivityBookingFriendSelection.this, resId, session.getEmail(), restaurantDate, restaurantTime);
                         for(String s : friendSelectedListArray){
                             int friendId = Integer.parseInt(helper.stringParser(s));
-                            System.out.println(friendId);
-                            db.createOrderline(ActivityBookingFriendSelection.this, friendId, ordeId);
+                            db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
                         }
         //                SMS logic
                         if(session.getPrefNotifyFriends()) {
-                            helper.sendSMS(getString(R.string.api_23_phone_1), session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
+                            for(String nr : friendSelectedListArray){
+                                String n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
+                                System.out.println(n);
+                            }
+                            helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
                         }
                         dialog.dismiss();
                     }
