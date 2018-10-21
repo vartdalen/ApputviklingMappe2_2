@@ -60,6 +60,7 @@ public class RestaurantProvider extends ContentProvider {
     public final static String ORDER_DATE = "Date";
     public final static String ORDER_TIME = "Time";
     public final static String ORDER_UserFK = "UserID";
+    public final static String ORDER_RestaurantFK = "RestaurantID";
 
     // Table Orderline columns
     public final static String ORDERLINE_ID = "_id";
@@ -97,7 +98,9 @@ public class RestaurantProvider extends ContentProvider {
             + ORDER_ID + " Integer PRIMARY KEY AUTOINCREMENT,"
             + ORDER_UserFK + " TEXT,"
             + ORDER_DATE + " TEXT,"
-            + ORDER_TIME + " TEXT);";
+            + ORDER_TIME + " TEXT,"
+            + ORDER_RestaurantFK + " Integer,"
+            + "FOREIGN KEY ("+ORDER_RestaurantFK+") REFERENCES "+TABLE_RESTAURANT+"("+RESTAURANT_ID+"));";
 
     // Table Orderline create-statement
     private static final String CREATE_ORDERLINE_TABLE = "CREATE TABLE " + TABLE_ORDERLINE + "("

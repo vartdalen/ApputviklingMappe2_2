@@ -105,7 +105,7 @@ public class ActivityManageFriends extends Activity {
                             !friendLastName.getText().toString().isEmpty() && friendDialogLastNameFeedback.getText().length() == 0 &&
                             !friendPhone.getText().toString().isEmpty() && friendDialogPhoneFeedback.getText().length() == 0)
                     {
-                        db.addFriend(ActivityManageFriends.this, friendFirstName.getText().toString(), friendLastName.getText().toString(), friendPhone.getText().toString(), session.getEmail().toString());
+                        db.createFriend(ActivityManageFriends.this, friendFirstName.getText().toString(), friendLastName.getText().toString(), friendPhone.getText().toString(), session.getEmail().toString());
                         friendListArray.add(Integer.parseInt(db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_ID)}, null, sql,ActivityManageFriends.this))+ " "
                                 + friendFirstName.getText().toString() + " " + friendLastName.getText().toString() + " " + friendPhone.getText().toString());
                         listAdapter.notifyDataSetChanged();

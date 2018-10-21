@@ -109,7 +109,7 @@ public class ActivityManageRestaurants extends Activity {
                         !restaurantPhone.getText().toString().isEmpty() && restaurantDialogPhoneFeedback.getText().length() == 0 &&
                         !restaurantType.getText().toString().isEmpty() && restaurantDialogTypeFeedback.getText().length() == 0)
                 {
-                    db.addRestaurant(ActivityManageRestaurants.this, restaurantName.getText().toString(), restaurantAddress.getText().toString(), restaurantPhone.getText().toString(), restaurantType.getText().toString());
+                    db.createRestaurant(ActivityManageRestaurants.this, restaurantName.getText().toString(), restaurantAddress.getText().toString(), restaurantPhone.getText().toString(), restaurantType.getText().toString());
                     restaurantListArray.add(Integer.parseInt(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_ID)}, null, sql,ActivityManageRestaurants.this))+ " "
                             + restaurantName.getText().toString() + " " + restaurantAddress.getText().toString() + " " + restaurantPhone.getText().toString() + " " + restaurantType.getText().toString());
                     listAdapter.notifyDataSetChanged();

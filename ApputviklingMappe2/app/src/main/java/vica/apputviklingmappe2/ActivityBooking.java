@@ -149,18 +149,12 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
                     }
                 }
                 if (indexSelected > -1 && !textDate.getText().toString().equals(getString(R.string.choose_date)) && !textTime.getText().toString().equals(getString(R.string.choose_time))) {
-//                    Intent intent = new Intent(ActivityBooking.this, ActivityBookingFriendSelection.class);
-//                    intent.putExtra("restaurant", restaurantListArray.get(indexSelected));
-//                    intent.putExtra("date", textDate.getText().toString());
-//                    intent.putExtra("time", textTime.getText().toString());
-//                    startActivity(intent);
+                    Intent intent = new Intent(ActivityBooking.this, ActivityBookingFriendSelection.class);
+                    intent.putExtra(getString(R.string.restaurant_name), restaurantListArray.get(indexSelected));
+                    intent.putExtra(getString(R.string.date), textDate.getText().toString());
+                    intent.putExtra(getString(R.string.time), textTime.getText().toString());
+                    startActivity(intent);
                 }
-//                SMS logic
-//                if(session.getPrefNotifyFriends()) {
-//                    helper.sendSMS(getString(R.string.api_23_phone_1), session.getPrefNotifyFriendsMessage(), ActivityBooking.this);
-//                }
-//                System.out.println(session.getPrefPersonalReminder());
-//                System.out.println(session.getPrefNotifyFriendsFrequency());
             }
         });
     }

@@ -28,8 +28,8 @@ public class MainActivity extends Activity {
         // Restaurant
         initRestaurant();
         // Order and Orderline
-        initOrder();
-        initOrderlines();
+//        initOrder();
+//        initOrderlines();
     }
 
     private void initUser(){
@@ -132,12 +132,14 @@ public class MainActivity extends Activity {
         values.put("Date", "10/20/2018");
         values.put("Time", "12:00");
         values.put("UserID", "admin@live.no");
+        values.put("RestaurantID", 1);
         getContentResolver().insert(CONTENT_ORDER_URI, values);
 
         ContentValues values1 = new ContentValues();
         values1.put("Date", "10/15/2018");
         values1.put("Time", "19:45");
         values1.put("UserID", "bruce@gmail.com");
+        values1.put("RestaurantID", 3);
         getContentResolver().insert(CONTENT_ORDER_URI, values1);
     }
 
