@@ -129,8 +129,6 @@ public class ActivityBookingFriendSelection extends Activity {
                         if(session.getPrefNotifyFriends()) {
                             helper.sendSMS(getString(R.string.api_23_phone_1), session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
                         }
-                        System.out.println(session.getPrefPersonalReminder());
-                        System.out.println(session.getPrefNotifyFriendsFrequency());
                         dialog.dismiss();
                     }
                 });
