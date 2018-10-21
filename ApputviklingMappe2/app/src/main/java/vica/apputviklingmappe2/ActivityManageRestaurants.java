@@ -126,11 +126,11 @@ public class ActivityManageRestaurants extends Activity {
         restaurantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(!restaurantList.isItemChecked(restaurantList.getPositionForView(view))) {
-                restaurantList.setItemChecked(restaurantList.getPositionForView(view), false);
-            } else {
-                restaurantList.setItemChecked(restaurantList.getPositionForView(view), true);
-            }
+                if(!restaurantList.isItemChecked(restaurantList.getPositionForView(view))) {
+                    restaurantList.setItemChecked(restaurantList.getPositionForView(view), false);
+                } else {
+                    restaurantList.setItemChecked(restaurantList.getPositionForView(view), true);
+                }
             }
         });
 
