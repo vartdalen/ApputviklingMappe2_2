@@ -153,6 +153,8 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
                     System.out.println(textDate.getText().toString());
                     System.out.println(textTime.getText().toString());
                 }
+                Intent intent = new Intent(ActivityBooking.this, ActivityBookingFriendSelection.class);
+                startActivityForResult(intent, RequestCodes.REQUEST_BOOKING);
             }
         });
     }

@@ -25,6 +25,7 @@
         <activity android:name=".ActivityPreferences"></activity>
         <activity android:name=".ActivityManageRestaurants"></activity>
         <activity android:name=".ActivityBooking"></activity>
+        <activity android:name=".ActivityBookingFriendSelection"></activity>
     </application>
 
 </manifest>
