@@ -31,8 +31,6 @@ public class ActivityLogin extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        System.out.println(session.getPrefPersonalReminder());
-        System.out.println(session.getPrefNotifyFriendsFrequency());
         session = new Session(ActivityLogin.this);
         if(session.getUserLevel() > 0) {
             finish();
@@ -46,6 +44,8 @@ public class ActivityLogin extends Activity {
         helper = new Helper();
         setupToolbar();
         setupFields();
+        System.out.println(session.getPrefPersonalReminder());
+        System.out.println(session.getPrefNotifyFriendsFrequency());
     }
 
     @Override
