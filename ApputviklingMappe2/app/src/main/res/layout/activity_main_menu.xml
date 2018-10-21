@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="72dp"
             android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_logo"/>
 
         <Button
             android:id="@+id/main_menu_button_book_table"
