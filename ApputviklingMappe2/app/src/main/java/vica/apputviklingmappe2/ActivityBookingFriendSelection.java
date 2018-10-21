@@ -124,11 +124,11 @@ public class ActivityBookingFriendSelection extends Activity {
                             int friendId = Integer.parseInt(helper.stringParser(s));
                             db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
                         }
-        //                SMS logic
+                        //SMS logic
                         if(session.getPrefNotifyFriends()) {
+                            String n = "";
                             for(String nr : friendSelectedListArray){
-                                String n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
-                                System.out.println(n);
+                                n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
                             }
                             helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
                         }
