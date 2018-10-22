@@ -16,7 +16,11 @@ public class VicaService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        //                            String n = "";
+//                            for(String nr : friendSelectedListArray){
+//                                n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
+//                            }
+//                            helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Intent i = new Intent(this, ResultNotification.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, i, 0);

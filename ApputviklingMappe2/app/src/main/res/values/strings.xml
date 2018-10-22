@@ -80,6 +80,9 @@
     <string name="notify_friends_frequency_summary">Control frequency of friends being notified</string>
     <string name="default_reminder_message">Your friend has booked a table and invited you!</string>
 
+    <!--Bundle to broadcast strings-->
+    <string name="friendSelectedListArray">friendSelectedListArray</string>
+
     <!--User-table database Strings-->
     <string name="USER_ID">Email</string>
     <string name="USER_LEVEL">Userlevel</string>

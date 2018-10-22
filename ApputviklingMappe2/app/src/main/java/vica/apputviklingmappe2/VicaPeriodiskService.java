@@ -9,16 +9,21 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
 public class VicaPeriodiskService extends Service {
-
     @Nullable
     @Override public IBinder onBind(Intent intent) { return null; }
     @Override public int onStartCommand(Intent intent, int flags, int startId){
         java.util.Calendar cal = Calendar.getInstance();
         Intent i = new Intent(this, VicaService.class);
+
+        ArrayList<String> friendSelectedListArray;
+        friendSelectedListArray = intent.getStringArrayListExtra(getString(R.string.friendSelectedListArray));
+        System.out.println(friendSelectedListArray.toArray());
+        i.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
 
         PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
         AlarmManager alarm =
