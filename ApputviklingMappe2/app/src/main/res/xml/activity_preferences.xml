@@ -8,7 +8,7 @@
         android:title="@string/personal">
         <SwitchPreference
             android:title="@string/personal_reminder"
-            android:summary="@string/notifications_summary"
+            android:summary="@string/personal_reminder_summary"
             android:key="@string/personal_reminder"/>
     </PreferenceCategory>
     <PreferenceCategory
@@ -21,12 +21,12 @@
                 android:title="@string/notify_friends_message"
                 android:summary="@string/notify_friends_message_summary"
                 android:key="@string/notify_friends_message"/>
-            <ListPreference
-                android:title="@string/notify_friends_frequency"
-                android:summary="@string/notify_friends_frequency_summary"
-                android:key="@string/notify_friends_frequency"
-                android:entries="@array/frequency_value"
-                android:entryValues="@array/frequency_index"
-                android:defaultValue="0"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/global">
+        <EditTextPreference
+            android:title="@string/timing"
+            android:summary="@string/timing_summary"
+            android:key="@string/timing"/>
     </PreferenceCategory>
 </android.preference.PreferenceScreen>

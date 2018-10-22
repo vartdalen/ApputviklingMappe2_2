@@ -44,8 +44,6 @@ public class ActivityLogin extends Activity {
         helper = new Helper();
         setupToolbar();
         setupFields();
-        System.out.println(session.getPrefPersonalReminder());
-        System.out.println(session.getPrefNotifyFriendsFrequency());
     }
 
     @Override

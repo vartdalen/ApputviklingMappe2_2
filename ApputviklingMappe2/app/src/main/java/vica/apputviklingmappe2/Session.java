@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Calendar;
 import java.util.Map;
 
 public class Session {
@@ -20,7 +21,7 @@ public class Session {
         for(Map.Entry<String,?> prefToReset : prefMap.entrySet()) {
             if (!prefToReset.getKey().equals(context.getString(R.string.personal_reminder))
             && !prefToReset.getKey().equals(context.getString(R.string.notify_friends))
-            && !prefToReset.getKey().equals(context.getString(R.string.notify_friends_frequency))
+            && !prefToReset.getKey().equals(context.getString(R.string.timing))
             && !prefToReset.getKey().equals(context.getString(R.string.notify_friends_message))) {
                 prefs.edit().remove(prefToReset.getKey()).apply();
             }
@@ -78,7 +79,7 @@ public class Session {
     public String getPrefNotifyFriendsMessage() {
         return prefs.getString(context.getString(R.string.notify_friends_message), context.getString(R.string.default_reminder_message));
     }
-    public int getPrefNotifyFriendsFrequency() {
-        return Integer.parseInt(prefs.getString(context.getString(R.string.notify_friends_frequency), "0"));
+    public String getPrefTiming() {
+        return prefs.getString(context.getString(R.string.timing), Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes());
     }
 }

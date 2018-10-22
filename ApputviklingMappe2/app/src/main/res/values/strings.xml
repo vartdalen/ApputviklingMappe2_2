@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ApputviklingMappe2</string>
+    <string name="app_name">vica</string>
 
     <!-- User info -->
     <string name="first_name">First name</string>
@@ -70,14 +70,15 @@
     <!--Preferences-->
     <string name="personal">Personal</string>
     <string name="personal_reminder">Personal reminder</string>
-    <string name="notifications_summary">Reminder of today\'s appointments</string>
+    <string name="personal_reminder_summary">Reminder of today\'s appointments</string>
     <string name="social">Social</string>
     <string name="notify_friends">Notify friends</string>
     <string name="notify_friends_summary">Notify invited friends by SMS</string>
     <string name="notify_friends_message">Notification message</string>
     <string name="notify_friends_message_summary">Customize the text in your friend notification</string>
-    <string name="notify_friends_frequency">Frequency</string>
-    <string name="notify_friends_frequency_summary">Control frequency of friends being notified</string>
+    <string name="global">Global</string>
+    <string name="timing">Timing</string>
+    <string name="timing_summary">Control timing of personal reminder and friends being notified (hh:mm)</string>
     <string name="default_reminder_message">Your friend has booked a table and invited you!</string>
 
     <!--User-table database Strings-->
