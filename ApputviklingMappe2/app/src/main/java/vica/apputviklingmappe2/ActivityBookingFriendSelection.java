@@ -178,26 +178,6 @@ public class ActivityBookingFriendSelection extends Activity {
                 }
             }
         });
-
-//        buttonDelete = (Button) findViewById(R.id.friend_delete_button);
-//        buttonDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SparseBooleanArray checked = friendList.getCheckedItemPositions();
-//                ArrayList<String> temp = new ArrayList<>();
-//                for(String s : friendListArray) {
-//                    if(checked.get(friendListArray.indexOf(s))) {
-//                        db.deleteFriend(ActivityBookingFriendSelection.this, helper.stringParser(s));
-//                    } else {
-//                        temp.add(s);
-//                    }
-//                }
-//                friendListArray.clear();
-//                friendListArray.addAll(temp);
-//                listAdapter.notifyDataSetChanged();
-//                friendList.setAdapter(listAdapter);
-//            }
-//        });
     }
 
     private void setupToolbar() {
