@@ -4,9 +4,12 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+
+import java.util.ArrayList;
 
 public class VicaService extends Service {
     @Override
@@ -16,18 +19,24 @@ public class VicaService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //                            String n = "";
-//                            for(String nr : friendSelectedListArray){
-//                                n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
-//                            }
-//                            helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
+        DB db = new DB();
+        Helper helper = new Helper();
+        ArrayList<String> friendSelectedListArray = intent.getStringArrayListExtra(getString(R.string.friendSelectedListArray));
+        String defaultMsg = intent.getStringExtra(getString(R.string.default_reminder_message));
+
+        String nr = "";
+        for(String friend : friendSelectedListArray){
+            nr = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(friend), null, this);
+        }
+        helper.sendSMS(nr, defaultMsg, null);
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Intent i = new Intent(this, ResultNotification.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, i, 0);
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Private Vica Restaurant")
-                .setContentText("Don't forget your restaurant booking mate!")
-                .setSmallIcon(R.mipmap.ic_launcher).setContentIntent(pIntent).build();
+                .setContentTitle(getString(R.string.vica_restaurant))
+                .setContentText(getString(R.string.default_reminder_message))
+                .setSmallIcon(R.drawable.ic_logo).setContentIntent(pIntent).build();
         notification.flags|= Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(0, notification);
 

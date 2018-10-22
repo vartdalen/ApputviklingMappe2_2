@@ -79,6 +79,7 @@
     <string name="notify_friends_frequency">Frequency</string>
     <string name="notify_friends_frequency_summary">Control frequency of friends being notified</string>
     <string name="default_reminder_message">Your friend has booked a table and invited you!</string>
+    <string name="vica_restaurant">Vica Restaurant</string>
 
     <!--Bundle to broadcast strings-->
     <string name="friendSelectedListArray">friendSelectedListArray</string>

@@ -60,16 +60,17 @@ public class Helper {
     }
 
     public void sendSMS(String phoneNo, String msg, Activity activity) {
-        int MY_PERMISSIONS_REQUEST_SEND_SMS = ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.SEND_SMS);
+        int MY_PERMISSIONS_REQUEST_SEND_SMS;
+        if(activity!=null) {
+            MY_PERMISSIONS_REQUEST_SEND_SMS = ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.SEND_SMS);
+        } else {
+            MY_PERMISSIONS_REQUEST_SEND_SMS = PackageManager.PERMISSION_GRANTED;
+        }
         if(MY_PERMISSIONS_REQUEST_SEND_SMS == PackageManager.PERMISSION_GRANTED) {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(phoneNo, null, msg, null, null);
-                Toast.makeText(activity.getApplicationContext(), activity.getApplicationContext().getString(R.string.friends_notified),
-                        Toast.LENGTH_LONG).show();
             } catch (Exception ex) {
-                Toast.makeText(activity.getApplicationContext(),ex.getMessage().toString(),
-                        Toast.LENGTH_LONG).show();
                 ex.printStackTrace();
             }
         } else {

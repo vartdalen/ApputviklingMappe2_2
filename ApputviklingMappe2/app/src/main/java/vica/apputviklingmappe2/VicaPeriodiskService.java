@@ -20,12 +20,10 @@ public class VicaPeriodiskService extends Service {
         java.util.Calendar cal = Calendar.getInstance();
         Intent i = new Intent(this, VicaService.class);
 
-        ArrayList<String> friendSelectedListArray;
-        friendSelectedListArray = intent.getStringArrayListExtra(getString(R.string.friendSelectedListArray));
-        System.out.println(friendSelectedListArray.toArray());
-        i.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
-
-        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
+        i.putExtra(getString(R.string.friendSelectedListArray), intent.getStringArrayListExtra(getString(R.string.friendSelectedListArray)));
+        i.putExtra(getString(R.string.default_reminder_message), intent.getStringExtra(getString(R.string.default_reminder_message)));
+        
+        PendingIntent pintent = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarm =
                 (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 5 * 1000, pintent); /*Hvert minutt*/

@@ -130,12 +130,13 @@ public class ActivityBookingFriendSelection extends Activity {
                         }
                         //SMS logic
                         if(session.getPrefNotifyFriends() || session.getPrefPersonalReminder()) {
-//                            String n = "";
-//                            for(String nr : friendSelectedListArray){
-//                                n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
-//                            }
-//                            helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
-
+                            if(session.getPrefNotifyFriends()){
+                                String n = "";
+                                for(String nr : friendSelectedListArray){
+                                    n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
+                                }
+                                helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
+                            }
                             startService();
                         }
                         dialog.dismiss();
@@ -230,6 +231,7 @@ public class ActivityBookingFriendSelection extends Activity {
         this.startService(intent);*/
 
         Intent intent = new Intent();
+        intent.putExtra(getString(R.string.default_reminder_message), session.getPrefNotifyFriendsMessage());
         intent.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
         intent.setAction("vica.apputviklingmappe2");
 

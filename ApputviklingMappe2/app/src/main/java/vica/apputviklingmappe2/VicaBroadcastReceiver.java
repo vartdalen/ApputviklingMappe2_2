@@ -14,6 +14,7 @@ public class VicaBroadcastReceiver extends BroadcastReceiver {
         ArrayList<String> friendSelectedListArray;
         friendSelectedListArray = intent.getStringArrayListExtra(context.getString(R.string.friendSelectedListArray));
         i.putExtra(context.getString(R.string.friendSelectedListArray), friendSelectedListArray);
+        i.putExtra(context.getString(R.string.default_reminder_message), intent.getStringExtra(context.getString(R.string.default_reminder_message)));
         context.startService(i);
     }
 }
