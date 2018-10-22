@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">vica</string>
+    <string name="app_name">Vica</string>
 
     <!-- User info -->
     <string name="first_name">First name</string>
@@ -80,6 +80,12 @@
     <string name="global">Global</string>
     <string name="timing">Timing</string>
     <string name="timing_summary">Control timing of personal reminder and friends being notified (hh:mm)</string>
+    <string name="vica_restaurant">Vica Restaurant</string>
+    <string name="notification_message">You have reservations today!</string>
+    <string name="default_time">17:00</string>
+
+    <!--Bundle to broadcast strings-->
+    <string name="friendSelectedListArray">friendSelectedListArray</string>
 
     <!--User-table database Strings-->
     <string name="USER_ID">Email</string>

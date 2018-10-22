@@ -27,6 +27,19 @@
         <activity android:name=".ActivityManageRestaurants"></activity>
         <activity android:name=".ActivityBooking"></activity>
         <activity android:name=".ActivityBookingFriendSelection"></activity>
+        <activity android:name=".ResultNotification"></activity>
+
+        <!-- Service -->
+        <service android:name=".VicaService"></service>
+        <service android:name=".VicaPeriodiskService"></service>
+
+        <!-- Broadcast Receiver-->
+        <receiver android:name=".VicaBroadcastReceiver">
+            <intent-filter>
+                <action android:name="vica.apputviklingmappe2" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -1,7 +1,10 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -51,6 +54,7 @@ public class ActivityBookingFriendSelection extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_friend_selection);
+        stoppPeriodisk();
 
         helper = new Helper();
         db = new DB();
@@ -114,7 +118,7 @@ public class ActivityBookingFriendSelection extends Activity {
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
                 final String sql = getString(R.string.ORDER_ID) + " DESC LIMIT 1";
-                final int ordeId = db.getId(DB.CONTENT_ORDER_URI, new String[]{getString(R.string.ORDER_ID)}, null, sql, ActivityBookingFriendSelection.this);
+                final int orderId = db.getId(DB.CONTENT_ORDER_URI, new String[]{getString(R.string.ORDER_ID)}, null, sql, ActivityBookingFriendSelection.this);
                 final int resId = Integer.parseInt(helper.stringParser(restaurantName));
                 booking_confirm_button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,12 +126,18 @@ public class ActivityBookingFriendSelection extends Activity {
                         db.createOrder(ActivityBookingFriendSelection.this, resId, session.getEmail(), restaurantDate, restaurantTime);
                         for(String s : friendSelectedListArray){
                             int friendId = Integer.parseInt(helper.stringParser(s));
-                            System.out.println(friendId);
-                            db.createOrderline(ActivityBookingFriendSelection.this, friendId, ordeId);
+                            db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
                         }
-        //                SMS logic
-                        if(session.getPrefNotifyFriends()) {
-                            helper.sendSMS(getString(R.string.api_23_phone_1), session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
+                        //SMS logic
+                        if(session.getPrefNotifyFriends() || session.getPrefPersonalReminder()) {
+                            if(session.getPrefNotifyFriends()){
+                                String n = "";
+                                for(String nr : friendSelectedListArray){
+                                    n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
+                                }
+                                helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
+                            }
+                            startService();
                         }
                         dialog.dismiss();
                     }
@@ -214,6 +224,29 @@ public class ActivityBookingFriendSelection extends Activity {
                 return true;
             }
         });
+    }
+
+    private void startService() {
+       /* Intent intent = new Intent(this, VicaService.class);
+        this.startService(intent);*/
+
+        Intent intent = new Intent();
+        intent.putExtra(getString(R.string.notify_friends_message), session.getPrefNotifyFriendsMessage());
+        intent.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
+        intent.putExtra(getString(R.string.notify_friends), session.getPrefNotifyFriends());
+        intent.putExtra(getString(R.string.personal_reminder), session.getPrefPersonalReminder());
+        intent.setAction("vica.apputviklingmappe2");
+
+        sendBroadcast(intent);
+    }
+
+    public void stoppPeriodisk() {
+        Intent i = new Intent(this, VicaService.class);
+        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
+        AlarmManager alarm =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if(alarm!= null) {
+            alarm.cancel(pintent);
+        }
     }
 
 }

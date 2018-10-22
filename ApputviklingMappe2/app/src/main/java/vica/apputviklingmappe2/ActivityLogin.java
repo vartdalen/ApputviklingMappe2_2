@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ public class ActivityLogin extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        PreferenceManager.setDefaultValues(this, R.xml.activity_preferences, false);
         session = new Session(ActivityLogin.this);
         if(session.getUserLevel() > 0) {
             finish();

@@ -9,24 +9,28 @@
         <SwitchPreference
             android:title="@string/personal_reminder"
             android:summary="@string/personal_reminder_summary"
-            android:key="@string/personal_reminder"/>
+            android:key="@string/personal_reminder"
+            android:defaultValue="true"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/social">
         <SwitchPreference
             android:title="@string/notify_friends"
             android:summary="@string/notify_friends_summary"
-            android:key="@string/notify_friends"/>
+            android:key="@string/notify_friends"
+            android:defaultValue="false"/>
             <EditTextPreference
                 android:title="@string/notify_friends_message"
                 android:summary="@string/notify_friends_message_summary"
-                android:key="@string/notify_friends_message"/>
+                android:key="@string/notify_friends_message"
+                android:defaultValue="@string/notify_friends_message_default"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/global">
         <EditTextPreference
             android:title="@string/timing"
             android:summary="@string/timing_summary"
-            android:key="@string/timing"/>
+            android:key="@string/timing"
+            android:defaultValue="@string/default_time"/>
     </PreferenceCategory>
 </android.preference.PreferenceScreen>
