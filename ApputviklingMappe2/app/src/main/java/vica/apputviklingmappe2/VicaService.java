@@ -21,7 +21,7 @@ public class VicaService extends Service {
         Intent i = new Intent(this, ResultNotification.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, i, 0);
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Vica Restaurant")
+                .setContentTitle("Private Vica Restaurant")
                 .setContentText("Don't forget your restaurant booking mate!")
                 .setSmallIcon(R.mipmap.ic_launcher).setContentIntent(pIntent).build();
         notification.flags|= Notification.FLAG_AUTO_CANCEL;

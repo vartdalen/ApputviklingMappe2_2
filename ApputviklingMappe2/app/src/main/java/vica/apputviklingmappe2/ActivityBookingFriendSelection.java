@@ -54,6 +54,7 @@ public class ActivityBookingFriendSelection extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_friend_selection);
+        stoppPeriodisk();
 
         helper = new Helper();
         db = new DB();
@@ -128,13 +129,13 @@ public class ActivityBookingFriendSelection extends Activity {
                             db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
                         }
                         //SMS logic
-                        if(session.getPrefNotifyFriends()) {
+                        if(session.getPrefNotifyFriends() || session.getPrefPersonalReminder()) {
                             String n = "";
                             for(String nr : friendSelectedListArray){
                                 n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
                             }
                             helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
-                            startService(v);
+                            startService();
                         }
                         dialog.dismiss();
                     }
@@ -223,16 +224,17 @@ public class ActivityBookingFriendSelection extends Activity {
         });
     }
 
-    public void startService(View v) {
-       /* Intent intent = new Intent(this, MinService.class);
+    private void startService() {
+       /* Intent intent = new Intent(this, VicaService.class);
         this.startService(intent);*/
+
 
         Intent intent= new Intent();
         intent.setAction("vica.apputviklingmappe2");
         sendBroadcast(intent);
     }
 
-    public void stoppPeriodisk(View v) {
+    public void stoppPeriodisk() {
         Intent i = new Intent(this, VicaService.class);
         PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
         AlarmManager alarm =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
