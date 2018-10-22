@@ -29,7 +29,8 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/button_primary"
             android:text="@string/book_table"
-            android:theme="@style/ButtonTheme" />
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/restaurant_icon"/>
 
         <Button
             android:id="@+id/main_menu_button_manage_friends"
@@ -38,7 +39,8 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/button_primary"
             android:text="@string/manage_friends"
-            android:theme="@style/ButtonTheme" />
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/friends_icon"/>
         <Button
             android:id="@+id/main_menu_button_manage_restaurants"
             android:layout_width="match_parent"
@@ -47,6 +49,7 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/button_primary"
             android:text="@string/manage_restaurants"
-            android:theme="@style/ButtonTheme" />
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/settings_icon"/>
     </LinearLayout>
 </LinearLayout>
