@@ -76,10 +76,10 @@
     <string name="notify_friends_summary">Notify invited friends by SMS</string>
     <string name="notify_friends_message">Notification message</string>
     <string name="notify_friends_message_summary">Customize the text in your friend notification</string>
+    <string name="notify_friends_message_default">Your friend has booked a table and invited you!</string>
     <string name="global">Global</string>
     <string name="timing">Timing</string>
     <string name="timing_summary">Control timing of personal reminder and friends being notified (hh:mm)</string>
-    <string name="default_reminder_message">Your friend has booked a table and invited you!</string>
 
     <!--User-table database Strings-->
     <string name="USER_ID">Email</string>

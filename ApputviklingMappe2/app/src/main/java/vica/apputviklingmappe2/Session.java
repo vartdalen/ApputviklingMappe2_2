@@ -77,7 +77,7 @@ public class Session {
         return prefs.getBoolean(context.getString(R.string.notify_friends), false);
     }
     public String getPrefNotifyFriendsMessage() {
-        return prefs.getString(context.getString(R.string.notify_friends_message), context.getString(R.string.default_reminder_message));
+        return prefs.getString(context.getString(R.string.notify_friends_message), context.getString(R.string.notify_friends_message_default));
     }
     public String getPrefTiming() {
         return prefs.getString(context.getString(R.string.timing), Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes());
