@@ -27,6 +27,7 @@
         <activity android:name=".ActivityManageRestaurants"></activity>
         <activity android:name=".ActivityBooking"></activity>
         <activity android:name=".ActivityBookingFriendSelection"></activity>
+        <activity android:name=".ResultNotification"></activity>
 
         <service android:name=".VicaService"></service>
         <service android:name=".VicaPeriodiskService"></service>

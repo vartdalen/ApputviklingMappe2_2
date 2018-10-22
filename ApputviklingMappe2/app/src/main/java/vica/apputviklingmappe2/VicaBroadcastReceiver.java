@@ -7,7 +7,6 @@ import android.content.Intent;
 public class VicaBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
         /* Intent i = new Intent(context, MinService.class);*/
         Intent i = new Intent(context, VicaPeriodiskService.class);
 

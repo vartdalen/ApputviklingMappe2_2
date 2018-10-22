@@ -1,7 +1,10 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -131,6 +134,7 @@ public class ActivityBookingFriendSelection extends Activity {
                                 n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
                             }
                             helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
+                            startService(v);
                         }
                         dialog.dismiss();
                     }
@@ -181,26 +185,6 @@ public class ActivityBookingFriendSelection extends Activity {
                 }
             }
         });
-
-//        buttonDelete = (Button) findViewById(R.id.friend_delete_button);
-//        buttonDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SparseBooleanArray checked = friendList.getCheckedItemPositions();
-//                ArrayList<String> temp = new ArrayList<>();
-//                for(String s : friendListArray) {
-//                    if(checked.get(friendListArray.indexOf(s))) {
-//                        db.deleteFriend(ActivityBookingFriendSelection.this, helper.stringParser(s));
-//                    } else {
-//                        temp.add(s);
-//                    }
-//                }
-//                friendListArray.clear();
-//                friendListArray.addAll(temp);
-//                listAdapter.notifyDataSetChanged();
-//                friendList.setAdapter(listAdapter);
-//            }
-//        });
     }
 
     private void setupToolbar() {
@@ -237,6 +221,24 @@ public class ActivityBookingFriendSelection extends Activity {
                 return true;
             }
         });
+    }
+
+    public void startService(View v) {
+       /* Intent intent = new Intent(this, MinService.class);
+        this.startService(intent);*/
+
+        Intent intent= new Intent();
+        intent.setAction("vica.apputviklingmappe2");
+        sendBroadcast(intent);
+    }
+
+    public void stoppPeriodisk(View v) {
+        Intent i = new Intent(this, VicaService.class);
+        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
+        AlarmManager alarm =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if(alarm!= null) {
+            alarm.cancel(pintent);
+        }
     }
 
 }
