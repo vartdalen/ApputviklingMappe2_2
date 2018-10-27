@@ -1,11 +1,8 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -194,7 +191,6 @@ public class ActivityBookingFriendSelection extends Activity {
     }
 
     private void startService() {
-        helper.stoppPeriodisk(ActivityBookingFriendSelection.this);
         Intent intent = new Intent();
         intent.putExtra(getString(R.string.notify_friends_and_personal_reminder_timing), session.getPrefTiming());
         intent.putExtra(getString(R.string.notify_friends_message), session.getPrefNotifyFriendsMessage());
