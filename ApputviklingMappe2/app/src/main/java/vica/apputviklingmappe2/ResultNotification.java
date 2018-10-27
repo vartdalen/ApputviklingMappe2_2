@@ -84,6 +84,7 @@ public class ResultNotification extends Activity {
                 }
             }
         });
+
         buttonOrderDetail = (Button) findViewById(R.id.order_detail_button);
         buttonOrderDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +108,7 @@ public class ResultNotification extends Activity {
                 View view = getLayoutInflater().inflate(R.layout.dialog_order_details, null);
                 final TextView bookingRestaurantName = (TextView) view.findViewById(R.id.booking_dialog_restaurant_name);
 
-                bookingRestaurantName.setText(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_NAME)}, getString(R.string.RESTAURANT_ID)+"="+id, null,ResultNotification.this));
+                bookingRestaurantName.setText(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_NAME)}, getString(R.string.RESTAURANT_ID)+"="+"'"+id+"'", null,ResultNotification.this));
 
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
