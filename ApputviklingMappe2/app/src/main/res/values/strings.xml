@@ -69,6 +69,7 @@
     <string name="ok_logout">Logout successful</string>
     <string name="friends_notified">Friends notified</string>
     <string name="order_confirmed">Order confirmed</string>
+    <string name="periodic_disabled">Periodic service disabled</string>
 
     <!--Preferences-->
     <string name="personal">Personal</string>
