@@ -32,7 +32,7 @@ public class ResultNotification extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         session = new Session(ResultNotification.this);
-        if(session.getUserLevel() < 2) {
+        if(session.getUserLevel() < 1) {
             finish();
             Intent intent = new Intent(ResultNotification.this, ActivityLogin.class);
             startActivity(intent);
@@ -49,7 +49,8 @@ public class ResultNotification extends Activity {
 
     private void populateRestaurantList() {
         String order = getString(R.string.ORDER_ID) + " DESC";
-        Cursor cur = getContentResolver().query(DB.CONTENT_ORDER_URI, null, null, null, order);
+        String selection = getString(R.string.ORDER_UserFK) + "=" + "'"+session.getEmail()+"'";
+        Cursor cur = getContentResolver().query(DB.CONTENT_ORDER_URI, null, selection, null, order);
         listAdapter = new ArrayAdapter<>(this, R.layout.list_my_orders, R.id.my_orders_textview, restaurantListArray);
         restaurantList.setAdapter(listAdapter);
         if(cur != null && cur.moveToFirst()) {

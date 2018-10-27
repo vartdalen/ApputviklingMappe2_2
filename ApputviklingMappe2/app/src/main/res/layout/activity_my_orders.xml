@@ -25,7 +25,7 @@
             android:id="@+id/my_order_list"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/listview_border"
             android:listSelector="@color/colorPrimaryFade"
             android:layout_below="@id/my_orders_textview">
