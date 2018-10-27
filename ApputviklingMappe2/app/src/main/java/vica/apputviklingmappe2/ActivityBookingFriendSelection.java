@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 
@@ -110,8 +109,6 @@ public class ActivityBookingFriendSelection extends Activity {
                 final TextView bookingDate = (TextView) view.findViewById(R.id.booking_dialog_restaurant_date);
                 final TextView bookingTime = (TextView) view.findViewById(R.id.booking_dialog_restaurant_time);
                 final TextView bookingFriendQuantity = (TextView) view.findViewById(R.id.booking_dialog_friend_quantity);
-                Button booking_confirm_button = (Button) view.findViewById(R.id.booking_dialog_confirm_button);
-                Button booking_cancel_button = (Button) view.findViewById(R.id.booking_dialog_cancel_button);
 
                 bookingRestaurantName.setText(restaurantName);
                 bookingDate.setText(restaurantDate);
@@ -120,41 +117,7 @@ public class ActivityBookingFriendSelection extends Activity {
 
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
-                final String sql = getString(R.string.ORDER_ID) + " DESC LIMIT 1";
-                final int orderId = db.getId(DB.CONTENT_ORDER_URI, new String[]{getString(R.string.ORDER_ID)}, null, sql, ActivityBookingFriendSelection.this);
-                final int resId = Integer.parseInt(helper.stringParser(restaurantName));
-                booking_confirm_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final ProgressDialog progressDialog = new ProgressDialog(ActivityBookingFriendSelection.this);
-                        progressDialog.setMessage(getString(R.string.ordering));
-                        progressDialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                if (!db.createOrder(ActivityBookingFriendSelection.this, resId, session.getEmail(), restaurantDate, restaurantTime)) {
-                                    System.out.println("Failed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                                } else {
-                                    for(String s : friendSelectedListArray){
-                                        int friendId = Integer.parseInt(helper.stringParser(s));
-                                        db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
-                                    }
-                                    startService();
-                                    System.out.println("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                                }
-                                progressDialog.dismiss();
-                            }
-                        }, 5000);
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-
-                booking_cancel_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                setupButtonsForDialog(dialog, view);
             }
         });
 
@@ -232,9 +195,6 @@ public class ActivityBookingFriendSelection extends Activity {
     }
 
     private void startService() {
-       /* Intent intent = new Intent(this, VicaService.class);
-        this.startService(intent);*/
-
         Intent intent = new Intent();
         intent.putExtra(getString(R.string.notify_friends_message), session.getPrefNotifyFriendsMessage());
         intent.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
@@ -252,6 +212,46 @@ public class ActivityBookingFriendSelection extends Activity {
         if(alarm!= null) {
             alarm.cancel(pintent);
         }
+    }
+
+    private void setupButtonsForDialog(final AlertDialog dialog, View view) {
+        final String sql = getString(R.string.ORDER_ID) + " DESC LIMIT 1";
+        final int orderId = db.getId(DB.CONTENT_ORDER_URI, new String[]{getString(R.string.ORDER_ID)}, null, sql, ActivityBookingFriendSelection.this);
+        final int resId = Integer.parseInt(helper.stringParser(restaurantName));
+        Button booking_confirm_button = (Button) view.findViewById(R.id.booking_dialog_confirm_button);
+        booking_confirm_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(ActivityBookingFriendSelection.this);
+                progressDialog.setMessage(getString(R.string.ordering));
+                progressDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        if (!db.createOrder(ActivityBookingFriendSelection.this, resId, session.getEmail(), restaurantDate, restaurantTime)) {
+                            System.out.println("Failed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        } else {
+                            for(String s : friendSelectedListArray){
+                                int friendId = Integer.parseInt(helper.stringParser(s));
+                                db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
+                            }
+                            startService();
+                            System.out.println("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        }
+                        progressDialog.dismiss();
+                    }
+                }, 5000);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+        Button booking_cancel_button = (Button) view.findViewById(R.id.booking_dialog_cancel_button);
+        booking_cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 }
