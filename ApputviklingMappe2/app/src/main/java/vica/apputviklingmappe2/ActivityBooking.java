@@ -60,8 +60,11 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == ResultCodes.ORDER_CONFIRMED) {
-            finish();
+        if (requestCode == RequestCodes.REQUEST_BOOKING) {
+            if (resultCode == ResultCodes.ORDER_CONFIRMED) {
+                setResult(ResultCodes.ORDER_CONFIRMED);
+                this.finish();
+            }
         }
     }
 
@@ -160,7 +163,7 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
                     intent.putExtra(getString(R.string.restaurant_name), restaurantListArray.get(indexSelected));
                     intent.putExtra(getString(R.string.date), textDate.getText().toString());
                     intent.putExtra(getString(R.string.time), textTime.getText().toString());
-                    startActivity(intent);
+                    startActivityForResult(intent, RequestCodes.REQUEST_BOOKING);
                 }
             }
         });

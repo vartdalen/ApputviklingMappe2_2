@@ -31,6 +31,6 @@
             android:title="@string/notify_friends_and_personal_reminder_timing"
             android:summary="@string/notify_friends_and_personal_reminder_timing_summary"
             android:key="@string/notify_friends_and_personal_reminder_timing"
-            android:defaultValue="@string/default_time"/>
+            android:defaultValue="@string/timing_default"/>
     </PreferenceCategory>
 </android.preference.PreferenceScreen>

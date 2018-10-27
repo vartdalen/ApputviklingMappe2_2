@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Vica</string>
+    <string name="vica_restaurant">Vica Restaurant</string>
 
     <!-- User info -->
     <string name="first_name">First name</string>
@@ -67,12 +68,13 @@
     <string name="ok_signup">Signup successful</string>
     <string name="ok_logout">Logout successful</string>
     <string name="friends_notified">Friends notified</string>
+    <string name="order_confirmed">Order confirmed</string>
 
     <!--Preferences-->
     <string name="personal">Personal</string>
     <string name="personal_reminder">Personal reminder</string>
     <string name="personal_reminder_summary">Reminder of today\'s appointments</string>
-    <string name="personal_reminder_message">You have reservations today!</string>
+    <string name="personal_reminder_message">You have upcoming appointments</string>
     <string name="social">Social</string>
     <string name="notify_friends">Notify friends</string>
     <string name="notify_friends_summary">Notify invited friends by SMS</string>
@@ -82,8 +84,7 @@
     <string name="global">Global</string>
     <string name="notify_friends_and_personal_reminder_timing">Timing</string>
     <string name="notify_friends_and_personal_reminder_timing_summary">Control time of day for personal reminder and friends being notified (hh:mm)</string>
-    <string name="vica_restaurant">Vica Restaurant</string>
-    <string name="default_time">17:00</string>
+    <string name="timing_default">17:00</string>
 
     <!--Bundle to broadcast strings-->
     <string name="friendSelectedListArray">friendSelectedListArray</string>

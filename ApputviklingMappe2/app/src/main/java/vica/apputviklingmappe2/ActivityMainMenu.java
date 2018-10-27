@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 public class ActivityMainMenu extends Activity {
@@ -47,6 +48,9 @@ public class ActivityMainMenu extends Activity {
             }
             if (resultCode == ResultCodes.RESULT_QUIT) {
                 finish();
+            }
+            if (resultCode == ResultCodes.ORDER_CONFIRMED) {
+                Toast.makeText(this, getString(R.string.order_confirmed), Toast.LENGTH_LONG).show();
             }
     }
 
