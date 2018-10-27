@@ -21,9 +21,12 @@ import java.util.ArrayList;
 
 public class ResultNotification extends Activity {
 
+    private Button buttonOrderDetail;
+
     private Toolbar toolbar;
     private Helper helper;
     private Session session;
+    private DB db;
 
     private ListView restaurantList;
     private ArrayAdapter<String> listAdapter;
@@ -42,6 +45,7 @@ public class ResultNotification extends Activity {
         setContentView(R.layout.activity_my_orders);
 
         helper = new Helper();
+        db = new DB();
         setupToolbar();
         setupFields();
         populateRestaurantList();
@@ -55,10 +59,9 @@ public class ResultNotification extends Activity {
         restaurantList.setAdapter(listAdapter);
         if(cur != null && cur.moveToFirst()) {
             do {
-                restaurantListArray.add((cur.getString(0)) + " " +
+                restaurantListArray.add((cur.getString(4)) + ": " +
                         (cur.getString(2)) + ", " +
-                        (cur.getString(3)) + ", " +
-                        (cur.getString(4)));
+                        (cur.getString(3)));
                 listAdapter.notifyDataSetChanged();
             }
             while(cur.moveToNext());
@@ -69,12 +72,54 @@ public class ResultNotification extends Activity {
     private void setupFields() {
         restaurantListArray = new ArrayList<>();
         restaurantList = (ListView)findViewById(R.id.my_order_list);
+        restaurantList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        restaurantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int listPos = restaurantList.getPositionForView(view);
+                if(!restaurantList.isItemChecked(listPos)) {
+                    restaurantList.setItemChecked(listPos, false);
+                } else if (restaurantList.isItemChecked(listPos)){
+                    restaurantList.setItemChecked(listPos, true);
+                }
+            }
+        });
+        buttonOrderDetail = (Button) findViewById(R.id.order_detail_button);
+        buttonOrderDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SparseBooleanArray checked = restaurantList.getCheckedItemPositions();
+                int checkedCounter = 0;
+                String id = "";
+                for(int i = 0; i < restaurantListArray.size(); i++){
+                    if(checked.get(i)){
+                        checkedCounter++;
+                    }
+                }
+                if(checkedCounter == 1) {
+                    for (String s : restaurantListArray) {
+                        if (checked.get(restaurantListArray.indexOf(s))) {
+                            id = helper.stringParser(s);
+                        }
+                    }
+                }
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ResultNotification.this);
+                View view = getLayoutInflater().inflate(R.layout.dialog_order_details, null);
+                final TextView bookingRestaurantName = (TextView) view.findViewById(R.id.booking_dialog_restaurant_name);
+
+                bookingRestaurantName.setText(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_NAME)}, getString(R.string.RESTAURANT_ID)+"="+id, null,ResultNotification.this));
+
+                dialogBuilder.setView(view);
+                final AlertDialog dialog = dialogBuilder.create();
+                dialog.show();
+            }
+        });
     }
 
     private void setupToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_logged_in);
-        toolbar.setTitle(getString(R.string.manage_restaurants));
+        toolbar.setTitle(getString(R.string.Restaurant_booking_orders));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -158,7 +158,6 @@ public class ActivityManageFriends extends Activity {
             SparseBooleanArray checked = friendList.getCheckedItemPositions();
             int checkedCounter = 0;
             String id = "";
-            String unparsed = "";
             for(int i = 0; i < friendListArray.size(); i++){
                 if(checked.get(i)){
                     checkedCounter++;
@@ -168,7 +167,6 @@ public class ActivityManageFriends extends Activity {
                 for(String s : friendListArray) {
                     if(checked.get(friendListArray.indexOf(s))) {
                         id = helper.stringParser(s);
-                        unparsed = s;
                     }
                 }
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ActivityManageFriends.this);

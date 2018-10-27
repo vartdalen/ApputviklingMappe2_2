@@ -14,21 +14,24 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:paddingTop="40dp">
-        <TextView
-            android:id="@+id/my_orders_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:text="Restaurant booking orders"/>
         <ListView
             android:id="@+id/my_order_list"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginTop="50dp"
             android:background="@drawable/listview_border"
-            android:listSelector="@color/colorPrimaryFade"
-            android:layout_below="@id/my_orders_textview">
+            android:listSelector="@color/colorPrimaryFade">
         </ListView>
+        <Button
+            android:id="@+id/order_detail_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_order_list"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="25dp"
+            android:padding="12dp"
+            android:text="@string/order_details"
+            android:background="@drawable/button_primary"
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/dialog_friend_add_icon"/>
     </RelativeLayout>
 </LinearLayout>

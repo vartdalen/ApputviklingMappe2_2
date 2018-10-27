@@ -119,5 +119,7 @@
     <string name="ORDERLINE_OrderFK">OrderID</string>
     <string name="ORDERLINE_FriendFK">FriendID</string>
     <string name="my_orders">My orders</string>
+    <string name="Restaurant_booking_orders">Restaurant Booking Orders</string>
+    <string name="order_details">Details</string>
 
 </resources>
