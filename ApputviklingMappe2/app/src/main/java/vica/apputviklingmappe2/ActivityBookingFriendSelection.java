@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -18,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 
@@ -123,22 +126,24 @@ public class ActivityBookingFriendSelection extends Activity {
                 booking_confirm_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        db.createOrder(ActivityBookingFriendSelection.this, resId, session.getEmail(), restaurantDate, restaurantTime);
-                        for(String s : friendSelectedListArray){
-                            int friendId = Integer.parseInt(helper.stringParser(s));
-                            db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
-                        }
-                        //SMS logic
-                        if(session.getPrefNotifyFriends() || session.getPrefPersonalReminder()) {
-                            if(session.getPrefNotifyFriends()){
-                                String n = "";
-                                for(String nr : friendSelectedListArray){
-                                    n = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID)+"="+helper.stringParser(nr), null, ActivityBookingFriendSelection.this);
+                        final ProgressDialog progressDialog = new ProgressDialog(ActivityBookingFriendSelection.this);
+                        progressDialog.setMessage(getString(R.string.ordering));
+                        progressDialog.show();
+                        new Handler().postDelayed(new Runnable() {
+                            public void run() {
+                                if (!db.createOrder(ActivityBookingFriendSelection.this, resId, session.getEmail(), restaurantDate, restaurantTime)) {
+                                    System.out.println("Failed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                                } else {
+                                    for(String s : friendSelectedListArray){
+                                        int friendId = Integer.parseInt(helper.stringParser(s));
+                                        db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
+                                    }
+                                    startService();
+                                    System.out.println("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                                 }
-                                helper.sendSMS(n, session.getPrefNotifyFriendsMessage(), ActivityBookingFriendSelection.this);
+                                progressDialog.dismiss();
                             }
-                            startService();
-                        }
+                        }, 5000);
                         dialog.dismiss();
                     }
                 });
