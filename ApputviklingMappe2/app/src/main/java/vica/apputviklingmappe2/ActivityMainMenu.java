@@ -1,12 +1,16 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 public class ActivityMainMenu extends Activity {
@@ -14,6 +18,8 @@ public class ActivityMainMenu extends Activity {
     private Button buttonBookTable;
     private Button buttonAddFriend;
     private Button buttonManageRestaurants;
+    private Button buttonMyOrders;
+    private Button buttonStopService;
 
     private Toolbar toolbar;
     private Helper helper;
@@ -122,6 +128,31 @@ public class ActivityMainMenu extends Activity {
                 }
             });
         }
-    }
 
+        buttonMyOrders = (Button) findViewById(R.id.main_menu_button_my_orders);
+        buttonMyOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityMainMenu.this, ResultNotification.class);
+                startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
+            }
+        });
+
+        buttonStopService = (Button) findViewById(R.id.stopService);
+        buttonStopService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stoppPeriodisk();
+            }
+        });
+    }
+    public void stoppPeriodisk() {
+        Toast.makeText(this, "Service Stopped", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, VicaService.class);
+        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
+        AlarmManager alarm =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if(alarm!= null) {
+            alarm.cancel(pintent);
+        }
+    }
 }

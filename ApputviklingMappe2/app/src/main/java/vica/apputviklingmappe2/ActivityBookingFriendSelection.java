@@ -54,7 +54,6 @@ public class ActivityBookingFriendSelection extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_friend_selection);
-        stoppPeriodisk();
 
         helper = new Helper();
         db = new DB();
@@ -236,14 +235,4 @@ public class ActivityBookingFriendSelection extends Activity {
 
         sendBroadcast(intent);
     }
-
-    public void stoppPeriodisk() {
-        Intent i = new Intent(this, VicaService.class);
-        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
-        AlarmManager alarm =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        if(alarm!= null) {
-            alarm.cancel(pintent);
-        }
-    }
-
 }

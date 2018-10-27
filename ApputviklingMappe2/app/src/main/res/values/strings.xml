@@ -118,5 +118,6 @@
 
     <string name="ORDERLINE_OrderFK">OrderID</string>
     <string name="ORDERLINE_FriendFK">FriendID</string>
+    <string name="my_orders">My orders</string>
 
 </resources>

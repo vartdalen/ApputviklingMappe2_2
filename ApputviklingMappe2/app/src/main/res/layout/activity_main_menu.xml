@@ -46,9 +46,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
             android:background="@drawable/button_primary"
             android:text="@string/manage_restaurants"
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/settings_icon"/>
+        <Button
+            android:id="@+id/main_menu_button_my_orders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/button_primary"
+            android:text="@string/my_orders"
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/settings_icon"/>
+        <!--android:layout_marginBottom="24dp"-->
+        <Button
+            android:id="@+id/stopService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/button_primary"
+            android:text="Stopp Service"
             android:theme="@style/ButtonTheme"
             android:drawableRight="@drawable/settings_icon"/>
     </LinearLayout>
