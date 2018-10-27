@@ -17,7 +17,7 @@
         <ListView
             android:id="@+id/restaurant_list"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:background="@drawable/listview_border"
             android:listSelector="@color/colorPrimaryFade">
         </ListView>
@@ -31,7 +31,8 @@
             android:padding="12dp"
             android:text="@string/add"
             android:background="@drawable/button_primary"
-            android:theme="@style/ButtonTheme"/>
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/dialog_friend_add_icon"/>
         <Button
             android:id="@+id/restaurant_delete_button"
             android:layout_width="match_parent"
@@ -41,7 +42,8 @@
             android:padding="12dp"
             android:text="@string/delete"
             android:background="@drawable/button_primary"
-            android:theme="@style/ButtonTheme"/>
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/friends_delete_icon"/>
         <Button
             android:id="@+id/restaurant_edit_button"
             android:layout_width="match_parent"
@@ -51,6 +53,7 @@
             android:padding="12dp"
             android:text="@string/edit"
             android:background="@drawable/button_primary"
-            android:theme="@style/ButtonTheme"/>
+            android:theme="@style/ButtonTheme"
+            android:drawableRight="@drawable/friends_edit_icon"/>
     </RelativeLayout>
 </LinearLayout>

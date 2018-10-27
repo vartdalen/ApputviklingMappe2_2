@@ -56,7 +56,6 @@ public class ResultNotification extends Activity {
         if(cur != null && cur.moveToFirst()) {
             do {
                 restaurantListArray.add((cur.getString(0)) + " " +
-                        (cur.getString(1)) + ", " +
                         (cur.getString(2)) + ", " +
                         (cur.getString(3)) + ", " +
                         (cur.getString(4)));

@@ -75,6 +75,6 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_primary"
         android:text="@string/add"
-        android:theme="@style/ButtonTheme" />
+        android:theme="@style/ButtonTheme"/>
 
 </RelativeLayout>
