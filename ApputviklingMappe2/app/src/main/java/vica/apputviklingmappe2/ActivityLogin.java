@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.security.NoSuchAlgorithmException;
@@ -141,6 +142,7 @@ public class ActivityLogin extends Activity {
         finish();
         Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
         startActivityForResult(intent, RequestCodes.REQUEST_LOGIN);
+        Toast.makeText(this, "Welcome, " + session.getFirstName(), Toast.LENGTH_LONG).show();
     }
 
     private boolean validate() throws NoSuchAlgorithmException {
