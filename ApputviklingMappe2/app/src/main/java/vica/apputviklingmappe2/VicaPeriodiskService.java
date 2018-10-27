@@ -29,7 +29,6 @@ public class VicaPeriodiskService extends Service {
         AlarmManager alarm =
                 (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 5 * 1000, pintent); /*Hvert minutt*/
-
         return super.onStartCommand(intent, flags, startId);
     }
 }

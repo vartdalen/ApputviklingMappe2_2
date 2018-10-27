@@ -26,12 +26,14 @@ public class VicaService extends Service {
         Boolean notifyFriends = intent.getExtras().getBoolean(getString(R.string.notify_friends));
         Boolean personalReminder = intent.getExtras().getBoolean(getString(R.string.personal_reminder));
 
-        if(notifyFriends) {
-            String nr = "";
-            for (String friend : friendSelectedListArray) {
-                nr = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID) + "=" + helper.stringParser(friend), null, this);
+        if(friendSelectedListArray!=null){
+            if(notifyFriends) {
+                String nr = "";
+                for (String friend : friendSelectedListArray) {
+                    nr = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID) + "=" + helper.stringParser(friend), null, this);
+                }
+                helper.sendSMS(nr, defaultMsg, null);
             }
-            helper.sendSMS(nr, defaultMsg, null);
         }
         if(personalReminder) {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

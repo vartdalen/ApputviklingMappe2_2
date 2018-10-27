@@ -227,9 +227,6 @@ public class ActivityBookingFriendSelection extends Activity {
     }
 
     private void startService() {
-       /* Intent intent = new Intent(this, VicaService.class);
-        this.startService(intent);*/
-
         Intent intent = new Intent();
         intent.putExtra(getString(R.string.notify_friends_message), session.getPrefNotifyFriendsMessage());
         intent.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
