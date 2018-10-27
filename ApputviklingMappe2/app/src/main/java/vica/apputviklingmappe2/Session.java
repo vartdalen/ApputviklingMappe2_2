@@ -21,7 +21,7 @@ public class Session {
         for(Map.Entry<String,?> prefToReset : prefMap.entrySet()) {
             if (!prefToReset.getKey().equals(context.getString(R.string.personal_reminder))
             && !prefToReset.getKey().equals(context.getString(R.string.notify_friends))
-            && !prefToReset.getKey().equals(context.getString(R.string.timing))
+            && !prefToReset.getKey().equals(context.getString(R.string.notify_friends_and_personal_reminder_timing))
             && !prefToReset.getKey().equals(context.getString(R.string.notify_friends_message))) {
                 prefs.edit().remove(prefToReset.getKey()).apply();
             }
@@ -80,6 +80,6 @@ public class Session {
         return prefs.getString(context.getString(R.string.notify_friends_message), context.getString(R.string.notify_friends_message_default));
     }
     public String getPrefTiming() {
-        return prefs.getString(context.getString(R.string.timing), Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes());
+        return prefs.getString(context.getString(R.string.notify_friends_and_personal_reminder_timing), Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes());
     }
 }

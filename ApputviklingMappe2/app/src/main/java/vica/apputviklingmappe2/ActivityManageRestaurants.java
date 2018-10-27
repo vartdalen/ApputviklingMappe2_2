@@ -142,7 +142,7 @@ public class ActivityManageRestaurants extends Activity {
             ArrayList<String> temp = new ArrayList<>();
             for(String s : restaurantListArray) {
                 if(checked.get(restaurantListArray.indexOf(s))) {
-                    db.deleteRestaurant(ActivityManageRestaurants.this, helper.stringParser(s));
+                    db.deleteRestaurant(ActivityManageRestaurants.this, helper.parseNumbersFromString(s));
                 } else {
                     temp.add(s);
                 }
@@ -170,7 +170,7 @@ public class ActivityManageRestaurants extends Activity {
             if(booleanCounter == 1){
                 for(String s : restaurantListArray) {
                     if(checked.get(restaurantListArray.indexOf(s))) {
-                        id = helper.stringParser(s);
+                        id = helper.parseNumbersFromString(s);
                         unparsed = s;
                     }
                 }

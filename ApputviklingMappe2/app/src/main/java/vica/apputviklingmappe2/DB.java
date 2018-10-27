@@ -111,14 +111,19 @@ public class DB extends Activity{
 
     // Order db methods
     public boolean createOrder(Context context, Integer resId, String userEmail, String date, String time){
-        ContentValues values = new ContentValues();
-        values.put(context.getString(R.string.ORDER_DATE), date);
-        values.put(context.getString(R.string.ORDER_TIME), time);
-        values.put(context.getString(R.string.ORDER_UserFK), userEmail);
-        values.put(context.getString(R.string.ORDER_RestaurantFK), resId);
-        context.getContentResolver().insert(CONTENT_ORDER_URI, values);
-        return true;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(context.getString(R.string.ORDER_DATE), date);
+            values.put(context.getString(R.string.ORDER_TIME), time);
+            values.put(context.getString(R.string.ORDER_UserFK), userEmail);
+            values.put(context.getString(R.string.ORDER_RestaurantFK), resId);
+            context.getContentResolver().insert(CONTENT_ORDER_URI, values);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
     }
+
     public void createOrderline(Context context, Integer friendId, Integer orderId){
         ContentValues values = new ContentValues();
         values.put(context.getString(R.string.ORDERLINE_FriendFK), friendId);

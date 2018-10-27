@@ -56,7 +56,6 @@ public class ActivityBookingFriendSelection extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_friend_selection);
-        stoppPeriodisk();
 
         helper = new Helper();
         db = new DB();
@@ -195,7 +194,9 @@ public class ActivityBookingFriendSelection extends Activity {
     }
 
     private void startService() {
+        helper.stoppPeriodisk(ActivityBookingFriendSelection.this);
         Intent intent = new Intent();
+        intent.putExtra(getString(R.string.notify_friends_and_personal_reminder_timing), session.getPrefTiming());
         intent.putExtra(getString(R.string.notify_friends_message), session.getPrefNotifyFriendsMessage());
         intent.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
         intent.putExtra(getString(R.string.notify_friends), session.getPrefNotifyFriends());
@@ -205,19 +206,10 @@ public class ActivityBookingFriendSelection extends Activity {
         sendBroadcast(intent);
     }
 
-    public void stoppPeriodisk() {
-        Intent i = new Intent(this, VicaService.class);
-        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
-        AlarmManager alarm =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        if(alarm!= null) {
-            alarm.cancel(pintent);
-        }
-    }
-
     private void setupButtonsForDialog(final AlertDialog dialog, View view) {
         final String sql = getString(R.string.ORDER_ID) + " DESC LIMIT 1";
         final int orderId = db.getId(DB.CONTENT_ORDER_URI, new String[]{getString(R.string.ORDER_ID)}, null, sql, ActivityBookingFriendSelection.this);
-        final int resId = Integer.parseInt(helper.stringParser(restaurantName));
+        final int resId = Integer.parseInt(helper.parseNumbersFromString(restaurantName));
         Button booking_confirm_button = (Button) view.findViewById(R.id.booking_dialog_confirm_button);
         booking_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,14 +220,14 @@ public class ActivityBookingFriendSelection extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         if (!db.createOrder(ActivityBookingFriendSelection.this, resId, session.getEmail(), restaurantDate, restaurantTime)) {
-                            System.out.println("Failed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         } else {
                             for(String s : friendSelectedListArray){
-                                int friendId = Integer.parseInt(helper.stringParser(s));
+                                int friendId = Integer.parseInt(helper.parseNumbersFromString(s));
                                 db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
                             }
                             startService();
-                            System.out.println("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            setResult(ResultCodes.ORDER_CONFIRMED);
+                            finish();
                         }
                         progressDialog.dismiss();
                     }

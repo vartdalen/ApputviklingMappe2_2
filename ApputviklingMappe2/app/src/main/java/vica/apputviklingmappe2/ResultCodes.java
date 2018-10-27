@@ -4,4 +4,5 @@ public class ResultCodes {
     public static final int RESULT_LOGOUT = 10;
     public static final int RESULT_REDIRECT = 11;
     public static final int RESULT_QUIT = 12;
+    public static final int ORDER_CONFIRMED = 13;
 }

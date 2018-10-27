@@ -139,7 +139,7 @@ public class ActivityManageFriends extends Activity {
             ArrayList<String> temp = new ArrayList<>();
             for(String s : friendListArray) {
                 if(checked.get(friendListArray.indexOf(s))) {
-                    db.deleteFriend(ActivityManageFriends.this, helper.stringParser(s));
+                    db.deleteFriend(ActivityManageFriends.this, helper.parseNumbersFromString(s));
                 } else {
                     temp.add(s);
                 }
@@ -167,7 +167,7 @@ public class ActivityManageFriends extends Activity {
             if(checkedCounter == 1){
                 for(String s : friendListArray) {
                     if(checked.get(friendListArray.indexOf(s))) {
-                        id = helper.stringParser(s);
+                        id = helper.parseNumbersFromString(s);
                         unparsed = s;
                     }
                 }

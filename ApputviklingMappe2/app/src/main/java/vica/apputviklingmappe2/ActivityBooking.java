@@ -59,6 +59,13 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == ResultCodes.ORDER_CONFIRMED) {
+            finish();
+        }
+    }
+
+    @Override
     public void onDateSet(DatePicker view, int outYear, int outMonth, int outDay) {
         year = outYear;
         month = outMonth;

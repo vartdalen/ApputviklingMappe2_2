@@ -72,6 +72,7 @@
     <string name="personal">Personal</string>
     <string name="personal_reminder">Personal reminder</string>
     <string name="personal_reminder_summary">Reminder of today\'s appointments</string>
+    <string name="personal_reminder_message">You have reservations today!</string>
     <string name="social">Social</string>
     <string name="notify_friends">Notify friends</string>
     <string name="notify_friends_summary">Notify invited friends by SMS</string>
@@ -79,10 +80,9 @@
     <string name="notify_friends_message_summary">Customize the text in your friend notification</string>
     <string name="notify_friends_message_default">Your friend has booked a table and invited you!</string>
     <string name="global">Global</string>
-    <string name="timing">Timing</string>
-    <string name="timing_summary">Control timing of personal reminder and friends being notified (hh:mm)</string>
+    <string name="notify_friends_and_personal_reminder_timing">Timing</string>
+    <string name="notify_friends_and_personal_reminder_timing_summary">Control time of day for personal reminder and friends being notified (hh:mm)</string>
     <string name="vica_restaurant">Vica Restaurant</string>
-    <string name="notification_message">You have reservations today!</string>
     <string name="default_time">17:00</string>
 
     <!--Bundle to broadcast strings-->

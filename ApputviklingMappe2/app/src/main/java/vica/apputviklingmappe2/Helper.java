@@ -2,9 +2,12 @@ package vica.apputviklingmappe2;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
@@ -44,7 +47,7 @@ public class Helper {
         return new String(hashed);
     }
 
-    public String stringParser(String listString){
+    public String parseNumbersFromString(String listString){
         if(listString != null){
             LinkedList<String> res = new LinkedList<>();
             Pattern p = Pattern.compile("\\d+");
@@ -75,6 +78,15 @@ public class Helper {
             }
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, 0);
+        }
+    }
+
+    public void stoppPeriodisk(Context context) {
+        Intent i = new Intent(context, VicaService.class);
+        PendingIntent pintent = PendingIntent.getService(context, 0, i, 0);
+        AlarmManager alarm =(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if(alarm!= null) {
+            alarm.cancel(pintent);
         }
     }
 }

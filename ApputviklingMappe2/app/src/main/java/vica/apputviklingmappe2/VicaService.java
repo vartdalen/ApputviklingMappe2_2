@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -29,9 +28,10 @@ public class VicaService extends Service {
         if(notifyFriends) {
             String phone;
             for (String friend : friendSelectedListArray) {
-                phone = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID) + "=" + helper.stringParser(friend), null, this);
-                helper.sendSMS(getString(R.string.api_23_phone_1), notificationMessage, null);
+                phone = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID) + "=" + helper.parseNumbersFromString(friend), null, this);
+                helper.sendSMS(phone, notificationMessage, null);
             }
+
         }
         if(personalReminder) {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -39,7 +39,7 @@ public class VicaService extends Service {
             PendingIntent pIntent = PendingIntent.getActivity(this, 0, i, 0);
             Notification notification = new NotificationCompat.Builder(this)
                     .setContentTitle(getString(R.string.vica_restaurant))
-                    .setContentText(getString(R.string.notification_message))
+                    .setContentText(getString(R.string.personal_reminder_message))
                     .setSmallIcon(R.drawable.ic_logo).setContentIntent(pIntent).build();
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             notificationManager.notify(0, notification);
