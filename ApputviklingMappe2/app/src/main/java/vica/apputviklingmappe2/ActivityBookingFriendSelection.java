@@ -1,15 +1,12 @@
 package vica.apputviklingmappe2;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -18,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -215,7 +211,7 @@ public class ActivityBookingFriendSelection extends Activity {
         booking_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if (session.getPrefNotifyFriends() && !requestPermission()) {
+            if (session.getPrefNotifyFriends() && !helper.requestSMSPermission(ActivityBookingFriendSelection.this)) {
                 return;
             }
             final ProgressDialog progressDialog = new ProgressDialog(ActivityBookingFriendSelection.this);
@@ -250,15 +246,4 @@ public class ActivityBookingFriendSelection extends Activity {
             }
         });
     }
-
-    private boolean requestPermission() {
-        int MY_PERMISSIONS_REQUEST_SEND_SMS = ActivityCompat.checkSelfPermission(ActivityBookingFriendSelection.this, Manifest.permission.SEND_SMS);
-        if(MY_PERMISSIONS_REQUEST_SEND_SMS == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            ActivityCompat.requestPermissions(ActivityBookingFriendSelection.this, new String[]{Manifest.permission.SEND_SMS}, 0);
-            return true;
-        }
-    }
-
 }

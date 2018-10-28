@@ -1,9 +1,12 @@
 package vica.apputviklingmappe2;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 import android.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ public class ActivityPreferences extends PreferenceActivity implements SharedPre
 
     Helper helper;
     SharedPreferences prefs;
+    int MY_PERMISSIONS_REQUEST_SEND_SMS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,7 @@ public class ActivityPreferences extends PreferenceActivity implements SharedPre
         setupToolbar();
         prefs = PreferenceManager.getDefaultSharedPreferences(ActivityPreferences.this);
         helper = new Helper();
+        MY_PERMISSIONS_REQUEST_SEND_SMS = ActivityCompat.checkSelfPermission(ActivityPreferences.this, Manifest.permission.SEND_SMS);
     }
 
     @Override
@@ -29,6 +34,9 @@ public class ActivityPreferences extends PreferenceActivity implements SharedPre
         if(!prefs.getBoolean(getString(R.string.personal_reminder), false) && !prefs.getBoolean(getString(R.string.notify_friends), false)) {
             helper.stoppPeriodisk(ActivityPreferences.this);
             Toast.makeText(ActivityPreferences.this, getString(R.string.periodic_disabled), Toast.LENGTH_LONG).show();
+        }
+        if(prefs.getBoolean(getString(R.string.notify_friends), false) && MY_PERMISSIONS_REQUEST_SEND_SMS != PackageManager.PERMISSION_GRANTED) {
+            helper.requestSMSPermission(ActivityPreferences.this);
         }
     }
 

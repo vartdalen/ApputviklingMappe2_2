@@ -32,10 +32,15 @@ public class ActivityMainMenu extends Activity {
             Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
             startActivity(intent);
         }
+        //personal reminder onSignin
         if (session.getPrefPersonalReminder()) {
             if(db.compareOrderDate(this, helper.parseSystemDateToDbFormat(), session.getEmail())){
                 helper.createNotification(ActivityMainMenu.this, getString(R.string.personal_reminder_message2));
             }
+        }
+        //ask for sms permission if permission has expired and notification is toggled on
+        if (session.getPrefNotifyFriends() ) {
+            helper.requestSMSPermission(ActivityMainMenu.this);
         }
 
         super.onCreate(savedInstanceState);

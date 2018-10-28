@@ -1,5 +1,6 @@
 package vica.apputviklingmappe2;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -9,6 +10,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsManager;
 
@@ -99,5 +102,15 @@ public class Helper {
                 .setSmallIcon(R.drawable.ic_logo).setContentIntent(pIntent).build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(0, notification);
+    }
+
+    public boolean requestSMSPermission(Activity activity) {
+        int MY_PERMISSIONS_REQUEST_SEND_SMS = ActivityCompat.checkSelfPermission(activity, Manifest.permission.SEND_SMS);
+        if(MY_PERMISSIONS_REQUEST_SEND_SMS == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, 0);
+            return false;
+        }
     }
 }
