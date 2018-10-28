@@ -15,7 +15,11 @@ import android.telephony.SmsManager;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,6 +63,11 @@ public class Helper {
         }else{
             return "";
         }
+    }
+
+    public String parseSystemDateToDbFormat() {
+        String date = new SimpleDateFormat("d/M", Locale.getDefault()).format(new Date());
+        return date;
     }
 
     public void sendSMS(String phoneNo, String msg, Activity activity) {

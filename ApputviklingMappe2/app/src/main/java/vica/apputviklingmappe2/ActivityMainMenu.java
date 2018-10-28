@@ -51,7 +51,7 @@ public class ActivityMainMenu extends Activity {
                 finish();
             }
             if (resultCode == ResultCodes.ORDER_CONFIRMED) {
-                Toast.makeText(this, getString(R.string.order_confirmed), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.order_confirmed) + " " + getString(R.string.timer_set) + " " + session.getPrefTiming(), Toast.LENGTH_LONG).show();
             }
     }
 

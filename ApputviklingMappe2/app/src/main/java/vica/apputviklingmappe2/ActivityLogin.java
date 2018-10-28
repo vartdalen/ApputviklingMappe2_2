@@ -35,6 +35,7 @@ public class ActivityLogin extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         PreferenceManager.setDefaultValues(this, R.xml.activity_preferences, false);
         session = new Session(ActivityLogin.this);
+        helper = new Helper();
         if(session.getUserLevel() > 0) {
             finish();
             Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
@@ -44,7 +45,6 @@ public class ActivityLogin extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         db = new DB();
-        helper = new Helper();
         setupToolbar();
         setupFields();
     }
