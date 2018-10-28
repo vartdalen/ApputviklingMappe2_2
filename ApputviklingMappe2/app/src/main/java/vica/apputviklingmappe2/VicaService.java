@@ -35,7 +35,7 @@ public class VicaService extends Service {
         }
         if(personalReminder) {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            Intent i = new Intent(this, ResultNotification.class);
+            Intent i = new Intent(this, ActivityOrderHistory.class);
             PendingIntent pIntent = PendingIntent.getActivity(this, 0, i, 0);
             Notification notification = new NotificationCompat.Builder(this)
                     .setContentTitle(getString(R.string.vica_restaurant))

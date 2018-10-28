@@ -29,7 +29,7 @@
         <activity android:name=".ActivityManageRestaurants"></activity>
         <activity android:name=".ActivityBooking"></activity>
         <activity android:name=".ActivityBookingFriendSelection"></activity>
-        <activity android:name=".ResultNotification"></activity>
+        <activity android:name=".ActivityOrderHistory"></activity>
 
         <!-- Service -->
         <service android:name=".VicaService"></service>
