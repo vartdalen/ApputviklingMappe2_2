@@ -31,7 +31,6 @@ public class VicaService extends Service {
                 phone = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID) + "=" + helper.parseNumbersFromString(friend), null, this);
                 helper.sendSMS(phone, notificationMessage, null);
             }
-
         }
         if(personalReminder) {
             helper.createNotification(VicaService.this);

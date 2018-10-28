@@ -32,8 +32,10 @@ public class ActivityMainMenu extends Activity {
             Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
             startActivity(intent);
         }
-        if(db.compareOrderDate(this, helper.parseSystemDateToDbFormat(), session.getEmail())){
-            helper.createNotification(ActivityMainMenu.this);
+        if(session.getPrefPersonalReminder()) {
+            if (db.compareOrderDate(this, helper.parseSystemDateToDbFormat(), session.getEmail())) {
+                helper.createNotification(ActivityMainMenu.this);
+            }
         }
 
         super.onCreate(savedInstanceState);
