@@ -3,9 +3,9 @@ package vica.apputviklingmappe2;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -34,8 +34,9 @@ public class ActivityLogin extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         PreferenceManager.setDefaultValues(this, R.xml.activity_preferences, false);
-        session = new Session(ActivityLogin.this);
+        db = new DB();
         helper = new Helper();
+        session = new Session(ActivityLogin.this);
         if(session.getUserLevel() > 0) {
             finish();
             Intent intent = new Intent(ActivityLogin.this, ActivityMainMenu.class);
@@ -44,7 +45,6 @@ public class ActivityLogin extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        db = new DB();
         setupToolbar();
         setupFields();
     }

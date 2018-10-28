@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
@@ -125,35 +126,39 @@ public class ActivitySignup extends Activity {
     }
 
     private boolean validate() throws NoSuchAlgorithmException {
-        ContentValues values = new ContentValues();
-        values.put(getString(R.string.USER_LEVEL), 1);
-        values.put(getString(R.string.USER_FIRSTNAME), firstName.getText().toString());
-        values.put(getString(R.string.USER_LASTNAME), lastName.getText().toString());
-        values.put(getString(R.string.USER_ID), email.getText().toString());
-        values.put(getString(R.string.USER_PHONE), phone.getText().toString());
-        values.put(getString(R.string.USER_PASSWORD), helper.hash(password.getText().toString()));
+        try {
+            ContentValues values = new ContentValues();
+            values.put(getString(R.string.USER_LEVEL), 1);
+            values.put(getString(R.string.USER_FIRSTNAME), firstName.getText().toString());
+            values.put(getString(R.string.USER_LASTNAME), lastName.getText().toString());
+            values.put(getString(R.string.USER_ID), email.getText().toString());
+            values.put(getString(R.string.USER_PHONE), phone.getText().toString());
+            values.put(getString(R.string.USER_PASSWORD), helper.hash(password.getText().toString()));
 
-        if (firstName.getText().length() > 0 && firstNameFeedback.getText().length() == 0
-                && lastName.getText().length() > 0 && lastNameFeedback.getText().length() == 0
-                && phone.getText().length() > 0 && phoneFeedback.getText().length() == 0
-                && email.getText().length() > 0 && emailConfirmFeedback.getText().length() == 0
-                && password.getText().length() > 0 && passwordFeedback.getText().length() == 0 ) {
+            if (firstName.getText().length() > 0 && firstNameFeedback.getText().length() == 0
+                    && lastName.getText().length() > 0 && lastNameFeedback.getText().length() == 0
+                    && phone.getText().length() > 0 && phoneFeedback.getText().length() == 0
+                    && email.getText().length() > 0 && emailConfirmFeedback.getText().length() == 0
+                    && password.getText().length() > 0 && passwordFeedback.getText().length() == 0) {
 
-            if (db.getEmail(email.getText().toString(), this).equals(email.getText().toString())){
-                emailConfirmFeedback.setText(getString(R.string.error_email3));
-                return false;
-            } else {
-                if ((getContentResolver().insert(DB.CONTENT_USER_URI, values) != null)){
-                    return true;
-                } else {
-                    passwordFeedback.setText(getString(R.string.error_signup2));
+                if (db.getEmail(email.getText().toString(), this).equals(email.getText().toString())) {
+                    emailConfirmFeedback.setText(getString(R.string.error_email3));
                     return false;
+                } else {
+                    if ((getContentResolver().insert(DB.CONTENT_USER_URI, values) != null)) {
+                        return true;
+                    } else {
+                        passwordFeedback.setText(getString(R.string.error_signup2));
+                        return false;
+                    }
                 }
+            } else {
+                passwordFeedback.setText(getString(R.string.error_signup1));
+                return false;
             }
-        } else {
-            passwordFeedback.setText(getString(R.string.error_signup1));
-            return false;
-        }
+        }catch (Exception e){}
+        Toast.makeText(this, getString(R.string.DB_Error_Message), Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     private void onSignupSuccess() {

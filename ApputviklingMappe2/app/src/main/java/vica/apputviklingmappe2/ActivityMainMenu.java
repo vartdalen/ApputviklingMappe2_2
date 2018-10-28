@@ -20,20 +20,25 @@ public class ActivityMainMenu extends Activity {
     private Toolbar toolbar;
     private Helper helper;
     private Session session;
+    private DB db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         session = new Session(ActivityMainMenu.this);
+        helper = new Helper();
+        db = new DB();
         if(session.getUserLevel() < 1) {
             finish();
             Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
             startActivity(intent);
         }
+        if(db.compareOrderDate(this, helper.parseSystemDateToDbFormat(), session.getEmail())){
+            helper.createNotification(ActivityMainMenu.this);
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        helper = new Helper();
         setupFields();
         setupToolbar();
     }

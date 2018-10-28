@@ -118,7 +118,7 @@ public class ActivityOrderHistory extends Activity {
 
     private void setupToolbar() {
         toolbar = findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.menu_logged_in);
+        toolbar.inflateMenu(R.menu.menu_logged_out);
         toolbar.setTitle(getString(R.string.Restaurant_booking_orders));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,22 +127,6 @@ public class ActivityOrderHistory extends Activity {
             }
         });
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(ActivityOrderHistory.this, ActivityPreferences.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                setResult(ResultCodes.RESULT_LOGOUT);
-                finish();
-                return true;
-            }
-        });
-        toolbar.getMenu().getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 setResult(ResultCodes.RESULT_QUIT);
