@@ -27,9 +27,6 @@ public class MainActivity extends Activity {
         initFriends();
         // Restaurant
         initRestaurant();
-        // Order and Orderline
-//        initOrder();
-//        initOrderlines();
     }
 
     private void initUser(){
@@ -125,49 +122,6 @@ public class MainActivity extends Activity {
         values6.put("Phonenumber", "94824131");
         values6.put("Type", "Barbecue");
         getContentResolver().insert(CONTENT_RESTAURANT_URI, values6);
-    }
-
-    public void initOrder(){
-        ContentValues values = new ContentValues();
-        values.put("Date", "10/20/2018");
-        values.put("Time", "12:00");
-        values.put("UserID", "admin@live.no");
-        values.put("RestaurantID", 1);
-        getContentResolver().insert(CONTENT_ORDER_URI, values);
-
-        ContentValues values1 = new ContentValues();
-        values1.put("Date", "10/15/2018");
-        values1.put("Time", "19:45");
-        values1.put("UserID", "bruce@gmail.com");
-        values1.put("RestaurantID", 3);
-        getContentResolver().insert(CONTENT_ORDER_URI, values1);
-    }
-
-    public void initOrderlines(){
-        ContentValues values = new ContentValues();
-        values.put("OrderID", 1);
-        values.put("FriendID", 1);
-        getContentResolver().insert(CONTENT_ORDERLINE_URI, values);
-
-        ContentValues values1 = new ContentValues();
-        values1.put("OrderID", 1);
-        values1.put("FriendID", 2);
-        getContentResolver().insert(CONTENT_ORDERLINE_URI, values1);
-
-        ContentValues values2 = new ContentValues();
-        values2.put("OrderID", 2);
-        values2.put("FriendID", 0);
-        getContentResolver().insert(CONTENT_ORDERLINE_URI, values2);
-
-        ContentValues values3 = new ContentValues();
-        values3.put("OrderID", 2);
-        values3.put("FriendID", 1);
-        getContentResolver().insert(CONTENT_ORDERLINE_URI, values3);
-
-        ContentValues values4 = new ContentValues();
-        values4.put("OrderID", 2);
-        values4.put("FriendID", 2);
-        getContentResolver().insert(CONTENT_ORDERLINE_URI, values4);
     }
 
     public String hash(String unhashed) throws NoSuchAlgorithmException {
