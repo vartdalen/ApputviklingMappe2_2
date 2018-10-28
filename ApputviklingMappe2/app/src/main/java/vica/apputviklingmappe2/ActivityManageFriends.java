@@ -49,7 +49,6 @@ public class ActivityManageFriends extends Activity {
 
         helper = new Helper();
         db = new DB();
-        System.out.println("DB compare: " + db.compareOrderDate(this, "27/9"));
         setupToolbar();
         setupFields();
         populateFriendList();

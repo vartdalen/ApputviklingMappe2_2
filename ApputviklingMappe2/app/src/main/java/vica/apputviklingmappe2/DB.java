@@ -155,15 +155,15 @@ public class DB extends Activity{
         }catch(Exception e) {}
     }
 
-    public boolean compareOrderDate(Context context, String systemDate)
+    public boolean compareOrderDate(Context context, String systemDate, String userEmail)
     {
         try{
             String[] projection = {context.getString(R.string.ORDER_DATE)};
-            String selection = context.getString(R.string.ORDER_DATE) + " LIKE " +"'"+systemDate+"%"+"'";
+            String selection = context.getString(R.string.ORDER_DATE) + " LIKE " +"'"+systemDate+"%"+"'"+" AND "+context
+                    .getString(R.string.ORDER_UserFK)+"="+"'"+userEmail+"'";
             Cursor cur = context.getContentResolver().query(CONTENT_ORDER_URI, projection, selection, null, null);
             if(cur != null && cur.moveToFirst()){
                 cur.moveToFirst();
-                System.out.println(cur.getString(0));
                 cur.close();
                 return true;
             }

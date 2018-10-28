@@ -4,20 +4,28 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsManager;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Helper {
 
@@ -87,5 +95,22 @@ public class Helper {
         if(alarm!= null) {
             alarm.cancel(pintent);
         }
+    }
+
+    public String parseSystemDateToDbFormat() {
+        String date = new SimpleDateFormat("d/M", Locale.getDefault()).format(new Date());
+        return date;
+    }
+
+    public void createNotification(Context context){
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        Intent i = new Intent(context, ActivityOrderHistory.class);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, 0);
+        Notification notification = new NotificationCompat.Builder(context)
+                .setContentTitle(context.getString(R.string.vica_restaurant))
+                .setContentText(context.getString(R.string.personal_reminder_message))
+                .setSmallIcon(R.drawable.ic_logo).setContentIntent(pIntent).build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(0, notification);
     }
 }

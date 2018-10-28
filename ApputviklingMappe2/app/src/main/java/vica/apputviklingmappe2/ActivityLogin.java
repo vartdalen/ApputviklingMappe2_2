@@ -1,12 +1,16 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +38,8 @@ public class ActivityLogin extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         PreferenceManager.setDefaultValues(this, R.xml.activity_preferences, false);
+        db = new DB();
+        helper = new Helper();
         session = new Session(ActivityLogin.this);
         if(session.getUserLevel() > 0) {
             finish();
@@ -43,8 +49,6 @@ public class ActivityLogin extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        db = new DB();
-        helper = new Helper();
         setupToolbar();
         setupFields();
     }

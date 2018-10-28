@@ -12,14 +12,13 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
-public class ResultNotification extends Activity {
+public class ActivityOrderHistory extends Activity {
 
     private Button buttonOrderDetail;
 
@@ -34,10 +33,10 @@ public class ResultNotification extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        session = new Session(ResultNotification.this);
+        session = new Session(ActivityOrderHistory.this);
         if(session.getUserLevel() < 1) {
             finish();
-            Intent intent = new Intent(ResultNotification.this, ActivityLogin.class);
+            Intent intent = new Intent(ActivityOrderHistory.this, ActivityLogin.class);
             startActivity(intent);
         }
 
@@ -104,11 +103,11 @@ public class ResultNotification extends Activity {
                         }
                     }
                 }
-                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ResultNotification.this);
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ActivityOrderHistory.this);
                 View view = getLayoutInflater().inflate(R.layout.dialog_order_details, null);
                 final TextView bookingRestaurantName = (TextView) view.findViewById(R.id.booking_dialog_restaurant_name);
 
-                bookingRestaurantName.setText(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_NAME)}, getString(R.string.RESTAURANT_ID)+"="+"'"+id+"'", null,ResultNotification.this));
+                bookingRestaurantName.setText(db.getInfo(DB.CONTENT_RESTAURANT_URI, new String[]{getString(R.string.RESTAURANT_NAME)}, getString(R.string.RESTAURANT_ID)+"="+"'"+id+"'", null,ActivityOrderHistory.this));
 
                 dialogBuilder.setView(view);
                 final AlertDialog dialog = dialogBuilder.create();
@@ -119,7 +118,7 @@ public class ResultNotification extends Activity {
 
     private void setupToolbar() {
         toolbar = findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.menu_logged_in);
+        toolbar.inflateMenu(R.menu.menu_logged_out);
         toolbar.setTitle(getString(R.string.Restaurant_booking_orders));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,24 +129,8 @@ public class ResultNotification extends Activity {
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(ResultNotification.this, ActivityPreferences.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                setResult(ResultCodes.RESULT_LOGOUT);
-                finish();
-                return true;
-            }
-        });
-        toolbar.getMenu().getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
                 setResult(ResultCodes.RESULT_QUIT);
-                helper.quit(ResultNotification.this);
+                helper.quit(ActivityOrderHistory.this);
                 return true;
             }
         });

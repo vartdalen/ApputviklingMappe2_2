@@ -1,9 +1,6 @@
 package vica.apputviklingmappe2;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -23,20 +20,25 @@ public class ActivityMainMenu extends Activity {
     private Toolbar toolbar;
     private Helper helper;
     private Session session;
+    private DB db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         session = new Session(ActivityMainMenu.this);
+        helper = new Helper();
+        db = new DB();
         if(session.getUserLevel() < 1) {
             finish();
             Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
             startActivity(intent);
         }
+        if(db.compareOrderDate(this, helper.parseSystemDateToDbFormat(), session.getEmail())){
+            helper.createNotification(ActivityMainMenu.this);
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        helper = new Helper();
         setupFields();
         setupToolbar();
     }
@@ -135,7 +137,7 @@ public class ActivityMainMenu extends Activity {
         buttonMyOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityMainMenu.this, ResultNotification.class);
+                Intent intent = new Intent(ActivityMainMenu.this, ActivityOrderHistory.class);
                 startActivityForResult(intent, RequestCodes.REQUEST_MAIN_MENU);
             }
         });
