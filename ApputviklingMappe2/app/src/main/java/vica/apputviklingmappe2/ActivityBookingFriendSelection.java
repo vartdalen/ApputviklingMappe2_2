@@ -198,6 +198,9 @@ public class ActivityBookingFriendSelection extends Activity {
         intent.putExtra(getString(R.string.friendSelectedListArray), friendSelectedListArray);
         intent.putExtra(getString(R.string.notify_friends), session.getPrefNotifyFriends());
         intent.putExtra(getString(R.string.personal_reminder), session.getPrefPersonalReminder());
+        intent.putExtra(getString(R.string.restaurant_name), restaurantName);
+        intent.putExtra(getString(R.string.date), restaurantDate);
+        intent.putExtra(getString(R.string.time), restaurantTime);
         intent.setAction("vica.apputviklingmappe2");
 
         sendBroadcast(intent);

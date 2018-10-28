@@ -16,6 +16,9 @@ public class VicaBroadcastReceiver extends BroadcastReceiver {
         i.putExtra(context.getString(R.string.notify_friends_message), intent.getStringExtra(context.getString(R.string.notify_friends_message)));
         i.putExtra(context.getString(R.string.notify_friends), intent.getExtras().getBoolean(context.getString(R.string.notify_friends)));
         i.putExtra(context.getString(R.string.personal_reminder), intent.getExtras().getBoolean(context.getString(R.string.personal_reminder)));
+        i.putExtra(context.getString(R.string.restaurant_name), intent.getStringExtra(context.getString(R.string.restaurant_name)));
+        i.putExtra(context.getString(R.string.date), intent.getStringExtra(context.getString(R.string.date)));
+        i.putExtra(context.getString(R.string.time), intent.getStringExtra(context.getString(R.string.time)));
 
         context.startService(i);
     }

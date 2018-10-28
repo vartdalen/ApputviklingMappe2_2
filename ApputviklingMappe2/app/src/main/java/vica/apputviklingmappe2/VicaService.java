@@ -20,12 +20,15 @@ public class VicaService extends Service {
         String notificationMessage = intent.getStringExtra(getString(R.string.notify_friends_message));
         Boolean notifyFriends = intent.getExtras().getBoolean(getString(R.string.notify_friends));
         Boolean personalReminder = intent.getExtras().getBoolean(getString(R.string.personal_reminder));
+        String restaurantName = intent.getStringExtra(getString(R.string.restaurant_name));
+        String restaurantDate = intent.getStringExtra(getString(R.string.date));
+        String restaurantTime = intent.getStringExtra(getString(R.string.time));
 
         if(notifyFriends) {
             String phone;
             for (String friend : friendSelectedListArray) {
                 phone = db.getInfo(DB.CONTENT_FRIEND_URI, new String[]{getString(R.string.FRIEND_PHONE)}, getString(R.string.FRIEND_ID) + "=" + helper.parseNumbersFromString(friend), null, this);
-                helper.sendSMS(phone, notificationMessage);
+                helper.sendSMS(phone, notificationMessage + "\nRestaurant: " + restaurantName + "\nDate: " + restaurantDate + "\nTime: " + restaurantTime);
             }
 
         }

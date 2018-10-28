@@ -22,6 +22,9 @@ public class VicaPeriodiskService extends Service {
         i.putExtra(getString(R.string.notify_friends_message), intent.getStringExtra(getString(R.string.notify_friends_message)));
         i.putExtra(getString(R.string.notify_friends), intent.getExtras().getBoolean(getString(R.string.notify_friends)));
         i.putExtra(getString(R.string.personal_reminder), intent.getExtras().getBoolean(getString(R.string.personal_reminder)));
+        i.putExtra(getString(R.string.restaurant_name), intent.getStringExtra(getString(R.string.restaurant_name)));
+        i.putExtra(getString(R.string.date), intent.getStringExtra(getString(R.string.date)));
+        i.putExtra(getString(R.string.time), intent.getStringExtra(getString(R.string.time)));
 
         PendingIntent pintent = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
