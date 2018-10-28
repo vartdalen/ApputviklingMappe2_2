@@ -71,9 +71,9 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
     @Override
     public void onDateSet(DatePicker view, int outYear, int outMonth, int outDay) {
         year = outYear;
-        month = outMonth;
+        month = outMonth+1;
         day = outDay;
-        String date = outDay + "/" + outMonth + "/" + outYear;
+        String date = day + "/" + month + "/" + year;
         textDate.setText(date);
     }
 

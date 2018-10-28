@@ -1,6 +1,5 @@
 package vica.apputviklingmappe2;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -10,8 +9,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsManager;
 
@@ -69,22 +66,12 @@ public class Helper {
         }
     }
 
-    public void sendSMS(String phoneNo, String msg, Activity activity) {
-        int MY_PERMISSIONS_REQUEST_SEND_SMS;
-        if(activity!=null) {
-            MY_PERMISSIONS_REQUEST_SEND_SMS = ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.SEND_SMS);
-        } else {
-            MY_PERMISSIONS_REQUEST_SEND_SMS = PackageManager.PERMISSION_GRANTED;
-        }
-        if(MY_PERMISSIONS_REQUEST_SEND_SMS == PackageManager.PERMISSION_GRANTED) {
-            try {
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(phoneNo, null, msg, null, null);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, 0);
+    public void sendSMS(String phoneNo, String msg) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, msg, null, null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

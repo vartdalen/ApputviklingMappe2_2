@@ -70,6 +70,7 @@
     <string name="friends_notified">Friends notified</string>
     <string name="order_confirmed">Order confirmed</string>
     <string name="periodic_disabled">Periodic service disabled</string>
+    <string name="order_failed">Failed to create order.</string>
 
     <!--Preferences-->
     <string name="personal">Personal</string>
