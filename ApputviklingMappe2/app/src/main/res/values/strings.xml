@@ -124,5 +124,6 @@
     <string name="order_history">Order history</string>
     <string name="Restaurant_booking_orders">Restaurant Booking Orders</string>
     <string name="order_details">Details</string>
+    <string name="DB_Error_Message">No database/content provider detected!</string>
 
 </resources>
