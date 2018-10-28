@@ -11,7 +11,7 @@
     <string name="user_level">User level</string>
     <string name="confirm_email">Confirm email</string>
     <string name="confirm_password">Confirm pw</string>
-    <string name="api_23_phone_1">+15555215554</string>
+    <string name="api_23_phone1">+15555215554</string>
 
     <!-- Restaurant info -->
     <string name="restaurant_name">Restaurant name</string>
@@ -76,6 +76,7 @@
     <string name="personal_reminder">Personal reminder</string>
     <string name="personal_reminder_summary">Reminder of today\'s appointments</string>
     <string name="personal_reminder_message">You have upcoming appointments</string>
+    <string name="personal_reminder_message2">You have one or more appointments today!</string>
     <string name="social">Social</string>
     <string name="notify_friends">Notify friends</string>
     <string name="notify_friends_summary">Notify invited friends by SMS</string>
@@ -86,7 +87,7 @@
     <string name="notify_friends_and_personal_reminder_timing">Timing</string>
     <string name="notify_friends_and_personal_reminder_timing_summary">Control time of day for personal reminder and friends being notified (hh:mm)</string>
     <string name="timing_default">17:00</string>
-    <string name="timer_set">Reminder set for </string>
+    <string name="timer_set">reminder set for </string>
 
     <!--Bundle to broadcast strings-->
     <string name="friendSelectedListArray">friendSelectedListArray</string>

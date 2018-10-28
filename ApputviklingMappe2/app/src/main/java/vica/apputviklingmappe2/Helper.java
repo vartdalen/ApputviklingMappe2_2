@@ -102,13 +102,13 @@ public class Helper {
         return date;
     }
 
-    public void createNotification(Context context){
+    public void createNotification(Context context, String message){
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         Intent i = new Intent(context, ActivityOrderHistory.class);
         PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, 0);
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentTitle(context.getString(R.string.vica_restaurant))
-                .setContentText(context.getString(R.string.personal_reminder_message))
+                .setContentText(message)
                 .setSmallIcon(R.drawable.ic_logo).setContentIntent(pIntent).build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(0, notification);

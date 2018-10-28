@@ -161,6 +161,7 @@ public class ActivityBookingFriendSelection extends Activity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(ResultCodes.RESULT_FINISH);
                 finish();
             }
         });
@@ -222,7 +223,7 @@ public class ActivityBookingFriendSelection extends Activity {
                                 db.createOrderline(ActivityBookingFriendSelection.this, friendId, orderId);
                             }
                             startService();
-                            setResult(ResultCodes.ORDER_CONFIRMED);
+                            setResult(ResultCodes.RESULT_ORDER_CONFIRMED);
                             finish();
                         }
                         progressDialog.dismiss();

@@ -1,12 +1,8 @@
 package vica.apputviklingmappe2;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 
 import java.util.ArrayList;
 
@@ -34,15 +30,7 @@ public class VicaService extends Service {
 
         }
         if(personalReminder) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            Intent i = new Intent(this, ActivityOrderHistory.class);
-            PendingIntent pIntent = PendingIntent.getActivity(this, 0, i, 0);
-            Notification notification = new NotificationCompat.Builder(this)
-                    .setContentTitle(getString(R.string.vica_restaurant))
-                    .setContentText(getString(R.string.personal_reminder_message))
-                    .setSmallIcon(R.drawable.ic_logo).setContentIntent(pIntent).build();
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(0, notification);
+            helper.createNotification(VicaService.this, getString(R.string.personal_reminder_message));
         }
         return super.onStartCommand(intent, flags, startId);
     }

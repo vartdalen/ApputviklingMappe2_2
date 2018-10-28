@@ -1,5 +1,6 @@
 package vica.apputviklingmappe2;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -26,6 +27,8 @@ public class Session {
                 prefs.edit().remove(prefToReset.getKey()).apply();
             }
         }
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
     }
 
     public void setUserLevel(int userLevel) {

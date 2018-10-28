@@ -61,8 +61,8 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RequestCodes.REQUEST_BOOKING) {
-            if (resultCode == ResultCodes.ORDER_CONFIRMED) {
-                setResult(ResultCodes.ORDER_CONFIRMED);
+            if (resultCode == ResultCodes.RESULT_ORDER_CONFIRMED) {
+                setResult(ResultCodes.RESULT_ORDER_CONFIRMED);
                 this.finish();
             }
         }
@@ -176,6 +176,7 @@ public class ActivityBooking extends FragmentActivity implements TimePickerDialo
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(ResultCodes.RESULT_FINISH);
                 finish();
             }
         });

@@ -1,6 +1,5 @@
 package vica.apputviklingmappe2;
 
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -12,7 +11,6 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class VicaPeriodiskService extends Service {
     @Nullable

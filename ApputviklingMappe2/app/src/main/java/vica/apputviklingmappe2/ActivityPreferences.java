@@ -53,6 +53,7 @@ public class ActivityPreferences extends PreferenceActivity implements SharedPre
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(ResultCodes.RESULT_FINISH);
                 finish();
             }
         });

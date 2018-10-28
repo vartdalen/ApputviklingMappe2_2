@@ -219,6 +219,7 @@ public class ActivityManageFriends extends Activity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(ResultCodes.RESULT_FINISH);
                 finish();
             }
         });

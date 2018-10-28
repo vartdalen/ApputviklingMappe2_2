@@ -32,8 +32,10 @@ public class ActivityMainMenu extends Activity {
             Intent intent = new Intent(ActivityMainMenu.this, ActivityLogin.class);
             startActivity(intent);
         }
-        if(db.compareOrderDate(this, helper.parseSystemDateToDbFormat(), session.getEmail())){
-            helper.createNotification(ActivityMainMenu.this);
+        if (session.getPrefPersonalReminder()) {
+            if(db.compareOrderDate(this, helper.parseSystemDateToDbFormat(), session.getEmail())){
+                helper.createNotification(ActivityMainMenu.this, getString(R.string.personal_reminder_message2));
+            }
         }
 
         super.onCreate(savedInstanceState);
@@ -55,8 +57,8 @@ public class ActivityMainMenu extends Activity {
             if (resultCode == ResultCodes.RESULT_QUIT) {
                 finish();
             }
-            if (resultCode == ResultCodes.ORDER_CONFIRMED) {
-                Toast.makeText(this, getString(R.string.order_confirmed) + " " + getString(R.string.timer_set) + " " + session.getPrefTiming(), Toast.LENGTH_LONG).show();
+            if (resultCode == ResultCodes.RESULT_ORDER_CONFIRMED) {
+                Toast.makeText(this, getString(R.string.order_confirmed) + ", " + getString(R.string.timer_set) + " " + session.getPrefTiming(), Toast.LENGTH_LONG).show();
             }
     }
 
